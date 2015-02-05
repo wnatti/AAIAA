@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="jni">
+      <UniqueIdentifier>9083457d-e370-4b32-834c-99709fda3d68</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>eee69b7c-521f-403e-ab42-6e983484441a</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>9cddbe70-7b9f-48e4-bfdc-d9d1fad6d41d</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Siika2D">
+      <UniqueIdentifier>{73075b0d-2ff0-4ed8-8fb2-80068dcfab6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Siika2D\Siika2D">
+      <UniqueIdentifier>{09c47307-17ea-48ec-9f36-fa3ec5e9dd9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Siika2D\Siika2D\native_app_glue">
+      <UniqueIdentifier>{c546b489-f93e-4094-83d5-3c3fcb1055c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\main.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="native_app_glue\android_native_app_glue.c">
+      <Filter>Siika2D\Siika2D\native_app_glue</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="native_app_glue\android_native_app_glue.h">
+      <Filter>Siika2D\Siika2D\native_app_glue</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

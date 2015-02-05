@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Siika2D", "Siika2D\Siika2D.vcxproj", "{12722FF2-AD9D-4FBB-AD5D-BED439098332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Tegra-Android = Debug|Tegra-Android
+		Release|Tegra-Android = Release|Tegra-Android
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12722FF2-AD9D-4FBB-AD5D-BED439098332}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
+		{12722FF2-AD9D-4FBB-AD5D-BED439098332}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
+		{12722FF2-AD9D-4FBB-AD5D-BED439098332}.Release|Tegra-Android.ActiveCfg = Release|Tegra-Android
+		{12722FF2-AD9D-4FBB-AD5D-BED439098332}.Release|Tegra-Android.Build.0 = Release|Tegra-Android
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
