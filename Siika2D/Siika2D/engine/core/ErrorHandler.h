@@ -6,16 +6,20 @@
 
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "s2d_error", __VA_ARGS__))
 
-/**
-	Singleton class.
+namespace core
+{
+	class ErrorHandler;
+}
 
-	Used for assertion-like error handling. 
-	Handler logs custom message to logcat(tag: s2d_error).
-	Aborts program on error while debugging is defined.
+/**
+Singleton class.
+
+Used for assertion-like error handling.
+Handler logs custom message to logcat(tag: s2d_error).
+Aborts program on error while debugging is defined.
 
 */
-
-class ErrorHandler
+class core::ErrorHandler
 {
 public:
 	/**

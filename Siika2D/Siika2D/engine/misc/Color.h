@@ -9,13 +9,18 @@ enum COLOR
 	RED , GREEN, BLUE
 };
 
+namespace s2d
+{
+	class Color;
+}
+
 /**
 	Basic color, 4 channels RGBA.
 	Values are given in 0-255 format and stored internally as floats between 0-1.
 
 	Enums for basic colors.
 */
-class Color
+class s2d::Color
 {
 public:
 
