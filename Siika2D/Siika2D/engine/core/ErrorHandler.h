@@ -1,6 +1,5 @@
 #pragma once
 
-#include <lodepng.h>
 #include <sstream>
 
 #include <android/log.h>
