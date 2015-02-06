@@ -12,12 +12,11 @@ namespace core
 }
 
 /**
-Singleton class.
+	Singleton class.
 
-Used for assertion-like error handling.
-Handler logs custom message to logcat(tag: s2d_error).
-Aborts program on error while debugging is defined.
-
+	Used for assertion-like error handling.
+	Handler logs custom message to logcat(tag: s2d_error).
+	Aborts program on error while debugging is defined.
 */
 class core::ErrorHandler
 {
