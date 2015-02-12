@@ -4,7 +4,6 @@ namespace core
 {
 	ResourceManager::ResourceManager(AAssetManager* aAssetManager)
 	{
-		_errorHandler = ErrorHandler::getInstance();
 		_androidAssetManager = aAssetManager;
 	}
 
@@ -17,35 +16,42 @@ namespace core
 	{
 		Image loadedImage;
 
-		AAsset* asset = nullptr;
-		asset = AAssetManager_open(_androidAssetManager, filename.c_str(), 0);
-
-		_errorHandler->checkForError(asset == nullptr, __LINE__, __FILE__, "Failed to android load asset");
-
-		unsigned int assetLength = AAsset_getLength(asset);
-		std::vector<unsigned char> assetData;
-		AAsset_read(asset, assetData.data(), assetLength);
-
-		AAsset_close(asset);
+		std::vector<unsigned char> assetData = loadAsset(filename);
 
 		unsigned error = lodepng::decode(loadedImage.data, loadedImage.width, loadedImage.height, assetData);
 
-		_errorHandler->checkForError(error, __LINE__, __FILE__, "lodepng failed to decode image");
+		s2d_assert(error, __FILE__, __LINE__);
+
+		_loadedImages.insert(std::make_pair(filename, loadedImage));
 
 		return loadedImage;
 	}
 
 	std::string ResourceManager::loadTextFile(std::string filename)
 	{
+		std::vector<unsigned char> assetData = loadAsset(filename);
+
+		std::string loadedText(assetData.begin(), assetData.end());
+
+		_loadedTextFiles.insert(std::make_pair(filename, loadedText));
+
+		return loadedText;
+	}
+
+	std::vector<unsigned char> ResourceManager::loadAsset(std::string filename)
+	{
+		std::vector<unsigned char> assetData;
+
 		AAsset* asset = nullptr;
 		asset = AAssetManager_open(_androidAssetManager, filename.c_str(), 0);
 
+		s2d_assert((asset == nullptr), __FILE__, __LINE__);
+
 		unsigned int assetLength = AAsset_getLength(asset);
-
-		std::vector<unsigned char> assetData;
-
 		AAsset_read(asset, assetData.data(), assetLength);
 
-		return std::string(assetData.begin(), assetData.end());
+		AAsset_close(asset);
+
+		return assetData;
 	}
 }

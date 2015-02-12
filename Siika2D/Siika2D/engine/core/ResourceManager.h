@@ -48,15 +48,20 @@ public:
 		Returns text from file as a std::string
 	*/
 	std::string loadTextFile(std::string filename);
+
 	//TODO:
 	//loadSound()
-	//loadFont()  
+	//loadFont()
 
 	
 private:
 	std::map<std::string, Image> _loadedImages;
-	ErrorHandler* _errorHandler;
+	std::map<std::string, std::string> _loadedTextFiles;
 	AAssetManager* _androidAssetManager;
+
+	//Load asset file from android's assetmanager
+	std::vector<unsigned char> loadAsset(std::string filename);
+
 	//TODO: container for other file types
 
 };
