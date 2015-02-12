@@ -2,7 +2,7 @@
 
 namespace s2d
 {
-	Color::Color(int red, int green, int blue, int alpha)
+	Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 	{
 		_red = red / 255.f;
 		_green = green / 255.f;
@@ -65,7 +65,7 @@ namespace s2d
 		}
 	}
 
-	void Color::setRGBA(int red, int green, int blue, int alpha)
+	void Color::setRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 	{
 		_red = red / 255.f;
 		_green = green / 255.f;
@@ -73,36 +73,36 @@ namespace s2d
 		_alpha = alpha / 255.f;
 	}
 
-	void Color::setRGB(int red, int green, int blue)
+	void Color::setRGB(uint8_t red, uint8_t green, uint8_t blue)
 	{
 		_red = red / 255.f;
 		_green = green / 255.f;
 		_blue = blue / 255.f;
 	}
 
-	void Color::setAlpha(int alpha)
+	void Color::setAlpha(uint8_t alpha)
 	{
 		_alpha = alpha / 255.f;
 	}
 
-	int Color::getR()
+	uint8_t Color::getR()
 	{
-		return int(_red * 255);
+		return uint8_t(_red * 255);
 	}
 
-	int Color::getG()
+	uint8_t Color::getG()
 	{
-		return int(_green * 255);
+		return uint8_t(_green * 255);
 	}
 
-	int Color::getB()
+	uint8_t Color::getB()
 	{
-		return int(_blue * 255);
+		return uint8_t(_blue * 255);
 	}
 
-	int Color::getA()
+	uint8_t Color::getA()
 	{
-		return int(_alpha * 255);
+		return uint8_t(_alpha * 255);
 	}
 
 }

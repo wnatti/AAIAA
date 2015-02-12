@@ -33,10 +33,30 @@
     <ClCompile Include="native_app_glue\android_native_app_glue.c">
       <Filter>Siika2D\Siika2D\native_app_glue</Filter>
     </ClCompile>
+    <ClCompile Include="engine\misc\Color.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\ErrorHandler.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\ResourceManager.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
       <Filter>Siika2D\Siika2D\native_app_glue</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\ResourceManager.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\misc\Color.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\ErrorHandler.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsContext.h" />
   </ItemGroup>
 </Project>
