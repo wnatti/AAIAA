@@ -27,9 +27,6 @@ void GraphicsContext::initialize(android_app* app)
 	bool result;
 
 	//This initializes the display we just got
-	result = false;
-	s2d_assert(result);
-
 	result = eglInitialize(_display, 0, 0);
 	s2d_assert(result);
 
