@@ -46,6 +46,9 @@
     <ClCompile Include="engine\graphics\GraphicsContext.cpp">
       <Filter>jni</Filter>
     </ClCompile>
+    <ClCompile Include="inc\lodepng\lodepng.cpp">
+      <Filter>Siika2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="Siika2D.h" />
     <ClInclude Include="engine\graphics\GraphicsContext.h">
       <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\lodepng\lodepng.h">
+      <Filter>Siika2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

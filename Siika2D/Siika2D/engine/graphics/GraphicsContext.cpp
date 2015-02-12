@@ -27,15 +27,18 @@ void GraphicsContext::initialize(android_app* app)
 	bool result;
 
 	//This initializes the display we just got
+	result = false;
+	s2d_assert(result);
+
 	result = eglInitialize(_display, 0, 0);
-	s2d_assert(result,__FILE__, __LINE__);
+	s2d_assert(result);
 
 	//This sets the configurations for the display
 	result = eglChooseConfig(_display, attributes, &_config, 1, &_numConfig);
-	s2d_assert(result, __FILE__, __LINE__);
+	s2d_assert(result);
 
 	result = eglGetConfigAttrib(_display, _config, EGL_NATIVE_VISUAL_ID, &_format);
-	s2d_assert(result, __FILE__, __LINE__);
+	s2d_assert(result);
 
 	ANativeWindow_setBuffersGeometry(app->window, 0, 0,_format);
 
@@ -43,7 +46,7 @@ void GraphicsContext::initialize(android_app* app)
 	_context = eglCreateContext(_display, _config, NULL, NULL);
 
 	result = eglMakeCurrent(_display, _surface, _surface, _context);
-	s2d_assert(result, __FILE__, __LINE__);
+	//s2d_assert(result, __FILE__, __LINE__);
 
 	eglQuerySurface(_display, _surface, EGL_WIDTH, &_width);
 	eglQuerySurface(_display, _surface, EGL_HEIGHT, &_height);

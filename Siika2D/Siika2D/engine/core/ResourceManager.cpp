@@ -20,7 +20,7 @@ namespace core
 
 		unsigned error = lodepng::decode(loadedImage.data, loadedImage.width, loadedImage.height, assetData);
 
-		s2d_assert(error, __FILE__, __LINE__);
+		s2d_assert(error);
 
 		_loadedImages.insert(std::make_pair(filename, loadedImage));
 
@@ -45,7 +45,7 @@ namespace core
 		AAsset* asset = nullptr;
 		asset = AAssetManager_open(_androidAssetManager, filename.c_str(), 0);
 
-		s2d_assert((asset == nullptr), __FILE__, __LINE__);
+		s2d_assert((asset == nullptr));
 
 		unsigned int assetLength = AAsset_getLength(asset);
 		AAsset_read(asset, assetData.data(), assetLength);
