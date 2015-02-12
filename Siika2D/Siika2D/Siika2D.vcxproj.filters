@@ -42,7 +42,10 @@
     <ClCompile Include="engine\core\ResourceManager.cpp">
       <Filter>jni</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsContext.cpp" />
+    <ClCompile Include="Siika2D.cpp" />
+    <ClCompile Include="engine\graphics\GraphicsContext.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
@@ -57,6 +60,9 @@
     <ClInclude Include="engine\core\ErrorHandler.h">
       <Filter>jni</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsContext.h" />
+    <ClInclude Include="Siika2D.h" />
+    <ClInclude Include="engine\graphics\GraphicsContext.h">
+      <Filter>jni</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

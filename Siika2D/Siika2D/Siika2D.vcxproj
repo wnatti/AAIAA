@@ -20,17 +20,19 @@
   <ItemGroup>
     <ClCompile Include="engine\core\ErrorHandler.cpp" />
     <ClCompile Include="engine\core\ResourceManager.cpp" />
+    <ClCompile Include="engine\graphics\GraphicsContext.cpp" />
     <ClCompile Include="engine\misc\Color.cpp" />
-    <ClCompile Include="GraphicsContext.cpp" />
     <ClCompile Include="jni\main.cpp" />
     <ClCompile Include="native_app_glue\android_native_app_glue.c" />
+    <ClCompile Include="Siika2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\core\ErrorHandler.h" />
     <ClInclude Include="engine\core\ResourceManager.h" />
+    <ClInclude Include="engine\graphics\GraphicsContext.h" />
     <ClInclude Include="engine\misc\Color.h" />
-    <ClInclude Include="GraphicsContext.h" />
     <ClInclude Include="native_app_glue\android_native_app_glue.h" />
+    <ClInclude Include="Siika2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{12722FF2-AD9D-4FBB-AD5D-BED439098332}</ProjectGuid>
