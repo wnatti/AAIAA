@@ -2,9 +2,9 @@
 
 namespace core
 {
-	void ErrorHandler::logError(int lineNumber, std::string filename, std::string errorMessage)
+	void ErrorHandler::logError(int lineNumber, std::string filename)
 	{
-		LOGE("s% FILE: s% LINE: i%", errorMessage.c_str(), filename.c_str(), lineNumber);
+		LOGE("FILE: s% LINE: i%", filename.c_str(), lineNumber);
 		abort();
 	}
 }

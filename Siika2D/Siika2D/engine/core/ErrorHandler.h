@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #ifndef NDEBUG
-#define s2d_assert(expression, errorMessage, filename, lineNumber) if(!expression)(core::ErrorHandler::logError(lineNumber, filename, errorMessage))
+#define s2d_assert(expression, filename, lineNumber) if(!expression)(core::ErrorHandler::logError(lineNumber,filename))
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "s2d_error", __VA_ARGS__))
 #endif
 
@@ -26,9 +26,9 @@ class core::ErrorHandler
 public:
 
 	/**
-		Prints error message with filename and line number to logcat.
+		Prints filename and line number to logcat.
 		Aborts program.
 		Use __LINE__ macro for lineNumber and __FILE__ for filename.
 	*/
-	static void logError(int lineNumber, std::string filename, std::string errorMessage);
+	static void logError(int lineNumber, std::string filename);
 };

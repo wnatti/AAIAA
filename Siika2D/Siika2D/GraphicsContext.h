@@ -7,6 +7,7 @@
 #include <GLES2\gl2.h>
 #include <android/log.h>
 #include "native_app_glue/android_native_app_glue.h"
+#include <ErrorHandler.h>
 
 class GraphicsContext
 {
