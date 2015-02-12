@@ -3,6 +3,9 @@
 #include <lodepng.h>
 #include <vector>
 #include <map>
+#include <android/asset_manager.h>
+
+#include "ErrorHandler.h"
 
 namespace core
 {
@@ -16,7 +19,7 @@ namespace core
 struct core::Image
 {
 	std::vector<unsigned char> data;
-	int height, width;
+	unsigned int height, width;
 };
 
 
@@ -29,7 +32,7 @@ struct core::Image
 class core::ResourceManager
 {
 public:
-	ResourceManager();
+	ResourceManager(AAssetManager* aAssetManager);
 	~ResourceManager();
 	
 	/**
@@ -38,14 +41,22 @@ public:
 		Returns image struct.
 	*/
 	Image loadImage(std::string filename);
+
+	/**
+		Loads text file with given filename.
+		Uses android assetmanager.
+		Returns text from file as a std::string
+	*/
+	std::string loadTextFile(std::string filename);
 	//TODO:
 	//loadSound()
-	//loadTextFile()
 	//loadFont()  
 
 	
 private:
 	std::map<std::string, Image> _loadedImages;
+	ErrorHandler* _errorHandler;
+	AAssetManager* _androidAssetManager;
 	//TODO: container for other file types
 
 };
