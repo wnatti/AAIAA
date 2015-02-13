@@ -11,24 +11,23 @@
 
 namespace core
 {
-	class ErrorHandler;
-}
-
-/**
-	Static class.
-
-	Used for assertion-like error handling.
-	Handler logs custom message to logcat(tag: s2d_error).
-	Aborts program on error while debugging is defined.
-*/
-class core::ErrorHandler
-{
-public:
 
 	/**
-		Prints filename and line number to logcat.
-		Aborts program.
-		Use __LINE__ macro for lineNumber and __FILE__ for filename.
-	*/
-	static void logError(int lineNumber, std::string filename);
-};
+		Static class.
+
+		Used for assertion-like error handling.
+		Handler logs custom message to logcat(tag: s2d_error).
+		Aborts program on error while debugging is defined.
+		*/
+	class ErrorHandler
+	{
+	public:
+
+		/**
+			Prints filename and line number to logcat.
+			Aborts program.
+			Use __LINE__ macro for lineNumber and __FILE__ for filename.
+			*/
+		static void logError(int lineNumber, std::string filename);
+	};
+}
