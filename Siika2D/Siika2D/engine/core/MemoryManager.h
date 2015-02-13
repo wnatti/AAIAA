@@ -4,7 +4,7 @@
 #include <typeinfo>
 #include <string>
 #include <iostream>
-#include <map>;
+#include <map>
 #include <memory.h>
 #include <sstream>
 #include "ErrorHandler.h"
@@ -58,15 +58,18 @@ namespace core
 		void getCount()
 		{
 			unsigned long size = 0;
-			std::ostringstream ss;
+			//std::ostringstream ss;
 			print("Memory Reserved at: \n");
 			for(std::map<void *, new_ptr_list>::iterator it = nRefs.begin(); it != nRefs.end(); it++)
 			{
-				ss << (void*)it->first << " size: " << it->second.size << " file: " << it->second.file << ":" << it->second.line << "\n";
+				//ss << (void*)it->first << " size: " << it->second.size << " file: " << it->second.file << ":" << it->second.line << "\n";
+				print("%p size %i file: %s :%i", it->first, it->second.size, it->second.file, it->second.line);
 				size += (unsigned long)it->second.size;
 			}
-			ss << "Total size: " << size << "\n";
-			print(ss.str());
+			//ss << "Total size: " << size << "\n";
+			print("Total size: %l", size);
+			//print("%s", ss.str());
+			//print(ss.str());
 
 		}
 

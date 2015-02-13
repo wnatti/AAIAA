@@ -14,23 +14,31 @@ _fragSource(fragmentSource), _vertSource(vertexSource)
 }
 
 Shader::~Shader()
-{}
+{
+	
+}
 
-std::string getShaderInfoLog(GLuint handle)
+std::string Shader::getShaderInfoLog(GLuint handle)
 {
 	GLint length;
 	glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &length);
 	GLchar * infoLog = new GLchar[length + 1];
 	glGetShaderInfoLog(handle, length + 1, &length, infoLog);
-	return std::string(infoLog);
+	std::string log;
+	log.copy(infoLog,length);
+	delete infoLog;
+	return log;
 }
-std::string getProgramInfoLog(GLuint handle)
+std::string Shader::getProgramInfoLog(GLuint handle)
 {
 	GLint length;
 	glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &length);
 	GLchar * infoLog = new GLchar[length + 1];
 	glGetProgramInfoLog(handle, length + 1, &length, infoLog);
-	return std::string(infoLog);
+	std::string log;
+	log.copy(infoLog, length);
+	delete infoLog;
+	return log;
 }
 bool Shader::compileShaders()
 {
@@ -45,14 +53,14 @@ bool Shader::compileShaders()
 	glGetShaderiv(_vertHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		LOGE(getShaderInfoLog(_vertHandle));
+		//LOGE(getShaderInfoLog(_vertHandle));
 		assert(status);
 		return false;
 	}
 	glGetShaderiv(_fragHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		LOGE(getShaderInfoLog(_vertHandle));
+		//LOGE(getShaderInfoLog(_vertHandle));
 		assert(status);
 		return false;
 	}
@@ -67,7 +75,7 @@ bool Shader::linkProgram()
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		LOGE(getProgramInfoLog(_vertHandle));
+		//LOGE(getProgramInfoLog(_vertHandle));
 		//s2d_assert(status);
 		assert(status);
 		return false;

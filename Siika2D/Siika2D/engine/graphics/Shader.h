@@ -28,7 +28,8 @@ namespace graphics
 		const GLuint getTextureAttrHndl(){ return _texId; }
 
 	private:
-		std::string getInfoLog(GLuint handle);
+		std::string getProgramInfoLog(GLuint handle);
+		std::string getShaderInfoLog(GLuint handle);
 		GLuint _fragHandle, _vertHandle, _colId, _posId, _texId;
 		const GLchar * _fragSource;
 		const GLchar * _vertSource;
