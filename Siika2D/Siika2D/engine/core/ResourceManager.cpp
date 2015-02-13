@@ -2,9 +2,14 @@
 
 using namespace core;
 
-ResourceManager::ResourceManager(AAssetManager* aAssetManager)
+ResourceManager::ResourceManager()
 {
-	_androidAssetManager = aAssetManager;
+	
+}
+
+void ResourceManager::init(AAssetManager* assetManager)
+{
+	_androidAssetManager = assetManager;
 }
 
 ResourceManager::~ResourceManager()

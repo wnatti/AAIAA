@@ -26,8 +26,11 @@ namespace core
 	class ResourceManager
 	{
 	public:
-		ResourceManager(AAssetManager* aAssetManager);
+		ResourceManager();
 		~ResourceManager();
+
+
+		void init(AAssetManager* assetManager);
 
 		/**
 			Loads png image with given filename or returns an existing one.
@@ -47,7 +50,7 @@ namespace core
 		//loadSound()
 		//loadFont()
 
-
+		
 	private:
 		std::map<std::string, Image> _loadedImages;
 		std::map<std::string, std::string> _loadedTextFiles;
