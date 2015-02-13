@@ -5,26 +5,32 @@
 #include <string>
 #include <iostream>
 #include <map>;
-#include <assert.h>
 #include <memory.h>
 #include <sstream>
-
+#include "ErrorHandler.h"
 
 
 namespace core
 {
 
 	/** MemoryManager class keeps count of objects created by overloaded new will print out list of unfreed memory at ~MemoryManager
-	
+
 	*/
 	class MemoryManager
 	{
 	public:
+		#define print(...) ((void)__android_log_print(ANDROID_LOG_WARN, "MemoryManager", __VA_ARGS__))
+		//void print(std::string line)
+		//{
+		//	std::cout << line;
+		//}
+
 		static MemoryManager& getInstance()
 		{
 			static MemoryManager mm;
 			return mm;
 		}
+		///Adds file linenumber memoryaddress and size information of object created by new() to map
 		void addRef(void * ptr, const char* file, int line, size_t size)
 		{
 			new_ptr_list list;
@@ -33,6 +39,7 @@ namespace core
 			list.size = size;
 			nRefs.insert(std::pair<void*, new_ptr_list>(ptr, list));
 		}
+		///Removes information from map called on delete
 		bool removeRef(void * ptr)
 		{
 			if(nRefs.size() < 1)
@@ -42,28 +49,26 @@ namespace core
 			{
 				free(ptr);
 				nRefs.erase(nRefs.find(ptr));
-				
 				return true;
 			}
 			return false;
 		}
 
+		/// Prints out reserved memory
 		void getCount()
 		{
 			unsigned long size = 0;
-			char lineToWrite[255];
-			std::string ptrStr;
+			std::ostringstream ss;
 			print("Memory Reserved at: \n");
 			for(std::map<void *, new_ptr_list>::iterator it = nRefs.begin(); it != nRefs.end(); it++)
 			{
-				std::ostringstream ss;
-				ss << (void*)it->first;
-				print(ss.str() +" size: " + std::to_string(it->second.size) + " file: " + it->second.file + ": " + std::to_string(it->second.line) + "\n");
+				ss << (void*)it->first << " size: " << it->second.size << " file: " << it->second.file << ":" << it->second.line << "\n";
+				print(ss.str());
 				size += (unsigned long)it->second.size;
 			}
 			print("Total size: " + std::to_string(size) + "\n");
 		}
-		
+
 	private:
 		struct new_ptr_list
 		{
@@ -84,13 +89,8 @@ namespace core
 				print("No leaks\n");
 		};
 
-		void print(std::string line)
-		{
-			std::cout << line;
-		}
 
 		std::map <void *, new_ptr_list> nRefs;
-
 	};
 
 }
@@ -116,7 +116,7 @@ void operator delete(void* ptr)
 {
 	if(!core::MemoryManager::getInstance().removeRef(ptr))
 		free(ptr);
-	
+
 }
 void operator delete[](void* ptr)
 {
