@@ -27,8 +27,6 @@ struct core::Image
 	All assets are loaded through ResourceManager.
 	Keeps track of loaded assets.
 */
-
-//TODO: Singleton
 class core::ResourceManager
 {
 public:
