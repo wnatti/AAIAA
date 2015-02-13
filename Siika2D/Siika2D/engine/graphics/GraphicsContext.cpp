@@ -1,5 +1,6 @@
 #include "GraphicsContext.h"
 
+using namespace graphics;
 
 GraphicsContext::GraphicsContext()
 {
@@ -8,6 +9,19 @@ GraphicsContext::GraphicsContext()
 
 GraphicsContext::~GraphicsContext()
 {
+	if (_display != EGL_NO_DISPLAY) {
+		eglMakeCurrent(_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		if (_context != EGL_NO_CONTEXT) {
+			eglDestroyContext(_display, _context);
+		}
+		if (_surface != EGL_NO_SURFACE) {
+			eglDestroySurface(_display, _surface);
+		}
+		eglTerminate(_display);
+	}
+	_display = EGL_NO_DISPLAY;
+	_context = EGL_NO_CONTEXT;
+	_surface = EGL_NO_SURFACE;
 
 }
 
@@ -51,4 +65,9 @@ void GraphicsContext::init(android_app* app)
 
 	glEnable(GL_CULL_FACE);
 
+}
+
+void GraphicsContext::swap()
+{
+	eglSwapBuffers(_display, _surface);
 }

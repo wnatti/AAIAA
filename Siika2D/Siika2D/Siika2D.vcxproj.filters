@@ -27,9 +27,6 @@
     </AndroidBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
     <ClCompile Include="native_app_glue\android_native_app_glue.c">
       <Filter>Siika2D\Siika2D\native_app_glue</Filter>
     </ClCompile>
@@ -48,6 +45,12 @@
     </ClCompile>
     <ClCompile Include="inc\lodepng\lodepng.cpp">
       <Filter>Siika2D</Filter>
+    </ClCompile>
+    <ClCompile Include="meini.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\main.cpp">
+      <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

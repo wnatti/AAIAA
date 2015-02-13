@@ -24,6 +24,9 @@
     <ClCompile Include="engine\misc\Color.cpp" />
     <ClCompile Include="inc\lodepng\lodepng.cpp" />
     <ClCompile Include="jni\main.cpp" />
+    <ClCompile Include="meini.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="native_app_glue\android_native_app_glue.c" />
     <ClCompile Include="Siika2D.cpp" />
   </ItemGroup>

@@ -9,21 +9,26 @@
 	Initializes the OpenGL ES 2.0 context
 */
 
-class GraphicsContext
+namespace graphics
 {
 
-public:
-	GraphicsContext();
-	~GraphicsContext();
-	void init(android_app* app);
-private:
-	//TODO: tähän private: sitten kun engine class (Siika2D) on done  
-	EGLDisplay _display;
-	EGLint _width, _height, _format;
-	EGLint _numConfig;
-	EGLConfig _config;
-	EGLSurface _surface;
-	EGLContext _context;
-	
+	class GraphicsContext
+	{
 
+	public:
+		GraphicsContext();
+		~GraphicsContext();
+		void swap();
+		void init(android_app* app);
+	private:
+		//TODO: tähän private: sitten kun engine class (Siika2D) on done  
+		EGLDisplay _display;
+		EGLint _width, _height, _format;
+		EGLint _numConfig;
+		EGLConfig _config;
+		EGLSurface _surface;
+		EGLContext _context;
+
+
+	};
 };
