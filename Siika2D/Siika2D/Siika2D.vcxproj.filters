@@ -70,5 +70,8 @@
     <ClInclude Include="inc\lodepng\lodepng.h">
       <Filter>Siika2D</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\MemoryManager.h">
+      <Filter>jni</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
