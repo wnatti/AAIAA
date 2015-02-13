@@ -1,9 +1,8 @@
 #include "GraphicsContext.h"
 
 
-GraphicsContext::GraphicsContext(android_app* app)
+GraphicsContext::GraphicsContext()
 {
-	initialize();
 }
 
 
@@ -44,7 +43,7 @@ void GraphicsContext::initialize(android_app* app)
 	_context = eglCreateContext(_display, _config, NULL, NULL);
 
 	result = eglMakeCurrent(_display, _surface, _surface, _context);
-	s2d_assert(result);
+	//s2d_assert(result, __FILE__, __LINE__);
 
 	eglQuerySurface(_display, _surface, EGL_WIDTH, &_width);
 	eglQuerySurface(_display, _surface, EGL_HEIGHT, &_height);

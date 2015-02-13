@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\core\ErrorHandler.h" />
-    <ClInclude Include="engine\core\MemoryManager.h" />
     <ClInclude Include="engine\core\ResourceManager.h" />
     <ClInclude Include="engine\graphics\GraphicsContext.h" />
     <ClInclude Include="engine\misc\Color.h" />
