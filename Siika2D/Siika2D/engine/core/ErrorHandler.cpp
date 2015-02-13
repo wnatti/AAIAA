@@ -1,9 +1,8 @@
 #include "ErrorHandler.h"
 
-namespace core
+using namespace core;
+
+void ErrorHandler::logError(int lineNumber, std::string filename)
 {
-	void ErrorHandler::logError(int lineNumber, std::string filename)
-	{
-		LOGE("FILE: %s LINE: %i", filename.c_str(), lineNumber);
-	}
+	LOGE("FILE: %s LINE: %i", filename.c_str(), lineNumber);
 }
