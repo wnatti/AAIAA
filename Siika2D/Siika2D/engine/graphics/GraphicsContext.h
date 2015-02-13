@@ -13,9 +13,10 @@ class GraphicsContext
 {
 
 public:
-	GraphicsContext(android_app* app);
+	GraphicsContext();
 	~GraphicsContext();
-	void initialize(android_app* app);
+	void init(android_app* app);
+private:
 	//TODO: tähän private: sitten kun engine class (Siika2D) on done  
 	EGLDisplay _display;
 	EGLint _width, _height, _format;
@@ -23,5 +24,6 @@ public:
 	EGLConfig _config;
 	EGLSurface _surface;
 	EGLContext _context;
+	
 
 };

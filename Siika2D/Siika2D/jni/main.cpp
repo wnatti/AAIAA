@@ -25,6 +25,7 @@
 #include <lodepng.h>
 #include <android/sensor.h>
 #include <android/log.h>
+#include "../Siika2D.h"
 #include "../engine/core/ErrorHandler.h"
 #include "../native_app_glue/android_native_app_glue.h"
 #include "../engine/core/ResourceManager.h"
@@ -45,14 +46,13 @@ struct saved_state {
 /**
  * Shared state for our app.
  */
-struct engine {
-    struct android_app* app;
+struct engine
+{
+	struct android_app* app;
 
     ASensorManager* sensorManager;
     const ASensor* accelerometerSensor;
     ASensorEventQueue* sensorEventQueue;
-
-	GraphicsContext Mycontext;
 
     int animating;
     EGLDisplay display;
@@ -63,19 +63,18 @@ struct engine {
     struct saved_state state;
 };
 
-static int engine_init_display(struct engine* engine)
-{
-
-	//NOTE: THIS IS A HACK UNTIL ENGINE_UI IS DONE
-	engine->Mycontext.initialize(engine->app);
-	engine->display = engine->Mycontext._display;
-	engine->context = engine->Mycontext._context;
-	engine->surface = engine->Mycontext._surface;
-	engine->width = engine->Mycontext._width;
-	engine->height = engine->Mycontext._height;
-	engine->state.angle = 0;
-	
-}
+//static int engine_init_display(struct engine* engine)
+//{
+//
+//	//NOTE: THIS IS A HACK UNTIL ENGINE_UI IS DONE
+//	engine->display = engine->Mycontext._display;
+//	engine->context = engine->Mycontext._context;
+//	engine->surface = engine->Mycontext._surface;
+//	engine->width = engine->Mycontext._width;
+//	engine->height = engine->Mycontext._height;
+//	engine->state.angle = 0;
+//	
+//}
 
 
 /**
@@ -181,13 +180,13 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
  * android_native_app_glue.  It runs in its own thread, with its own
  * event loop for receiving input events and doing other things.
  */
-void android_main(struct android_app* state) {
-    struct engine engine;
 
-    // Make sure glue isn't stripped.
-    app_dummy();
 
-    memset(&engine, 0, sizeof(engine));
+
+void android_main(struct android_app* state)
+{
+	Siika2D::getInstance();
+	
     state->userData = &engine;
     state->onAppCmd = engine_handle_cmd;
     state->onInputEvent = engine_handle_input;

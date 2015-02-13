@@ -1,16 +1,17 @@
 #include "GraphicsContext.h"
 
 
-GraphicsContext::GraphicsContext(android_app* app)
+GraphicsContext::GraphicsContext()
 {
 }
 
 
 GraphicsContext::~GraphicsContext()
 {
+
 }
 
-void GraphicsContext::initialize()
+void GraphicsContext::init(android_app* app)
 {
 	//Setting the color buffers' sizes etc.
 	const EGLint attributes[] = {
