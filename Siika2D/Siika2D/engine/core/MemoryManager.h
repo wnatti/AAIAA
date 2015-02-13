@@ -63,10 +63,11 @@ namespace core
 			for(std::map<void *, new_ptr_list>::iterator it = nRefs.begin(); it != nRefs.end(); it++)
 			{
 				ss << (void*)it->first << " size: " << it->second.size << " file: " << it->second.file << ":" << it->second.line << "\n";
-				print(ss.str());
 				size += (unsigned long)it->second.size;
 			}
-			print("Total size: " + std::to_string(size) + "\n");
+			ss << "Total size: " << size << "\n";
+			print(ss.str());
+
 		}
 
 	private:
