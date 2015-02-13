@@ -37,7 +37,8 @@ private:
 	std::vector<unsigned char>* _imageData;
 
 	/**
-		Generates OpenGL texture names
+		Generates OpenGL texture names.
+		Specifies OpenGL texture image and sets texture parameters.
 	*/
 	void initialize();
 };
