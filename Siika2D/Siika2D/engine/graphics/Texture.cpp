@@ -2,7 +2,7 @@
 
 namespace graphics
 {
-	Texture::Texture(int width, int height, std::vector<unsigned char> imageData)
+	Texture::Texture(int width, int height, std::vector<unsigned char>* imageData)
 	{
 		_width = width;
 		_height = height;

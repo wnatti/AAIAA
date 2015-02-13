@@ -11,17 +11,33 @@ namespace graphics
 	class Texture;
 }
 
+
+/**
+	Class for drawing images with OpenGL.
+*/
 class graphics::Texture
 {
 public:
-	Texture(int width, int height, std::vector<unsigned char> imageData);
+	/**
+		Constructor.
+		Set texture size and image data
+		Calls initialize.
+	*/
+	Texture(int width, int height, std::vector<unsigned char>* imageData);
 	~Texture();
 
+	/**
+		Get the OpenGL texture unit.
+	*/
 	GLuint getTexture();
 
 private:
 	int _width, _height;
 	GLuint _texture;
-	std::vector<unsigned char> _imageData;
+	std::vector<unsigned char>* _imageData;
+
+	/**
+		Generates OpenGL texture names
+	*/
 	void initialize();
 };

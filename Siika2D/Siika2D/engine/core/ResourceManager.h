@@ -34,18 +34,18 @@ public:
 	~ResourceManager();
 	
 	/**
-		Loads png image with given filename. 
+		Loads png image with given filename or returns an existing one. 
 		Uses lodepng and android assetmanager for decoding.
 		Returns image struct.
 	*/
-	Image loadImage(std::string filename);
+	Image* loadImage(std::string filename);
 
 	/**
-		Loads text file with given filename.
+		Loads text file with given filename or returns an existing one.
 		Uses android assetmanager.
 		Returns text from file as a std::string
 	*/
-	std::string loadTextFile(std::string filename);
+	std::string* loadTextFile(std::string filename);
 
 	//TODO:
 	//loadSound()

@@ -12,11 +12,11 @@ namespace core
 
 	}
 
-	Image ResourceManager::loadImage(std::string filename)
+	Image* ResourceManager::loadImage(std::string filename)
 	{
 		std::map<std::string, Image>::iterator it = _loadedImages.find(filename);
 		if (it != _loadedImages.end())
-			return it->second;
+			return &it->second;
 		else
 		{
 			Image loadedImage;
@@ -29,15 +29,15 @@ namespace core
 
 			_loadedImages.insert(std::make_pair(filename, loadedImage));
 
-			return loadedImage;
+			return &_loadedImages.at(filename);
 		}
 	}
 
-	std::string ResourceManager::loadTextFile(std::string filename)
+	std::string* ResourceManager::loadTextFile(std::string filename)
 	{
 		std::map<std::string, std::string>::iterator it = _loadedTextFiles.find(filename);
 		if (it != _loadedTextFiles.end())
-			return it->second;
+			return &it->second;
 		else
 		{
 			std::vector<unsigned char> assetData = loadAsset(filename);
@@ -46,7 +46,7 @@ namespace core
 
 			_loadedTextFiles.insert(std::make_pair(filename, loadedText));
 
-			return loadedText;
+			return &_loadedTextFiles.at(filename);
 		}
 	}
 

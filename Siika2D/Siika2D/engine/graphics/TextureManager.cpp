@@ -19,13 +19,12 @@ namespace graphics
 			return &it->second;
 		else
 		{
-			core::Image image = _resourceManager->loadImage(filename);
-			Texture texture(image.height, image.height, image.data);
+			core::Image* image = _resourceManager->loadImage(filename);
+			Texture texture(image->height, image->height, &image->data);
 
 			_createdTextures.insert(std::make_pair(filename, texture));
 
-			return &texture;
+			return &_createdTextures.at(filename);
 		}
-
 	}
 }
