@@ -13,7 +13,7 @@ class GraphicsContext
 {
 
 public:
-	GraphicsContext();
+	GraphicsContext(android_app* app);
 	~GraphicsContext();
 	void initialize(android_app* app);
 	//TODO: tähän private: sitten kun engine class (Siika2D) on done  

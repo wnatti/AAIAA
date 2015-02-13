@@ -1,6 +1,7 @@
 #pragma once
 #include "../../native_app_glue/android_native_app_glue.h" //TODO: includeen projektiin siististi tämän jossain vaiheessa
 #include "engine\graphics\GraphicsContext.h"
+#include "engine\core\MemoryManager.h"
 
 
 /** User interface for the engine's subsystems

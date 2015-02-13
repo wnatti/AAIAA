@@ -1,7 +1,7 @@
 #include "GraphicsContext.h"
 
 
-GraphicsContext::GraphicsContext()
+GraphicsContext::GraphicsContext(android_app* app)
 {
 }
 
@@ -10,7 +10,7 @@ GraphicsContext::~GraphicsContext()
 {
 }
 
-void GraphicsContext::initialize(android_app* app)
+void GraphicsContext::initialize()
 {
 	//Setting the color buffers' sizes etc.
 	const EGLint attributes[] = {
