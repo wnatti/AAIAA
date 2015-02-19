@@ -4,46 +4,70 @@ using namespace graphics;
 
 Buffer::Buffer()
 {
+	glGenBuffers(2, _buffers);
+
+	//TODO Set stride
 }
 
 
 Buffer::~Buffer()
 {
-		
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDeleteBuffers(2, _buffers);
 }
 
-void Buffer::addVertex()
+void Buffer::bindVertexBuffer()
 {
-	glGenBuffers(1, &_index);
-	glBindBuffer(GL_ARRAY_BUFFER, _index);
-	glBufferData(GL_ARRAY_BUFFER, _size * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, _buffers[0]);
 }
 
-void Buffer::addIndex()
+void Buffer::bindIndexBuffer()
 {
-	glGenBuffers(1, &_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _size * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[1]);
 }
 
-void Buffer::fillVertexData(unsigned _size, void *_data)
+
+void Buffer::addVertices(GLfloat *vertices, int vertexCount)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _index);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, _size, _data);
+	if (vertexCount == 4)
+		addRectIndices(vertexCount);
 
+	for (int i = 0; i < vertexCount; i++)
+	{
+		_vertexData.push_back(vertices[i]);
+	}
 }
 
-void Buffer::vertexAttributeBuffer(GLuint _vertex)
+void Buffer::updateBufferData()
 {
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertex);
-	glVertexAttribPointer(
-		1,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		0
-	);
+	glBindBuffer(GL_ARRAY_BUFFER, _buffers[0]);
+	glBufferData(GL_ARRAY_BUFFER, _vertexData.size() * sizeof(float), _vertexData.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[1]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexData.size() * sizeof(float), _indexData.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
+
+//Private
+void Buffer::addRectIndices(int vertexCount)
+{
+	int index = _vertexData.size();
+
+	GLuint INDEX_DATA[] = 
+	{ 
+		index, 
+		index + 1,
+		index + 2,
+		index + 2,
+		index + 3,
+		index
+	};
+
+	for (int i = 0; i < vertexCount; i++)
+	{
+		_indexData.push_back(INDEX_DATA[i]);
+	}
+}
+
