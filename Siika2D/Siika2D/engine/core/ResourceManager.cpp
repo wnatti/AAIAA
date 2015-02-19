@@ -4,11 +4,12 @@ using namespace core;
 
 ResourceManager::ResourceManager()
 {
-	
+	_androidAssetManager = nullptr;
 }
 
 void ResourceManager::init(AAssetManager* assetManager)
 {
+	if (_androidAssetManager == nullptr)
 	_androidAssetManager = assetManager;
 }
 

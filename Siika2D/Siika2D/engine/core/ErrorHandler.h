@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #ifndef NDEBUG
-#define s2d_assert(expression) if(!expression)(core::ErrorHandler::logError(__LINE__,__FILE__),abort())
+#define s2d_assert(expression) if(!expression)(core::ErrorHandler::logError(__LINE__,__FILE__), abort())
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "s2d_error", __VA_ARGS__))
 #endif
 

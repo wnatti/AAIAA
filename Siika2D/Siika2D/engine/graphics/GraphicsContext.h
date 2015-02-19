@@ -6,7 +6,8 @@
 #include "../core/ErrorHandler.h"
 
 /**
-	Initializes the OpenGL ES 2.0 context
+	Initializes OpenGL ES 2.0 context
+		and wipes it when needed
 */
 
 namespace graphics
@@ -18,17 +19,39 @@ namespace graphics
 	public:
 		GraphicsContext();
 		~GraphicsContext();
-		void swap();
+	
+
+		/**
+			glClear and swapBuffers		
+		*/
+		void draw();
+		/**
+			Initializes OpenGL ES 2.0 context
+		*/
 		void init(android_app* app);
+
+		/**
+			Clears the context
+		*/
+		void wipeContext();
 	private:
-		//TODO: tähän private: sitten kun engine class (Siika2D) on done  
+
+		/**
+		Swaps buffers
+		*/
+		void swap();
+
+
+		/**
+		Clears the screen
+		*/
+		void clear();
+
 		EGLDisplay _display;
 		EGLint _width, _height, _format;
 		EGLint _numConfig;
 		EGLConfig _config;
 		EGLSurface _surface;
 		EGLContext _context;
-
-
 	};
 };

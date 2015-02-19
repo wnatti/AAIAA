@@ -7,8 +7,8 @@
 
 
 /** 
-	Singleton User interface for the engine's subsystems
-	to be used everywhere engine's subsystems are needed
+	Singleton User interface used for the engine's subsystems.
+	To be used everywhere engine's subsystems are needed
 */
 
 struct saved_state {
@@ -24,18 +24,27 @@ public:
 	/**
 		Pointter to the UI
 	*/
-	static Siika2D* UI();
+	static Siika2D* UI(android_app* app);
 	virtual ~Siika2D();
-	bool init(android_app *app);
-	void draw();
-		
+	bool init();
+
+	/**
+		Asks if siika wants to die
+	*/
+	bool wantsToExit()
+	{
+		return _exitRequested;
+	}
+	void draw(); //TODO: Graphics luokka jolle piirto?
+	
 	ASensorManager* _sensorManager;
 	const ASensor* _accelerometerSensor;
 	saved_state svd_state;
 	ASensorEventQueue* _sensorEventQueue;
+	static void processCommands(android_app* app, int32_t command);
 protected:
-	
-	Siika2D();
+	bool _exitRequested;
+	Siika2D(android_app* app);
 	Siika2D(const Siika2D& s2d);
 	Siika2D& operator=(const Siika2D& s2d);
 		
