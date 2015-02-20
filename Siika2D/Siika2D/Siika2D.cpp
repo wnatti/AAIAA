@@ -18,21 +18,36 @@ Siika2D::Siika2D(android_app* app)
 {
 	LOGE("SIIKA CREATED");
 	_exitRequested = false;
+	//This is hella important
 	_application = app;
 	_application->userData = this;
 	_application->onAppCmd = this->processCommands;
+
 }
 
 Siika2D::~Siika2D()
 {
-	LOGE("SIIKA DESTROYED");
+	
 	_graphicsContext.wipeContext();
 	//TODO: Release resources
+	LOGE("SIIKA DESTROYED");
+	_application = nullptr;
 	_instance = nullptr;
 }
 
-bool Siika2D::init()
+bool Siika2D::init(android_app* app)
 {
+
+	_application = app;
+	_application->userData = this;
+	_application->onAppCmd = this->processCommands;
+
+	if (app->savedState != nullptr)
+	{
+		// We are starting with a previous saved state; restore from it.
+		_savedState = *(struct saved_state*)app->savedState;
+	}
+
 	if (_application != nullptr)
 	{
 		_resourceManager.init(_application->activity->assetManager);
@@ -50,7 +65,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_START:
 		cmdString += "START";
 		LOGE(cmdString.c_str());
-		siikaInstance->init();
+		siikaInstance->init(app);
 		break;
 
 	case APP_CMD_DESTROY:
@@ -75,7 +90,6 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		if (app->window != nullptr)
 		{
 			siikaInstance->_graphicsContext.init(app);
-			siikaInstance->draw();
 		}
 		break;
 	case APP_CMD_GAINED_FOCUS:
@@ -88,14 +102,12 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		cmdString += "LOST_FOCUS";
 		LOGE(cmdString.c_str());
 		//TODO: go to input
-
 		siikaInstance->draw();
 		break;
 
 	case APP_CMD_TERM_WINDOW:
 		cmdString += "TERM_WINDOW";
 		LOGE(cmdString.c_str());
-		siikaInstance->_graphicsContext.wipeContext();
 		break;
 	}
 }

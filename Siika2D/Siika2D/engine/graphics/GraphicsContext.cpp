@@ -18,15 +18,22 @@ void GraphicsContext::wipeContext()
 	if (_display != EGL_NO_DISPLAY)
 	{
 		eglMakeCurrent(_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		if (_context != EGL_NO_CONTEXT) {
+
+		if (_context != EGL_NO_CONTEXT)
+		{
 			eglDestroyContext(_display, _context);
 		}
+
 		if (_surface != EGL_NO_SURFACE)
 		{
 			eglDestroySurface(_display, _surface);
 		}
+
 		eglTerminate(_display);
 	}
+
+
+	LOGE("WIPING CONTEXT");
 	_display = EGL_NO_DISPLAY;
 	_context = EGL_NO_CONTEXT;
 	_surface = EGL_NO_SURFACE;
@@ -55,7 +62,8 @@ void GraphicsContext::init(android_app* app)
 
 	//This gets us the display of the android device
 	_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-	result = (_display != nullptr);
+
+	result = (_display != nullptr || EGL_NO_DISPLAY);
 	s2d_assert(result);
 
 	//This initializes the display we just got

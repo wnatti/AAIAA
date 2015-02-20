@@ -43,12 +43,6 @@ void android_main(struct android_app* app)
 
 	//Tässä oli inputtia
 
-	if (app->savedState != nullptr)
-	{
-		// We are starting with a previous saved state; restore from it.
-		siika->svd_state = *(struct saved_state*)app->savedState;
-	}
-
 	// loop waiting for stuff to do.
 	int animating = 1;
 	bool running = true;
@@ -63,7 +57,8 @@ void android_main(struct android_app* app)
 		// If animating, we loop until all events are read, then continue
 		// to draw the next frame of animation.
 		while ((ident = ALooper_pollAll(animating ? 0 : -1, nullptr, &events,
-			(void**)&source)) >= 0) {
+			(void**)&source)) >= 0)
+		{
 
 			// Process this event.
 			if (source != NULL) {
@@ -71,17 +66,17 @@ void android_main(struct android_app* app)
 			}
 
 			// If a sensor has data, process it now.
-			if (ident == LOOPER_ID_USER) {
-				if (siika->_accelerometerSensor != NULL) {
-					ASensorEvent event;
-					while (ASensorEventQueue_getEvents(siika->_sensorEventQueue,
-						&event, 1) > 0) {
-						LOGI("accelerometer: x=%f y=%f z=%f",
-							event.acceleration.x, event.acceleration.y,
-							event.acceleration.z);
-					}
-				}
-			}
+			//if (ident == LOOPER_ID_USER) {
+			//	if (siika->_accelerometerSensor != NULL) {
+			//		ASensorEvent event;
+			//		while (ASensorEventQueue_getEvents(siika->_sensorEventQueue,
+			//			&event, 1) > 0) {
+			//			LOGI("accelerometer: x=%f y=%f z=%f",
+			//				event.acceleration.x, event.acceleration.y,
+			//				event.acceleration.z);
+			//		}
+			//	}
+			//}
 
 			// Check if we are exiting.
 		}

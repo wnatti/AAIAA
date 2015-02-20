@@ -26,7 +26,7 @@ public:
 	*/
 	static Siika2D* UI(android_app* app);
 	virtual ~Siika2D();
-	bool init();
+	bool init(android_app *app);
 
 	/**
 		Asks if siika wants to die
@@ -39,7 +39,7 @@ public:
 	
 	ASensorManager* _sensorManager;
 	const ASensor* _accelerometerSensor;
-	saved_state svd_state;
+	saved_state _savedState;
 	ASensorEventQueue* _sensorEventQueue;
 	static void processCommands(android_app* app, int32_t command);
 protected:
@@ -47,11 +47,12 @@ protected:
 	Siika2D(android_app* app);
 	Siika2D(const Siika2D& s2d);
 	Siika2D& operator=(const Siika2D& s2d);
-		
+	void addApplicationCommand();
 	static Siika2D* _instance;
 
 	core::ResourceManager _resourceManager;
 	graphics::GraphicsContext _graphicsContext;
 	android_app *_application;
+	std::vector<int> _appCommandList;
 		
 };
