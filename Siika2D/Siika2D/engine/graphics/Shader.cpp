@@ -1,16 +1,27 @@
 #include "Shader.h"
 using namespace graphics;
 
-Shader::Shader():
-_fragSource(_defFragmentSource), _vertSource(_defVertexSource)
+Shader::Shader()
 {
+	default = true;
 	init();
+	_fragSource = _defFragmentSource;
+	_vertSource = _defVertexSource;
+	valid = compileShaders();
+	if(valid)
+		valid = linkProgram();
+	//valid = true if neither complie or link returned false
 }
 
 Shader::Shader(const GLchar * fragmentSource, const GLchar * vertexSource) :
 _fragSource(fragmentSource), _vertSource(vertexSource)
 {
+	default = false;
 	init();
+	valid = compileShaders();
+	if(valid)
+		valid = linkProgram();
+	//valid = true if neither complie or link returned false
 }
 
 Shader::~Shader()
@@ -25,7 +36,7 @@ std::string Shader::getShaderInfoLog(GLuint handle)
 	GLchar * infoLog = new GLchar[length + 1];
 	glGetShaderInfoLog(handle, length + 1, &length, infoLog);
 	std::string log;
-	log.copy(infoLog,length);
+	log.append(infoLog);
 	delete infoLog;
 	return log;
 }
@@ -53,14 +64,16 @@ bool Shader::compileShaders()
 	glGetShaderiv(_vertHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		//LOGE(getShaderInfoLog(_vertHandle));
+		std::string infoLog = getShaderInfoLog(_vertHandle);
+		//LOGE("Vertex shader complile failed \n" << getShaderInfoLog(_vertHandle));
 		assert(status);
 		return false;
 	}
 	glGetShaderiv(_fragHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		//LOGE(getShaderInfoLog(_vertHandle));
+		std::string infoLog = getShaderInfoLog(_fragHandle);
+		//LOGE("Fragment shader complie failed \n" << getShaderInfoLog(_fragHandle));
 		assert(status);
 		return false;
 	}
@@ -75,23 +88,29 @@ bool Shader::linkProgram()
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		//LOGE(getProgramInfoLog(_vertHandle));
+		//LOGE("Linking program failed \n" << getProgramInfoLog(_program));
 		//s2d_assert(status);
 		assert(status);
 		return false;
 	}
+	return true;
 }
-bool Shader::use()
+void Shader::use(GLint posId, GLint colId, GLint textureId)
+{
+	glUseProgram(_program);
+}
+void Shader::use()
 {
 	glUseProgram(_program);
 	_posId = glGetAttribLocation(_program, _posString);
-	assert(_posId > -1);
+	assert(_posId < -1);
 	glEnableVertexAttribArray(_posId);
 	_colId = glGetAttribLocation(_program, _colString);
-	assert(_colId > -1);
+	assert(_colId < -1);
 	glEnableVertexAttribArray(_colId);
 	_texId = glGetAttribLocation(_program, _texString);
 	glEnableVertexAttribArray(_texId);
+	return;
 }
 
 void Shader::init()
