@@ -39,7 +39,7 @@ namespace graphics
 		/**
 			Add vertices to vertex buffer for drawing.
 		*/
-		void addVertices(GLfloat *vertices, int vertexCount = 4);
+		void addVertices(GLfloat *vertices, int vertexCount = 4, int stride = 8);
 
 		/**
 			Give vertex and index data buffer's data store.
@@ -50,7 +50,7 @@ namespace graphics
 	private:
 		
 		//Fill index buffer for rectangle shapes
-		void addRectIndices(int vertexCount);
+		void addRectIndices(int vertexCount, int stride);
 
 		GLuint *_buffers;
 		std::vector<GLfloat> _vertexData;

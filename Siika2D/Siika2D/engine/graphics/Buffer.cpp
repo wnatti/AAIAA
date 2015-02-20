@@ -5,8 +5,6 @@ using namespace graphics;
 Buffer::Buffer()
 {
 	glGenBuffers(2, _buffers);
-
-	//TODO Set stride
 }
 
 
@@ -28,12 +26,12 @@ void Buffer::bindIndexBuffer()
 }
 
 
-void Buffer::addVertices(GLfloat *vertices, int vertexCount)
-{
+void Buffer::addVertices(GLfloat *vertices, int vertexCount, int stride)
+{	
 	if (vertexCount == 4)
-		addRectIndices(vertexCount);
+		addRectIndices(vertexCount, stride);
 
-	for (int i = 0; i < vertexCount; i++)
+	for (int i = 0; i < vertexCount*stride; i++)
 	{
 		_vertexData.push_back(vertices[i]);
 	}
@@ -51,9 +49,9 @@ void Buffer::updateBufferData()
 }
 
 //Private
-void Buffer::addRectIndices(int vertexCount)
+void Buffer::addRectIndices(int vertexCount, int stride)
 {
-	int index = _vertexData.size();
+	int index = _vertexData.size()/stride;
 
 	GLuint INDEX_DATA[] = 
 	{ 
@@ -70,4 +68,3 @@ void Buffer::addRectIndices(int vertexCount)
 		_indexData.push_back(INDEX_DATA[i]);
 	}
 }
-
