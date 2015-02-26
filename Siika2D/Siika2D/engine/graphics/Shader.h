@@ -1,5 +1,4 @@
 #pragma once
-//#include "../core/MemoryManager.h"
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
 #include "../core/ErrorHandler.h"
@@ -21,11 +20,12 @@ namespace graphics
 		const GLuint getPositionAttr(){ return _posId; }
 		const GLuint getTextureAttr(){ return _texId; }
 		const GLint getProgram(){ return _program; }
-	protected:
+	
 		///Shader must be created using ShaderManager::createShader()
 		Shader();
 		Shader(const GLchar * fragmentSource, const GLchar * vertexSource);
 		~Shader();
+	//protected:
 		///calls glUseProgram() and enables shader attributes. This is for default shader only, also gets and enables default shader atributes
 		void use();
 		//TODO: move this to public ?

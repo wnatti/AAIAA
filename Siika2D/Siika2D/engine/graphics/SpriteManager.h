@@ -1,8 +1,8 @@
 #pragma once
+#include <vector>
+#include "Shader.h"
 #include "Sprite.h"
 #include "Buffer.h"
-#include "ShaderManager.h"
-#include <vector>
 
 namespace graphics
 {

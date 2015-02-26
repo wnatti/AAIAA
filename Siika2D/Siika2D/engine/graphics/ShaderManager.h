@@ -1,11 +1,12 @@
 #pragma once
 #include "Shader.h"
+
 #include "../core/ErrorHandler.h"
+#include "../core/ResourceManager.h"
+
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
-#include "../core/MemoryManager.h"
 #include <vector>
-#include "../core/ResourceManager.h"
 
 //#include "../../Siika2D.h"
 

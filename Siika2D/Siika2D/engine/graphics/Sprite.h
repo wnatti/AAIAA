@@ -6,8 +6,8 @@ namespace graphics
 	class Sprite
 	{
 	public:
-		Sprite();
-		~Sprite();
+		Sprite(){};
+		~Sprite(){};
 		void setTexture(Texture * TextureToSet){ _texture = TextureToSet; }
 		GLfloat * getVertices();
 		///Gets next sprite in spritesheet
@@ -22,12 +22,4 @@ namespace graphics
 
 
 	};
-
-	Sprite::Sprite()
-	{
-	}
-
-	Sprite::~Sprite()
-	{
-	}
 }
