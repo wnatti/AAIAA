@@ -2,69 +2,49 @@
 
 using namespace graphics;
 
-Buffer::Buffer()
+Buffer::Buffer(GLenum bufferType, GLenum usagePattern)
 {
-	glGenBuffers(2, _buffers);
+	glGenBuffers(1, _buffers);
+	s2d_assert(glGetError == 0);
+
+	_bufferType = bufferType;
+	_usagePattern = usagePattern;
 }
 
 
 Buffer::~Buffer()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glDeleteBuffers(2, _buffers);
+	glBindBuffer(_bufferType, 0);
+	glDeleteBuffers(1, _buffers);
 }
 
-void Buffer::bindVertexBuffer()
+void Buffer::bindBuffer()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _buffers[0]);
+	glBindBuffer(_bufferType, _buffers[0]);
+	s2d_assert(glGetError == 0);
 }
 
-void Buffer::bindIndexBuffer()
+void Buffer::unbindBuffer()
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[1]);
+	glBindBuffer(_bufferType, 0);
+	s2d_assert(glGetError == 0);
 }
 
-
-void Buffer::addVertices(GLfloat *vertices, int vertexCount, int stride)
-{	
-	if (vertexCount == 4)
-		addRectIndices(vertexCount, stride);
-
-	for (int i = 0; i < vertexCount*stride; i++)
-	{
-		_vertexData.push_back(vertices[i]);
-	}
-}
-
-void Buffer::updateBufferData()
+void Buffer::addBufferData(void* bufferData, GLsizei size, GLint offset)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _buffers[0]);
-	glBufferData(GL_ARRAY_BUFFER, _vertexData.size() * sizeof(float), _vertexData.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(_bufferType, _buffers[0]);
+	glBufferSubData(_bufferType, offset, size, bufferData);
+	s2d_assert(glGetError == 0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexData.size() * sizeof(float), _indexData.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(_bufferType, 0);
 }
 
-//Private
-void Buffer::addRectIndices(int vertexCount, int stride)
+
+void Buffer::setBufferData(void* bufferData, GLsizei size)
 {
-	int index = _vertexData.size()/stride;
+	glBindBuffer(_bufferType, _buffers[0]);
+	glBufferData(_bufferType, size, bufferData, _usagePattern);
+	s2d_assert(glGetError == 0);
 
-	GLuint INDEX_DATA[] = 
-	{ 
-		index, 
-		index + 1,
-		index + 2,
-		index + 2,
-		index + 3,
-		index
-	};
-
-	for (int i = 0; i < vertexCount; i++)
-	{
-		_indexData.push_back(INDEX_DATA[i]);
-	}
+	glBindBuffer(_bufferType, 0);
 }

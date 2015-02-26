@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../core/ErrorHandler.h"
+
 #include <GLES2\gl2.h>
 #include <cstdlib>
 #include <vector>
@@ -16,44 +18,55 @@ namespace graphics
 
 		/**
 			Constructor.
-			Generate buffer names and set stride values.
+			Set buffer type and usage pattern.
+			Generate buffer.
+
+			Use GLenum values for bufferType and usagePattern.
+			usagePattern is GL_STATIC_DRAW by default.
 		*/
-		Buffer();
+		Buffer(GLenum bufferType, GLenum usagePattern = GL_STATIC_DRAW);
 
 		/**
 			Destructor.
-			Unbind and delete all buffers.
+			Unbind and delete buffer.
 		*/
 		~Buffer();
 
 		/**
-			Bind vertex buffer object.
+			Set usage pattern for buffer.
+			Use GLenum values.
 		*/
-		void bindVertexBuffer();
+		void setUsagePattern(GLenum usagePattern);
 
 		/**
-			Bind index buffer object.
+			Redefines some or all of the data store for the buffer object.
+
+			Give pointer to data and data size in bytes for buffer.
+			Give offset measured in bytes, where to start replacing data.
+			Offset is set to 0 by default.
 		*/
-		void bindIndexBuffer();
+		void addBufferData(void* bufferData, GLsizei size, GLint offset = 0);
 
 		/**
-			Add vertices to vertex buffer for drawing.
+			Give pointer to data and data size in bytes for buffer.
 		*/
-		void addVertices(GLfloat *vertices, int vertexCount = 4, int stride = 8);
+		void setBufferData(void* bufferData, GLsizei size);
+
 
 		/**
-			Give vertex and index data buffer's data store.
-			Call before drawing.
+			Bind buffer object.
 		*/
-		void updateBufferData();
+		void bindBuffer();
+
+		/**
+			Unbind buffer object.
+		*/
+		void unbindBuffer();
 
 	private:
-		
-		//Fill index buffer for rectangle shapes
-		void addRectIndices(int vertexCount, int stride);
 
+		GLenum _bufferType;
+		GLenum _usagePattern;
 		GLuint *_buffers;
-		std::vector<GLfloat> _vertexData;
-		std::vector<GLint> _indexData;
 	};
 }
