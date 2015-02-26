@@ -1,5 +1,5 @@
 #pragma once
-#include "../core/MemoryManager.h"
+//#include "../core/MemoryManager.h"
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
 #include "../core/ErrorHandler.h"
@@ -35,7 +35,7 @@ namespace graphics
 		bool compileShaders();
 		bool linkProgram();
 		void init();
-		bool default, valid;
+		bool _default, _valid;
 		std::string getProgramInfoLog(GLuint handle);
 		std::string getShaderInfoLog(GLuint handle);
 		GLuint _fragHandle, _vertHandle, _colId, _posId, _texId;

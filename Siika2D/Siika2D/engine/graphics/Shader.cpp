@@ -3,24 +3,24 @@ using namespace graphics;
 
 Shader::Shader()
 {
-	default = true;
+	_default = true;
 	init();
 	_fragSource = _defFragmentSource;
 	_vertSource = _defVertexSource;
-	valid = compileShaders();
-	if(valid)
-		valid = linkProgram();
+	_valid = compileShaders();
+	if(_valid)
+		_valid = linkProgram();
 	//valid = true if neither complie or link returned false
 }
 
 Shader::Shader(const GLchar * fragmentSource, const GLchar * vertexSource) :
 _fragSource(fragmentSource), _vertSource(vertexSource)
 {
-	default = false;
+	_default = false;
 	init();
-	valid = compileShaders();
-	if(valid)
-		valid = linkProgram();
+	_valid = compileShaders();
+	if(_valid)
+		_valid = linkProgram();
 	//valid = true if neither complie or link returned false
 }
 
