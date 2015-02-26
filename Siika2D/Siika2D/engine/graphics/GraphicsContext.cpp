@@ -33,7 +33,7 @@ void GraphicsContext::wipeContext()
 	}
 
 
-	LOGE("WIPING CONTEXT");
+	LOGI("WIPED GRAPHICS_CONTEXT");
 	_display = EGL_NO_DISPLAY;
 	_context = EGL_NO_CONTEXT;
 	_surface = EGL_NO_SURFACE;
@@ -63,7 +63,7 @@ void GraphicsContext::init(android_app* app)
 	//This gets us the display of the android device
 	_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 
-	result = (_display != nullptr || EGL_NO_DISPLAY);
+	result = (_display != nullptr && _display != EGL_NO_DISPLAY);
 	s2d_assert(result);
 
 	//This initializes the display we just got
@@ -95,6 +95,7 @@ void GraphicsContext::init(android_app* app)
 	result = eglQuerySurface(_display, _surface, EGL_HEIGHT, &_height);
 	s2d_assert(result);
 
+	glClearColor(0, 1, 0, 1);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	
@@ -106,12 +107,11 @@ void GraphicsContext::swap()
 }
 void GraphicsContext::clear()
 {
-	glClearColor(0, 1, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 void GraphicsContext::draw()
 {
-	if (_display != EGL_NO_DISPLAY)
+	if (_display != EGL_NO_DISPLAY && _display != nullptr)
 	{
 		clear();
 		swap();

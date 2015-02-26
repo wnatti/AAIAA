@@ -52,6 +52,7 @@
     <ClCompile Include="jni\main.cpp">
       <Filter>jni</Filter>
     </ClCompile>
+    <ClCompile Include="Siika_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">

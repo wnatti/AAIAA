@@ -29,6 +29,7 @@
     </ClCompile>
     <ClCompile Include="native_app_glue\android_native_app_glue.c" />
     <ClCompile Include="Siika2D.cpp" />
+    <ClCompile Include="Siika_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\core\ErrorHandler.h" />

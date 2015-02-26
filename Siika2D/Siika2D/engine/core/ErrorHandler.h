@@ -7,6 +7,7 @@
 #ifndef NDEBUG
 #define s2d_assert(expression) if(!expression)(core::ErrorHandler::logError(__LINE__,__FILE__), abort())
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "s2d_error", __VA_ARGS__))
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "s2d_info", __VA_ARGS__))
 #endif
 
 namespace core
@@ -29,5 +30,6 @@ namespace core
 			Use __LINE__ macro for lineNumber and __FILE__ for filename.
 			*/
 		static void logError(int lineNumber, std::string filename);
+	
 	};
 }

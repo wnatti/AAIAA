@@ -24,35 +24,37 @@ public:
 	/**
 		Pointter to the UI
 	*/
-	static Siika2D* UI(android_app* app);
+	static Siika2D* UI();
 	virtual ~Siika2D();
-	bool init(android_app *app);
+	void init(android_app *app);
 
 	/**
-		Asks if siika wants to die
+		Clears the screen
 	*/
-	bool wantsToExit()
-	{
-		return _exitRequested;
-	}
-	void draw(); //TODO: Graphics luokka jolle piirto?
+	void clear();
+
+	/**
+		Asks GraphicsContext to swap buffers
+	*/
+	void swap();
 	
 	ASensorManager* _sensorManager;
 	const ASensor* _accelerometerSensor;
 	saved_state _savedState;
 	ASensorEventQueue* _sensorEventQueue;
-	static void processCommands(android_app* app, int32_t command);
+
 protected:
-	bool _exitRequested;
-	Siika2D(android_app* app);
+	Siika2D();
 	Siika2D(const Siika2D& s2d);
 	Siika2D& operator=(const Siika2D& s2d);
 	void addApplicationCommand();
 	static Siika2D* _instance;
+	
 
 	core::ResourceManager _resourceManager;
 	graphics::GraphicsContext _graphicsContext;
 	android_app *_application;
 	std::vector<int> _appCommandList;
+	static void processCommands(android_app* app, int32_t command);
 		
 };

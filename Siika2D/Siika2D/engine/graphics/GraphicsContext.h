@@ -34,18 +34,13 @@ namespace graphics
 			Clears the context
 		*/
 		void wipeContext();
-	private:
 
-		/**
-		Swaps buffers
-		*/
+		void clear();
+
+	
 		void swap();
 
-
-		/**
-		Clears the screen
-		*/
-		void clear();
+	private:
 
 		EGLDisplay _display;
 		EGLint _width, _height, _format;
@@ -53,5 +48,6 @@ namespace graphics
 		EGLConfig _config;
 		EGLSurface _surface;
 		EGLContext _context;
+
 	};
 };
