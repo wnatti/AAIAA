@@ -7,13 +7,14 @@
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
 #include <vector>
-
+#include <map>
 //#include "../../Siika2D.h"
 
 //#include "GL\glew.h"
 
 namespace graphics
 {
+
 	enum shdrAtrib { unknown = -1, position, color, texture };
 	
 	class ShaderManager
@@ -61,7 +62,7 @@ namespace graphics
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	private:
 		//Finds already created shader in _shaders
-		Shader * findShader(char * vertSource, char * fragSource);
+		Shader * findShader(const char * vertSource, const char * fragSource);
 		GLint findAtrib(shdrAtrib atribToFind);
 
 		int defaultIndx;
@@ -74,5 +75,6 @@ namespace graphics
 
 		s_shdrAtrib _atrib[3];
 		std::vector<Shader*> _shaders;
+		std::map<shdrAtrib, char*> _shaderAtribs;
 	};
 }

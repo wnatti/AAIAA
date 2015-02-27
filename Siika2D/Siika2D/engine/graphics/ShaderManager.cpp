@@ -89,7 +89,7 @@ Shader * ShaderManager::createShader(char * vertPath, char * fragPath)
 	if(!newShdr)
 	{
 		newShdr = new Shader(fragSource->c_str(), vertSource->c_str());
-		if(newShdr->valid)
+		if(newShdr->_valid)
 			_shaders.push_back(newShdr); 
 		else // Compile or link failed infolog in logcat
 		{

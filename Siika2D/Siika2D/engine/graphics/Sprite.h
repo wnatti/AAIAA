@@ -1,5 +1,6 @@
 #pragma once
 #include "Texture.h"
+#include "..\glm\vec2.hpp"
 
 namespace graphics
 {
@@ -14,12 +15,7 @@ namespace graphics
 		void step();
 	private:
 		Texture * _texture;
-		int _width, _height,
-		_posX, _posY, _posZ,
-		_originX, _originY;
-
-		float _texX, _texY;
-
-
+		glm::vec2 _origin, _size, _position, _texturePos;
+		int _posZ;
 	};
 }

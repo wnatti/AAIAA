@@ -1,29 +1,29 @@
 #pragma once
 #include <vector>
-#include "Shader.h"
 #include "Sprite.h"
+#include "Shader.h"
 #include "Buffer.h"
+#include "ShaderManager.h"
+#include <map>
 
 namespace graphics
 {
+
 	class SpriteManager
 	{
 	public:
-		SpriteManager();
-		~SpriteManager();
+		SpriteManager(ShaderManager * shdrMngr) :_shdrMngr(shdrMngr){};
+		~SpriteManager(){};
+		Sprite * createSprite(){};
 		void drawSprites();
 	private:
-		void batchSprites();
-		Shader _shaderToUse;
-		std::vector<Sprite> _sprites;
-		Buffer _spriteBuffer;
+		struct sprites_buffer
+		{
+			std::vector<Sprite> sprites;
+			Buffer buffer;
+		};
+		void batchSprites(std::vector<Sprite> * toBatch){};
+		ShaderManager * _shdrMngr;
+		std::map<Shader*, sprites_buffer> _sprites;
 	};
-
-	SpriteManager::SpriteManager()
-	{
-	}
-
-	SpriteManager::~SpriteManager()
-	{
-	}
 }
