@@ -45,7 +45,7 @@ namespace graphics
 			Give offset measured in bytes, where to start replacing data.
 			Offset is set to 0 by default.
 		*/
-		void addBufferData(void* bufferData, GLsizei size, GLint offset = 0);
+		void subBufferData(void* bufferData, GLsizei size, GLint offset = 0);
 
 		/**
 			Give pointer to data and data size in bytes for buffer.

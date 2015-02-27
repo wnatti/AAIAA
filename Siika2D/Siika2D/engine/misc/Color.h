@@ -1,5 +1,7 @@
 #pragma once
 #include <stdlib.h>
+#include "vec4.hpp"
+#include "GLES2\gl2.h"
 
 
 namespace graphics
@@ -79,8 +81,14 @@ namespace graphics
 			*/
 		uint8_t getA();
 
+		/**
+			Returns GLfloat color values 
+		*/
+		glm::vec4 getGLColor();
+
+
 	private:
-		float _red, _green, _blue, _alpha;
+		GLfloat _glRed, _glGreen, _glBlue, _glAlpha;
 
 	};
 }

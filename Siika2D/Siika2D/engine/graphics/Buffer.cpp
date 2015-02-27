@@ -30,7 +30,7 @@ void Buffer::unbindBuffer()
 	s2d_assert(glGetError == 0);
 }
 
-void Buffer::addBufferData(void* bufferData, GLsizei size, GLint offset)
+void Buffer::subBufferData(void* bufferData, GLsizei size, GLint offset)
 {
 	glBindBuffer(_bufferType, _buffers[0]);
 	glBufferSubData(_bufferType, offset, size, bufferData);
