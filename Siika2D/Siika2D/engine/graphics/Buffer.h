@@ -67,6 +67,6 @@ namespace graphics
 
 		GLenum _bufferType;
 		GLenum _usagePattern;
-		GLuint _buffers;
+		GLuint _buffer;
 	};
 }

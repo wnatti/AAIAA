@@ -4,8 +4,6 @@
 
 Siika2D *siika = Siika2D::UI();
 
-graphics::BufferManager buffManager;
-graphics::ShaderManager shaderManager;
 
 bool done = false;
 
@@ -18,25 +16,28 @@ GLfloat vertices[] =
 
 GLint indices[] =
 {
-	1, 2, 3,
-	2, 3, 1
+	1, 2, 3
 };
 
 
-void drawStuff()
-{
-	
-}
 
 void doStuff()
 {
+	graphics::ShaderManager shaderManager;
+	shaderManager.useShader();
+	graphics::BufferManager buffManager;
+	
+	shaderManager.useShader();
+
 	siika->clear();
+
+
 	buffManager.addVertices(vertices, sizeof(vertices));
 	buffManager.addIndices(indices, sizeof(indices));
 
 	buffManager.setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
 	done = true;
-
+	shaderManager.useShader();
 	buffManager.draw();
 	siika->swap();
 }
@@ -45,7 +46,7 @@ void doStuff()
 void siika_main()
 {
 	
-	if (siika->drawReady== true && done == false)
+	if (siika->drawReady == true && done == false)
 		doStuff();
 
 }

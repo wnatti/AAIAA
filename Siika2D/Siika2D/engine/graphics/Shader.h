@@ -67,7 +67,7 @@ namespace graphics
 			"}\n";
 		// "   gl_Position = windowProjection * viewProjection * worldProjection * vec4(position, 0, 1);\n"
 		const GLchar* _defFragmentSource =
-			"varying vec4 varyCol;\n"
+			"varying lowp vec4 varyCol;\n"
 			"void main()\n"
 			"{\n"
 			"   gl_FragColor = varyCol;\n"

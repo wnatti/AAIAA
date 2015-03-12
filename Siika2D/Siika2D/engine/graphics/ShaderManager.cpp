@@ -68,7 +68,7 @@ void ShaderManager::useShader(void)
 		}
 		else  //should never come here
 		{
-			//LOGE("No current shader but default shader loaded: ShaderManager::useShader()");
+			//s2d_error("No current shader but default shader loaded: ShaderManager::useShader()");
 			_currentShader = _shaders[defaultIndx];
 		}
 	}

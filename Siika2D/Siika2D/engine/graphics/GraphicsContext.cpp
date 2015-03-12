@@ -33,7 +33,7 @@ void GraphicsContext::wipeContext()
 	}
 
 
-	LOGI("WIPED GRAPHICS_CONTEXT");
+	s2d_info("WIPED GRAPHICS_CONTEXT");
 	_display = EGL_NO_DISPLAY;
 	_context = EGL_NO_CONTEXT;
 	_surface = EGL_NO_SURFACE;
@@ -44,7 +44,7 @@ void GraphicsContext::wipeContext()
 void GraphicsContext::init(android_app* app)
 {
 
-	LOGI("INITING GRAPHICS CONTEXT");
+	s2d_info("INITING GRAPHICS CONTEXT");
 	//Setting the color buffers' sizes etc.
 	const EGLint configAttribs[] = {
 		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,

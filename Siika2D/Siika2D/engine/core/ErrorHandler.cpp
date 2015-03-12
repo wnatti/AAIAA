@@ -4,5 +4,5 @@ using namespace core;
 
 void ErrorHandler::logError(int lineNumber, std::string filename)
 {
-	LOGE("FILE: %s LINE: %i", filename.c_str(), lineNumber);
+	s2d_error("FILE: %s LINE: %i", filename.c_str(), lineNumber);
 }

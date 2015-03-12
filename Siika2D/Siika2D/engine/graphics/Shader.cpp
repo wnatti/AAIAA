@@ -61,22 +61,25 @@ bool Shader::compileShaders()
 	glShaderSource(_fragHandle, 1, &_fragSource, NULL);
 	glCompileShader(_vertHandle);
 	glCompileShader(_fragHandle);
+
 	glGetShaderiv(_vertHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
 		std::string infoLog = getShaderInfoLog(_vertHandle);
-		//LOGE("Vertex shader complile failed \n" << getShaderInfoLog(_vertHandle));
-		assert(status);
+		//s2d_error("Vertex shader complile failed \n" << getShaderInfoLog(_vertHandle));
+		s2d_assert(status);
 		return false;
 	}
+
 	glGetShaderiv(_fragHandle, GL_COMPILE_STATUS, &status);
 	if(status == GL_FALSE)
 	{
 		std::string infoLog = getShaderInfoLog(_fragHandle);
-		//LOGE("Fragment shader complie failed \n" << getShaderInfoLog(_fragHandle));
-		assert(status);
+		s2d_error("Fragment shader compile failed \n");
+		s2d_assert(status);
 		return false;
 	}
+
 	glAttachShader(_program, _vertHandle);
 	glAttachShader(_program, _fragHandle);
 	return true;
@@ -88,9 +91,9 @@ bool Shader::linkProgram()
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
 	{
-		//LOGE("Linking program failed \n" << getProgramInfoLog(_program));
-		//s2d_assert(status);
-		assert(status);
+		//s2d_error("Linking program failed \n" << getProgramInfoLog(_program));
+		//s2d_s2d_assert(status);
+		s2d_assert(status);
 		return false;
 	}
 	return true;
@@ -103,13 +106,14 @@ void Shader::use()
 {
 	glUseProgram(_program);
 	_posId = glGetAttribLocation(_program, _posString);
-	assert(_posId < -1);
+	s2d_assert(_posId < -1);
 	glEnableVertexAttribArray(_posId);
 	_colId = glGetAttribLocation(_program, _colString);
-	assert(_colId < -1);
+	s2d_assert(_colId < -1);
 	glEnableVertexAttribArray(_colId);
-	_texId = glGetAttribLocation(_program, _texString);
-	glEnableVertexAttribArray(_texId);
+	//_texId = glGetAttribLocation(_program, _texString);
+	//s2d_assert(_colId < -1);
+	//glEnableVertexAttribArray(_texId);5
 	return;
 }
 

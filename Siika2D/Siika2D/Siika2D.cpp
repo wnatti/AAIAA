@@ -16,7 +16,7 @@ Siika2D* Siika2D::UI()
 
 Siika2D::Siika2D()
 {
-	LOGI("SIIKA CREATED");
+	s2d_info("SIIKA CREATED");
 }
 
 Siika2D::~Siika2D()
@@ -24,7 +24,7 @@ Siika2D::~Siika2D()
 	_graphicsContext.wipeContext();
 	//TODO: Release resources
 
-	LOGI("SIIKA DESTROYED");
+	s2d_info("SIIKA DESTROYED");
 	_application = nullptr;
 	_instance = nullptr;
 }
@@ -54,7 +54,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	{
 	case APP_CMD_START:
 		cmdString += "START";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 
 		//Application started,
 		//initialize siika (get saved_state)
@@ -63,14 +63,14 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 
 	case APP_CMD_DESTROY:
 		cmdString += "DESTROY";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 
 		delete _instance;
 		break;
 
 	case APP_CMD_SAVE_STATE:
 		cmdString += "SAVE_STATE";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 
 		//Creating state to restore from
 		//malloc is recommended by native_app_glue
@@ -82,20 +82,20 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 
 	case APP_CMD_INIT_WINDOW:
 		cmdString += "INIT_WINDOW";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 		_instance->_graphicsContext.init(app);
 		break;
 
 	case APP_CMD_GAINED_FOCUS:
 		cmdString += "GAINED_FOCUS";
 		_instance->drawReady = true;
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 		//TODO: go to input
 		break;
 
 	case APP_CMD_LOST_FOCUS:
 		cmdString += "LOST_FOCUS";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 		_instance->drawReady = false;
 		//TODO: go to input
 		//here was draw
@@ -103,7 +103,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 
 	case APP_CMD_TERM_WINDOW:
 		cmdString += "TERM_WINDOW";
-		LOGI(cmdString.c_str());
+		s2d_info(cmdString.c_str());
 		_instance->_graphicsContext.wipeContext();
 
 		break;

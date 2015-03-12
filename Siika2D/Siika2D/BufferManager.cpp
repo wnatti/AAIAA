@@ -99,7 +99,9 @@ void BufferManager::draw()
 
 	}
 
-	glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
+	GLint err = glGetError();
+	s2d_assert(err == 0);
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, reinterpret_cast<GLvoid*>(0));
 
 	_vertexBuffer.unbindBuffer();
 	_indexBuffer.unbindBuffer();

@@ -41,10 +41,13 @@ namespace graphics
 		~ShaderManager(){ _shaders.empty(); }
 		///Sets all shader attributes existing values will be overwritten
 		void setAtribs(GLint position, GLint texture, GLint color);
+
 		///Used to enable specific shader atribute returns atribute handle
 		GLint enableShaderAtribute(char * atribName);
+
 		///Sets and enables specified atribute
 		GLint enableShaderAtribute(char * atribName,shdrAtrib atribType);
+
 		///Sets single given shader attribute value
 		void setAtrib(shdrAtrib atribToSet, GLint value);
 		
