@@ -1,19 +1,20 @@
 #include "Siika2D.h"
 
 
+
 void extern siika_main();
 
 void android_main(android_app* app)
 {
+	Siika2D *siika = Siika2D::UI();
+	siika->init(app);
 	int animating = 1;
 	int ident;
 	int events;
 
-	Siika2D *siika = Siika2D::UI();
-	siika->init(app);
-
 	while (1)
 	{
+	
 		siika_main();
 		
 		struct android_poll_source* source; //This goes to input
@@ -28,5 +29,6 @@ void android_main(android_app* app)
 				source->process(app, source);
 			}
 		}
+
 	}
 }

@@ -31,6 +31,7 @@ Siika2D::~Siika2D()
 
 void Siika2D::init(android_app* app)
 {
+	drawReady = false;
 	_application = app;
 	_application->userData = this;
 	_application->onAppCmd = this->processCommands;
@@ -38,7 +39,7 @@ void Siika2D::init(android_app* app)
 	//Loading saved state if there is one
 	if (app->savedState != nullptr)
 		_savedState = *(struct saved_state*)app->savedState;
-	
+
 	_resourceManager.init(_application->activity->assetManager);
 
 }
@@ -82,12 +83,12 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_INIT_WINDOW:
 		cmdString += "INIT_WINDOW";
 		LOGI(cmdString.c_str());
-
 		_instance->_graphicsContext.init(app);
 		break;
 
 	case APP_CMD_GAINED_FOCUS:
 		cmdString += "GAINED_FOCUS";
+		_instance->drawReady = true;
 		LOGI(cmdString.c_str());
 		//TODO: go to input
 		break;
@@ -95,6 +96,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_LOST_FOCUS:
 		cmdString += "LOST_FOCUS";
 		LOGI(cmdString.c_str());
+		_instance->drawReady = false;
 		//TODO: go to input
 		//here was draw
 		break;

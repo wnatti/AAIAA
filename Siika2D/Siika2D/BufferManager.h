@@ -4,7 +4,6 @@
 #include "engine\misc\Color.h"
 #include <vector>
 
-
 namespace graphics
 {
 	class BufferManager

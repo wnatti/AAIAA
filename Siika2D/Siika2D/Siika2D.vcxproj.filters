@@ -53,6 +53,25 @@
       <Filter>jni</Filter>
     </ClCompile>
     <ClCompile Include="Siika_main.cpp" />
+    <ClCompile Include="BufferManager.cpp" />
+    <ClCompile Include="engine\graphics\TextureManager.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Texture.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Shader.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Buffer.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Sprite.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\ShaderManager.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="native_app_glue\android_native_app_glue.h">
@@ -75,6 +94,25 @@
       <Filter>Siika2D</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\MemoryManager.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager.h" />
+    <ClInclude Include="engine\graphics\TextureManager.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Texture.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Shader.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Buffer.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Sprite.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\ShaderManager.h">
       <Filter>jni</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,8 +4,10 @@ using namespace graphics;
 
 Buffer::Buffer(GLenum bufferType, GLenum usagePattern)
 {
-	glGenBuffers(1, _buffers);
-	s2d_assert(glGetError == 0);
+	int err = glGetError();
+	glGenBuffers(1, &_buffers);
+	err = glGetError();
+	s2d_assert(err == 0);
 
 	_bufferType = bufferType;
 	_usagePattern = usagePattern;
@@ -15,26 +17,26 @@ Buffer::Buffer(GLenum bufferType, GLenum usagePattern)
 Buffer::~Buffer()
 {
 	glBindBuffer(_bufferType, 0);
-	glDeleteBuffers(1, _buffers);
+	glDeleteBuffers(1, &_buffers);
 }
 
 void Buffer::bindBuffer()
 {
-	glBindBuffer(_bufferType, _buffers[0]);
-	s2d_assert(glGetError == 0);
+	glBindBuffer(_bufferType, _buffers);
+	s2d_assert(glGetError() == 0);
 }
 
 void Buffer::unbindBuffer()
 {
 	glBindBuffer(_bufferType, 0);
-	s2d_assert(glGetError == 0);
+	s2d_assert(glGetError() == 0);
 }
 
 void Buffer::subBufferData(void* bufferData, GLsizei size, GLint offset)
 {
-	glBindBuffer(_bufferType, _buffers[0]);
+	glBindBuffer(_bufferType, _buffers);
 	glBufferSubData(_bufferType, offset, size, bufferData);
-	s2d_assert(glGetError == 0);
+	s2d_assert(glGetError() == 0);
 
 	glBindBuffer(_bufferType, 0);
 }
@@ -42,9 +44,10 @@ void Buffer::subBufferData(void* bufferData, GLsizei size, GLint offset)
 
 void Buffer::setBufferData(void* bufferData, GLsizei size)
 {
-	glBindBuffer(_bufferType, _buffers[0]);
+	glBindBuffer(_bufferType, _buffers);
 	glBufferData(_bufferType, size, bufferData, _usagePattern);
-	s2d_assert(glGetError == 0);
+	int err = glGetError();
+	s2d_assert(err == 0);
 
 	glBindBuffer(_bufferType, 0);
 }

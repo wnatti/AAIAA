@@ -43,6 +43,9 @@ public:
 	saved_state _savedState;
 	ASensorEventQueue* _sensorEventQueue;
 
+
+	bool drawReady;
+
 protected:
 	Siika2D();
 	Siika2D(const Siika2D& s2d);

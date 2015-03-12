@@ -37,7 +37,6 @@ namespace graphics
 
 		void clear();
 
-	
 		void swap();
 
 	private:

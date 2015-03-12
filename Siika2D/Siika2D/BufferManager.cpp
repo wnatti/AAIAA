@@ -7,7 +7,6 @@ BufferManager::BufferManager() :_indexBuffer(GL_ELEMENT_ARRAY_BUFFER), _vertexBu
 	_positionId = -1;
 	_colorId = -1;
 	_textureId = -1;
-
 }
 
 void BufferManager::setAttributes(GLint pos, GLint col, GLint textr)
