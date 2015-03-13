@@ -8,14 +8,10 @@
 #include <GLES2\gl2.h>
 #include <vector>
 #include <map>
-//#include "../../Siika2D.h"
-
-//#include "GL\glew.h"
 
 namespace graphics
 {
 
-	enum shdrAtrib { unknown = -1, position, color, texture };
 	
 	class ShaderManager
 	{
@@ -29,28 +25,15 @@ namespace graphics
 			
 			To use custom shaders 
 			1) call createShader(vertexshaderPath, fragmentShaderPath)
-			2) enable shader atributes with enableShaderAtribute
-			3) set shader atributes with setAtrib(s)
-			4) call useShader()
+			2) call useShader()
 
+			If colors or textures are needed use shader::setColor and shader::setTexture
 
 		*/
 	public:
 		
-		ShaderManager():_currentShader(nullptr),defaultIndx(-1){};
+		ShaderManager(core::ResourceManager * resMngr) :_rmngr(resMngr),_currentShader(nullptr), _defaultIndx(-1){};
 		~ShaderManager(){ _shaders.empty(); }
-		///Sets all shader attributes existing values will be overwritten
-		void setAtribs(GLint position, GLint texture, GLint color);
-
-		///Used to enable specific shader atribute returns atribute handle
-		GLint enableShaderAtribute(char * atribName);
-
-		///Sets and enables specified atribute
-		GLint enableShaderAtribute(char * atribName,shdrAtrib atribType);
-
-		///Sets single given shader attribute value
-		void setAtrib(shdrAtrib atribToSet, GLint value);
-		
 		/**
 			Loads shader code with resourceManager. 
 			If shader attribute values are not set default ones will be used. 
@@ -66,18 +49,12 @@ namespace graphics
 	private:
 		//Finds already created shader in _shaders
 		Shader * findShader(const char * vertSource, const char * fragSource);
-		GLint findAtrib(shdrAtrib atribToFind);
 
-		int defaultIndx;
+		int _defaultIndx;
 		Shader * _currentShader;
-		struct s_shdrAtrib
-		{
-			shdrAtrib atr = unknown;
-			GLint indx = -1;
-		};
-
-		s_shdrAtrib _atrib[3];
+		
 		std::vector<Shader*> _shaders;
 		std::map<shdrAtrib, char*> _shaderAtribs;
+		core::ResourceManager * _rmngr;
 	};
 }

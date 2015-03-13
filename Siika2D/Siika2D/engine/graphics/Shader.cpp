@@ -1,10 +1,21 @@
 #include "Shader.h"
 using namespace graphics;
 
-Shader::Shader()
+Shader::Shader(bool color, bool texture):
+_color(color), _texture(texture)
 {
 	_default = true;
 	init();
+	//TODO: More default shader codes 
+	/*
+	if(color && texture)
+	{}
+	else
+	{
+		if(color){}
+		if(texture){}
+	}
+	*/
 	_fragSource = _defFragmentSource;
 	_vertSource = _defVertexSource;
 	_valid = compileShaders();
@@ -13,8 +24,8 @@ Shader::Shader()
 	//valid = true if neither complie or link returned false
 }
 
-Shader::Shader(const GLchar * fragmentSource, const GLchar * vertexSource) :
-_fragSource(fragmentSource), _vertSource(vertexSource)
+Shader::Shader(const GLchar * fragmentSource, const GLchar * vertexSource, bool color, bool texture) :
+_fragSource(fragmentSource), _vertSource(vertexSource), _color(color), _texture(texture)
 {
 	_default = false;
 	init();
@@ -87,48 +98,42 @@ bool Shader::compileShaders()
 bool Shader::linkProgram()
 {
 	GLint status;
-	glBindAttribLocation(_program, 0, "position");
-	glBindAttribLocation(_program, 1, "color");
+	glBindAttribLocation(_program, shdrAtrib::position, _posString);
+	if(_color)
+		glBindAttribLocation(_program, shdrAtrib::color, _colString);
+	if(_texture)
+		glBindAttribLocation(_program, shdrAtrib::texture, _texString);
 	glLinkProgram(_program);
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
 	{
 		//s2d_error("Linking program failed \n" << getProgramInfoLog(_program));
-		//s2d_s2d_assert(status);
 		s2d_assert(status);
 		return false;
 	}
 	return true;
 }
+/*
 void Shader::use(GLint posId, GLint colId, GLint textureId)
 {
 	glEnableVertexAttribArray(posId);
 	glEnableVertexAttribArray(colId);
 	glUseProgram(_program);
 }
+*/
 void Shader::use()
 {
 	glUseProgram(_program);
-	_posId = 0;
-//	glBindAttribLocation(_program, 0, "position");
-//	s2d_assert(_posId < -1);
-	glEnableVertexAttribArray(_posId);
-
-	_colId = 1;
-//	glBindAttribLocation(_program,1,"color");
-//	s2d_assert(_colId < -1);
-	glEnableVertexAttribArray(_colId);
-	//_texId = glGetAttribLocation(_program, _texString);
-	//s2d_assert(_texId < -1);
-	//glEnableVertexAttribArray(_texId);
+	glEnableVertexAttribArray(shdrAtrib::position);
+	if(_color)
+		glEnableVertexAttribArray(shdrAtrib::color);
+	if(_texture)
+		glEnableVertexAttribArray(shdrAtrib::texture);
 	return;
 }
 
 void Shader::init()
 {
-	_colId = -1;
-	_posId = -1;
-	_texId = -1;
 	_program = -1;
 	_fragHandle = -1;
 	_vertHandle = -1;
