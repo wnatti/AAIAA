@@ -57,7 +57,7 @@ void SpriteManager::spriteBatcher(std::vector<Sprite> *toBatch)
 		{
 			if (toBatch->at(i)._posZ == toBatch->at(j)._posZ)
 			{
-				if (toBatch->at(i)._texture.getTexture() < toBatch->at(j)._texture.getTexture())
+				if (toBatch->at(i)._texture->getTexture() < toBatch->at(j)._texture->getTexture())
 				{
 						Sprite temp = toBatch->at(j);
 						toBatch->at(j) = toBatch->at(i);
