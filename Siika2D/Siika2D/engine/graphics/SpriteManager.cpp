@@ -2,12 +2,18 @@
 
 using namespace graphics;
 
+
+
 void SpriteManager::drawSprites()
 {
 	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 	{
 
+<<<<<<< HEAD
 		batchSprites(&(*it->second).sprites);
+=======
+		spriteBatcher(&it->second.sprites);
+>>>>>>> 6aaa3cf9cc670522b0831a8f6a5754d3a4575cfd
 		it->first->use(); // shader->use()
 		// TODO: Check for changes before recreating buffer
 		BufferManager buf = (*it->second).buffer;
@@ -25,6 +31,7 @@ void SpriteManager::drawSprites()
 		glUseProgram(0u);
 	}
 }
+<<<<<<< HEAD
 Sprite * SpriteManager::createSprite()
 {
 	return createSprite(nullptr);
@@ -64,3 +71,51 @@ SpriteManager::~SpriteManager()
 	}
 
 }
+=======
+
+bool SpriteManager::compareSpriteZs(Sprite &sprite1, Sprite &sprite2)
+{
+	if (sprite1._posZ > sprite2._posZ)
+		return true;
+	else
+		return false;
+}
+
+
+void SpriteManager::spriteBatcher(std::vector<Sprite> *toBatch)
+{
+	int i, j;
+	
+
+	for ( i = 0; i < toBatch->size(); i++)
+	{
+		for (j = i + 1; j < toBatch->size(); j++)
+		{
+			if (!compareSpriteZs(toBatch->at(i), toBatch->at(j)))
+			{
+					Sprite temp = toBatch->at(j);
+					toBatch->at(j) = toBatch->at(i);
+					toBatch->at(i) = temp;
+			}
+		}
+	}
+
+	for (i = 0; i < toBatch->size(); i++)
+	{
+		for (j = i + 1; j < toBatch->size(); j++)
+		{
+			if (toBatch->at(i)._posZ == toBatch->at(j)._posZ)
+			{
+				if (toBatch->at(i)._texture->getTexture() < toBatch->at(j)._texture->getTexture())
+				{
+						Sprite temp = toBatch->at(j);
+						toBatch->at(j) = toBatch->at(i);
+						toBatch->at(i) = temp;
+				}
+			}
+		}
+	}
+
+}
+
+>>>>>>> 6aaa3cf9cc670522b0831a8f6a5754d3a4575cfd
