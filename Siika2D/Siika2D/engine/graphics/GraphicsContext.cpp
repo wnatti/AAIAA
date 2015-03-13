@@ -99,7 +99,7 @@ void GraphicsContext::init(android_app* app)
 
 	glClearColor(0, 1, 0, 1);
 
-	glEnable(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	
 

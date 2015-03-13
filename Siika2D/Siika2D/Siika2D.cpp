@@ -64,7 +64,6 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_DESTROY:
 		cmdString += "DESTROY";
 		s2d_info(cmdString.c_str());
-
 		delete _instance;
 		break;
 

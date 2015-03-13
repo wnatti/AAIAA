@@ -55,7 +55,7 @@ void ShaderManager::useShader(void)
 		GLint pos = findAtrib(position);
 		GLint tex = findAtrib(texture);
 		GLint col = findAtrib(color);
-		_currentShader->use(pos,col,tex);
+		_currentShader->use(shdrAtrib::position, shdrAtrib::color, shdrAtrib::unknown);
 	}
 	else
 	{
@@ -72,8 +72,7 @@ void ShaderManager::useShader(void)
 			_currentShader = _shaders[defaultIndx];
 		}
 	}
-	//s2d_assert(_currentShader);
-	assert(_currentShader);
+	s2d_assert(_currentShader);
 	_currentShader->use();
 }
 Shader * ShaderManager::createShader(char * vertPath, char * fragPath)
@@ -116,14 +115,14 @@ Shader * ShaderManager::findShader(const char * vertSource, const char * fragSou
 GLint ShaderManager::enableShaderAtribute(char * atribName)
 {
 	GLint id = glGetAttribLocation(_currentShader->_program, atribName);
-	assert(id > -1);
+	s2d_assert(id > -1);
 	glEnableVertexAttribArray(id);
 	return id;
 }
 GLint ShaderManager::enableShaderAtribute(char * atribName, shdrAtrib atribType)
 {
 	GLint id = glGetAttribLocation(_currentShader->_program, atribName);
-	assert(id > -1);
+	s2d_assert(id > -1);
 	glEnableVertexAttribArray(id);
 	setAtrib(atribType, id);
 	return id;

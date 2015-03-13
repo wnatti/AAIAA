@@ -4,14 +4,15 @@
 
 Siika2D *siika = Siika2D::UI();
 
-
-bool done = false;
+graphics::ShaderManager *shaderManager;
+graphics::BufferManager *buffManager;
+bool managersDone = false;
 
 GLfloat vertices[] =
 {
-	0.5, 1.0, 1.0, 1.0, 1.0, 1.0,
-	0.0, 0.0, 1.0, 1.0, 1.0, 1.0,
-	1.0, 0.0, 1.0, 1.0, 1.0, 1.0
+	-1.0, -1.0, 1.0, 1.0, 1.0, 1.0,
+	0.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+	1.0, -1.0, 1.0, 1.0, 1.0, 1.0
 };
 
 GLint indices[] =
@@ -20,25 +21,26 @@ GLint indices[] =
 };
 
 
-
 void doStuff()
 {
-	graphics::ShaderManager shaderManager;
-	shaderManager.useShader();
-	graphics::BufferManager buffManager;
-	
-	shaderManager.useShader();
+	if (!managersDone)
+	{
+		shaderManager = new graphics::ShaderManager;
+		buffManager = new graphics::BufferManager;
+		buffManager->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
+		shaderManager->useShader();
+
+		buffManager->addVertices(vertices, sizeof(vertices));
+		buffManager->addIndices(indices, sizeof(indices));
+
+		managersDone = true;
+	}
 
 	siika->clear();
 
-
-	buffManager.addVertices(vertices, sizeof(vertices));
-	buffManager.addIndices(indices, sizeof(indices));
-
-	buffManager.setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
-	done = true;
-	shaderManager.useShader();
-	buffManager.draw();
+	
+	
+	buffManager->draw();
 	siika->swap();
 }
 
@@ -46,7 +48,7 @@ void doStuff()
 void siika_main()
 {
 	
-	if (siika->drawReady == true && done == false)
+	if (siika->drawReady == true)
 		doStuff();
 
 }

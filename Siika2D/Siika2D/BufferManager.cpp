@@ -101,7 +101,10 @@ void BufferManager::draw()
 
 	GLint err = glGetError();
 	s2d_assert(err == 0);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, reinterpret_cast<GLvoid*>(0));
+	
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
+	err = glGetError();
+	s2d_assert(err == 0);
 
 	_vertexBuffer.unbindBuffer();
 	_indexBuffer.unbindBuffer();

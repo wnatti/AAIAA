@@ -56,4 +56,3 @@ void Buffer::setBufferData(void* bufferData, GLsizei size)
 
 	glBindBuffer(_bufferType, 0);
 }
-

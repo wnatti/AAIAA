@@ -51,17 +51,17 @@ namespace graphics
 		const GLchar* _defVertexSource =
 			"attribute vec2 position;\n"
 			"attribute vec4 color;\n"
-			"attribute vec2 texture;\n"
+			//"attribute vec2 texture;\n"
 
-			"uniform mat4 windowProjection;\n"
-			"uniform mat4 worldProjection;\n"
-			"uniform mat4 viewProjection;\n"
+			//"uniform mat4 windowProjection;\n"
+			//"uniform mat4 worldProjection;\n"
+			//"uniform mat4 viewProjection;\n"
 
-			"varying vec2 UV;\n"
-			"varying vec4 varyCol;\n"
-			"uniform sampler2D sampler;\n"
+			//"varying vec2 UV;\n"
+			"varying  vec4 varyCol;\n"
+			//"uniform sampler2D sampler;\n"
 			"void main() {\n"
-			"	UV = texture;\n"
+			//"	UV = texture;\n"
 			"	varyCol = color; \n"
 			"   gl_Position = vec4(position, 0, 1);\n"
 			"}\n";

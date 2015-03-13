@@ -67,7 +67,7 @@ bool Shader::compileShaders()
 	{
 		std::string infoLog = getShaderInfoLog(_vertHandle);
 		//s2d_error("Vertex shader complile failed \n" << getShaderInfoLog(_vertHandle));
-		s2d_assert(status);
+		s2d_assert(status != GL_FALSE);
 		return false;
 	}
 
@@ -76,7 +76,7 @@ bool Shader::compileShaders()
 	{
 		std::string infoLog = getShaderInfoLog(_fragHandle);
 		s2d_error("Fragment shader compile failed \n");
-		s2d_assert(status);
+		s2d_assert(status != GL_FALSE);
 		return false;
 	}
 
@@ -87,6 +87,8 @@ bool Shader::compileShaders()
 bool Shader::linkProgram()
 {
 	GLint status;
+	glBindAttribLocation(_program, 0, "position");
+	glBindAttribLocation(_program, 1, "color");
 	glLinkProgram(_program);
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
@@ -100,20 +102,25 @@ bool Shader::linkProgram()
 }
 void Shader::use(GLint posId, GLint colId, GLint textureId)
 {
+	glEnableVertexAttribArray(posId);
+	glEnableVertexAttribArray(colId);
 	glUseProgram(_program);
 }
 void Shader::use()
 {
 	glUseProgram(_program);
-	_posId = glGetAttribLocation(_program, _posString);
-	s2d_assert(_posId < -1);
+	_posId = 0;
+//	glBindAttribLocation(_program, 0, "position");
+//	s2d_assert(_posId < -1);
 	glEnableVertexAttribArray(_posId);
-	_colId = glGetAttribLocation(_program, _colString);
-	s2d_assert(_colId < -1);
+
+	_colId = 1;
+//	glBindAttribLocation(_program,1,"color");
+//	s2d_assert(_colId < -1);
 	glEnableVertexAttribArray(_colId);
 	//_texId = glGetAttribLocation(_program, _texString);
-	//s2d_assert(_colId < -1);
-	//glEnableVertexAttribArray(_texId);5
+	//s2d_assert(_texId < -1);
+	//glEnableVertexAttribArray(_texId);
 	return;
 }
 
