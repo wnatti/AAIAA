@@ -22,7 +22,6 @@ namespace graphics
 		Color * getColor(){ return _col; };
 		///Gets next sprite in spritesheet
 		void step();
-<<<<<<< HEAD
 	protected:
 		Sprite(){};
 
@@ -42,12 +41,6 @@ namespace graphics
 		glm::vec2 _texPos[4];
 		Color * _col;
 		bool _draw;
-=======
 		void moveSprite();
-		int _posZ;
-		Texture * _texture;
-	private:
-		glm::vec2 _origin, _size, _position, _texturePos;
->>>>>>> 6aaa3cf9cc670522b0831a8f6a5754d3a4575cfd
 	};
 }
