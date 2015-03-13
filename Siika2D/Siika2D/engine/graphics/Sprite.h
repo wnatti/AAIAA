@@ -13,9 +13,10 @@ namespace graphics
 		GLfloat * getVertices();
 		///Gets next sprite in spritesheet
 		void step();
-	private:
-		Texture * _texture;
-		glm::vec2 _origin, _size, _position, _texturePos;
+		void moveSprite();
 		int _posZ;
+		Texture * _texture;
+	private:
+		glm::vec2 _origin, _size, _position, _texturePos;
 	};
 }
