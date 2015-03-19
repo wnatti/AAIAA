@@ -8,6 +8,8 @@
 #include <string>
 namespace graphics
 {
+	enum shdrAtrib { unknown = -1, position, color, texture };
+
 	class Shader
 	{
 		friend class ShaderManager;
@@ -16,30 +18,29 @@ namespace graphics
 		Default attribute names are Position: "position" Color: "color" TextureCoordinate: "texture"
 		*/
 	public:
-		const GLuint getColorAttr(){ return _colId; }
-		const GLuint getPositionAttr(){ return _posId; }
-		const GLuint getTextureAttr(){ return _texId; }
+		//const GLuint getColorAttr(){ return _colId; }
+		//const GLuint getPositionAttr(){ return _posId; }
+		//const GLuint getTextureAttr(){ return _texId; }
 		const GLuint getProgram(){ return _program; }
-	
-	//protected:
-		///Shader must be created using ShaderManager::createShader()
-		Shader();
-		Shader(const GLchar * fragmentSource, const GLchar * vertexSource);
-		~Shader();
-
 		///calls glUseProgram() and enables shader attributes. This is for default shader only, also gets and enables default shader atributes
 		void use();
-		//TODO: move this to public ?
-		///calls glUseProgram() and sets preEnabled attributes to the shader atributes must first be enabled on ShaderManager::enableShaderAtribute
-		void use(GLint posId, GLint colId, GLint textureId);
 	private:
+		///Shader must be created using ShaderManager::createShader()
+		Shader(bool color = false, bool texture = false);
+		Shader(const GLchar * fragmentSource, const GLchar * vertexSource, bool color = false, bool texture = false);
+		~Shader();
+		void setColor(bool toSet){ _color = toSet; }
+		void setTexture(bool toSet){ _texture = toSet; }
+
+
 		bool compileShaders();
 		bool linkProgram();
 		void init();
 		bool _default, _valid;
 		std::string getProgramInfoLog(GLuint handle);
 		std::string getShaderInfoLog(GLuint handle);
-		GLuint _fragHandle, _vertHandle, _colId, _posId, _texId;
+		bool _color, _texture;
+		GLuint _fragHandle, _vertHandle;// , _colId, _posId, _texId;
 		const GLchar * _fragSource;
 		const GLchar * _vertSource;
 		GLuint _program;
