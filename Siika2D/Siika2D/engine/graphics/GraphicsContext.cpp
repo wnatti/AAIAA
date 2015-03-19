@@ -1,5 +1,5 @@
 #include "GraphicsContext.h"
-
+#include "jni.h"
 using namespace graphics;
 
 GraphicsContext::GraphicsContext()
@@ -43,6 +43,7 @@ void GraphicsContext::wipeContext()
 
 void GraphicsContext::init(android_app* app)
 {
+
 
 	s2d_info("INITING GRAPHICS CONTEXT");
 	//Setting the color buffers' sizes etc.
@@ -89,6 +90,7 @@ void GraphicsContext::init(android_app* app)
 	result = (_context != nullptr);
 	s2d_assert(result == EGL_TRUE);
 	
+
 	result = eglMakeCurrent(_display, _surface, _surface, _context);
 	s2d_assert(result == EGL_TRUE);
 
@@ -96,12 +98,13 @@ void GraphicsContext::init(android_app* app)
 	s2d_assert(result == EGL_TRUE);
 	result = eglQuerySurface(_display, _surface, EGL_HEIGHT, &_height);
 	s2d_assert(result == EGL_TRUE);
+	
 
 	glClearColor(0, 1, 0, 1);
 
+
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
-	
 
 }
 
@@ -112,12 +115,4 @@ void GraphicsContext::swap()
 void GraphicsContext::clear()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-}
-void GraphicsContext::draw()
-{
-	if (_display != EGL_NO_DISPLAY && _display != nullptr)
-	{
-		clear();
-		swap();
-	}
 }

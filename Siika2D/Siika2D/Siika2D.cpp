@@ -31,7 +31,7 @@ Siika2D::~Siika2D()
 
 void Siika2D::init(android_app* app)
 {
-	drawReady = false;
+	_drawReady = false;
 	_application = app;
 	_application->userData = this;
 	_application->onAppCmd = this->processCommands;
@@ -42,6 +42,20 @@ void Siika2D::init(android_app* app)
 
 	_resourceManager.init(_application->activity->assetManager);
 
+}
+
+void Siika2D::initGraphics()
+{
+	_instance->_graphicsContext.init(_instance->_application);
+	_instance->_drawReady = true;
+	_shaderManager = new graphics::ShaderManager(&_resourceManager);
+
+}
+
+void Siika2D::releaseGraphics()
+{
+	_instance->_graphicsContext.wipeContext();
+	_instance->_drawReady = false;
 }
 
 void Siika2D::processCommands(android_app* app,int32_t command)
@@ -79,9 +93,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_INIT_WINDOW:
 		cmdString += "INIT_WINDOW";
 		s2d_info(cmdString.c_str());
-		_instance->_graphicsContext.initAppConfigs(app);
-		_instance->_graphicsContext.init(app);
-		_instance->drawReady = true;
+		_instance->initGraphics();
 		break;
 
 	case APP_CMD_GAINED_FOCUS:
@@ -100,8 +112,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_TERM_WINDOW:
 		cmdString += "TERM_WINDOW";
 		s2d_info(cmdString.c_str());
-		_instance->_graphicsContext.wipeContext();
-		_instance->drawReady = false;
+		_instance->releaseGraphics();
 		break;
 
 	case APP_CMD_LOW_MEMORY:

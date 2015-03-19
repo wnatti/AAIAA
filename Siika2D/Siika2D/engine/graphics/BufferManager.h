@@ -1,7 +1,7 @@
 #pragma once
 #include "Buffer.h"
 #include "vec2.hpp"
-#include "..\misc\Color.h"
+#include "../misc/Color.h"
 #include <vector>
 
 namespace graphics
@@ -33,5 +33,8 @@ namespace graphics
 		GLint _textureId;
 		GLsizei _strideLength;
 		void addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col);
+		void setAttribPointers();
+		void bindBuffers();
+		void unbindBuffers();
 	};
 }

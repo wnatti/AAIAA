@@ -1,11 +1,9 @@
 #include "../Siika2D.h"
-#include "../BufferManager.h"
+#include "../engine/graphics/BufferManager.h"
 #include "../engine/graphics/ShaderManager.h"
 
 Siika2D *siika = Siika2D::UI();
 
-graphics::ShaderManager *shaderManager;
-graphics::BufferManager *buffManager;
 bool managersDone = false;
 
 GLfloat vertices[] =
@@ -25,13 +23,13 @@ void doStuff()
 {
 	if (!managersDone)
 	{
-		shaderManager = new graphics::ShaderManager;
-		buffManager = new graphics::BufferManager;
-		buffManager->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
-		shaderManager->useShader();
+		//shaderManager = new graphics::ShaderManager(&siika->_resourceManager);
+		//buffManager = new graphics::BufferManager;
+		//buffManager->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
+		//shaderManager->useShader();
 
-		buffManager->addVertices(vertices, sizeof(vertices));
-		buffManager->addIndices(indices, sizeof(indices));
+		//buffManager->addVertices(vertices, sizeof(vertices));
+		//buffManager->addIndices(indices, sizeof(indices));
 
 		managersDone = true;
 	}
@@ -40,7 +38,7 @@ void doStuff()
 
 	
 	
-	buffManager->draw();
+	//buffManager->draw();
 	siika->swap();
 }
 
@@ -48,7 +46,7 @@ void doStuff()
 void siika_main()
 {
 	
-	if (siika->drawReady == true)
+	if (siika->drawReady() == true)
 		doStuff();
 
 }

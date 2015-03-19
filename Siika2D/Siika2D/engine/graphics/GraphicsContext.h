@@ -22,22 +22,24 @@ namespace graphics
 	
 
 		/**
-			glClear and swapBuffers		
-		*/
-		void draw();
-		/**
 			Initializes OpenGL ES 2.0 context
 		*/
 		void init(android_app* app);
 
 		/**
-			Clears the context
+			Clears the context thoroughly
 		*/
 		void wipeContext();
-
+		/**
+			Clears the screen with a color (default green)
+		*/
 		void clear();
-
+		/**
+			Swap buffers
+		*/
 		void swap();
+
+
 
 	private:
 
