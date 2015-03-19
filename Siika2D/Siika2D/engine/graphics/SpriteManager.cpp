@@ -12,7 +12,7 @@ void SpriteManager::drawSprites()
 		it->first->use(); // shader->use()
 		// TODO: Check for changes before recreating buffer
 		BufferManager buf = (*it->second).buffer;
-	
+		
 		for(std::vector<Sprite*>::iterator sit = (*it->second).sprites.begin(); sit != (*it->second).sprites.end(); sit++)
 		{
 			glm::vec2 * positions = (*sit)->getPositions();
@@ -45,6 +45,7 @@ Sprite * SpriteManager::createSprite(Sprite * sprite)
 		}
 	}
 	bfr = new sprites_buffer;
+	bfr->buffer.setAttributes(position, color, texture);
 	bfr->sprites.push_back(sprite);
 	_sprites.insert(std::pair<Shader*, sprites_buffer*>(shdr, bfr));
 	return sprite;
