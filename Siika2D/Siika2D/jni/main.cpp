@@ -2,7 +2,7 @@
 #include "../engine/graphics/BufferManager.h"
 #include "../engine/graphics/ShaderManager.h"
 
-Siika2D *siika = Siika2D::UI();
+core::Siika2D *siika = core::Siika2D::UI();
 
 bool managersDone = false;
 
@@ -28,7 +28,7 @@ void doStuff()
 		//buffManager->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
 		//shaderManager->useShader();
 
-		//buffManager->addVertices(vertices, sizeof(vertices));
+		//siika->addVertices(vertices, sizeof(vertices));
 		//buffManager->addIndices(indices, sizeof(indices));
 
 		managersDone = true;

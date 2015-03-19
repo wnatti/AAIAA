@@ -1,5 +1,5 @@
 #include "GraphicsContext.h"
-#include "jni.h"
+
 using namespace graphics;
 
 GraphicsContext::GraphicsContext()

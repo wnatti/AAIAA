@@ -9,12 +9,14 @@
 #include <vector>
 #include <map>
 
+
+
 namespace graphics
 {
 
-	
 	class ShaderManager
 	{
+		friend class Graphics;
 		/***
 			Class for managing and loading shaders
 			Default values for shader attributes are: "position", "color", "texture" 
@@ -32,8 +34,7 @@ namespace graphics
 		*/
 	public:
 		
-		ShaderManager(core::ResourceManager * resMngr) :_rmngr(resMngr),_currentShader(nullptr), _defaultIndx(-1){};
-		~ShaderManager(){ _shaders.empty(); }
+
 		/**
 			Loads shader code with resourceManager. 
 			If shader attribute values are not set default ones will be used. 
@@ -47,6 +48,8 @@ namespace graphics
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	private:
+		ShaderManager(core::ResourceManager * resMngr) :_rmngr(resMngr), _currentShader(nullptr), _defaultIndx(-1){};
+		~ShaderManager(){ _shaders.empty(); }
 		//Finds already created shader in _shaders
 		Shader * findShader(const char * vertSource, const char * fragSource);
 

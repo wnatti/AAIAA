@@ -6,7 +6,7 @@ void extern siika_main();
 
 void android_main(android_app* app)
 {
-	Siika2D *siika = Siika2D::UI();
+	core::Siika2D *siika = core::Siika2D::UI();
 	siika->init(app);
 	int animating = 1;
 	int ident;

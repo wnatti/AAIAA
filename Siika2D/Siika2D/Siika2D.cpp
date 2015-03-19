@@ -1,6 +1,9 @@
 #include "Siika2D.h"
 
+using namespace core;
+
 Siika2D* Siika2D::_instance = nullptr;
+
 
 Siika2D* Siika2D::UI()
 {
@@ -21,7 +24,8 @@ Siika2D::Siika2D()
 
 Siika2D::~Siika2D()
 {
-	_graphicsContext.wipeContext();
+	//GRAPHICS->
+	//_graphicsContext.wipeContext();
 	//TODO: Release resources
 
 	s2d_info("SIIKA DESTROYED");
@@ -39,22 +43,20 @@ void Siika2D::init(android_app* app)
 	//Loading saved state if there is one
 	if (app->savedState != nullptr)
 		_savedState = *(struct saved_state*)app->savedState;
-
 	_resourceManager.init(_application->activity->assetManager);
 
 }
 
 void Siika2D::initGraphics()
 {
-	_instance->_graphicsContext.init(_instance->_application);
+	_instance->GRAPHICS._graphicsContext.init(_instance->_application);
 	_instance->_drawReady = true;
-	_shaderManager = new graphics::ShaderManager(&_resourceManager);
 
 }
 
 void Siika2D::releaseGraphics()
 {
-	_instance->_graphicsContext.wipeContext();
+	_instance->GRAPHICS._graphicsContext.wipeContext();
 	_instance->_drawReady = false;
 }
 
@@ -141,10 +143,10 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 
 void Siika2D::swap()
 {
-	_graphicsContext.swap();
+	GRAPHICS.swap();
 }
 
 void Siika2D::clear()
 {
-	_graphicsContext.clear();
+	GRAPHICS.clear();
 }

@@ -25,6 +25,7 @@ namespace core
 		*/
 	class ResourceManager
 	{
+
 	public:
 		ResourceManager();
 		~ResourceManager();

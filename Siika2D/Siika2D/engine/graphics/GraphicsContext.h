@@ -51,4 +51,4 @@ namespace graphics
 		EGLContext _context;
 
 	};
-};
+}
