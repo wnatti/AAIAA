@@ -55,7 +55,6 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_START:
 		cmdString += "START";
 		s2d_info(cmdString.c_str());
-
 		//Application started,
 		//initialize siika (get saved_state)
 		_instance->init(app);
@@ -70,24 +69,23 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_SAVE_STATE:
 		cmdString += "SAVE_STATE";
 		s2d_info(cmdString.c_str());
-
 		//Creating state to restore from
 		//malloc is recommended by native_app_glue
 		app->savedState = malloc(sizeof(state));
 		*((saved_state*)app->savedState) = *state;
 		app->savedStateSize = sizeof(state);
-
 		break;
 
 	case APP_CMD_INIT_WINDOW:
 		cmdString += "INIT_WINDOW";
 		s2d_info(cmdString.c_str());
+		_instance->_graphicsContext.initAppConfigs(app);
 		_instance->_graphicsContext.init(app);
+		_instance->drawReady = true;
 		break;
 
 	case APP_CMD_GAINED_FOCUS:
 		cmdString += "GAINED_FOCUS";
-		_instance->drawReady = true;
 		s2d_info(cmdString.c_str());
 		//TODO: go to input
 		break;
@@ -95,7 +93,6 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_LOST_FOCUS:
 		cmdString += "LOST_FOCUS";
 		s2d_info(cmdString.c_str());
-		_instance->drawReady = false;
 		//TODO: go to input
 		//here was draw
 		break;
@@ -104,8 +101,29 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		cmdString += "TERM_WINDOW";
 		s2d_info(cmdString.c_str());
 		_instance->_graphicsContext.wipeContext();
-
+		_instance->drawReady = false;
 		break;
+
+	case APP_CMD_LOW_MEMORY:
+		cmdString += "LOW_MEMORY";
+		s2d_info(cmdString.c_str());
+		break;
+
+	case APP_CMD_PAUSE:
+		cmdString += "PAUSE";
+		s2d_info(cmdString.c_str());
+		break;
+
+	case APP_CMD_STOP:
+		cmdString += "STOP";
+		s2d_info(cmdString.c_str());
+		break;
+
+	case APP_CMD_CONFIG_CHANGED:
+		cmdString += "CONFIG_CHANGED";
+		s2d_info(cmdString.c_str());
+		break;
+
 	}
 }
 

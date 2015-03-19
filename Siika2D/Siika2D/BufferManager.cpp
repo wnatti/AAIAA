@@ -76,15 +76,19 @@ void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 
 void BufferManager::draw()
 {
-	if (_vertices.size() != 0)
-		_vertexBuffer.setBufferData(_vertices.data(), _vertices.size());
+	bindBuffers();
+	setAttribPointers();
 
-	if (_indices.size() != 0)
-		_indexBuffer.setBufferData(_indices.data(), _indices.size());
+	GLint err;
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
+	err = glGetError();
+	s2d_assert(err == 0);
 
-	_vertexBuffer.bindBuffer();
-	_indexBuffer.bindBuffer();
+	unbindBuffers();
+}
 
+void BufferManager::setAttribPointers()
+{
 	glVertexAttribPointer(_positionId, 2, GL_FLOAT, GL_FALSE, _strideLength, reinterpret_cast<GLvoid*>(0));
 
 	if (_textureId != -1)
@@ -96,16 +100,30 @@ void BufferManager::draw()
 			glVertexAttribPointer(_colorId, 4, GL_FLOAT, GL_FALSE, _strideLength, reinterpret_cast<GLvoid*>(4 * sizeof(GLfloat)));
 		else
 			glVertexAttribPointer(_colorId, 4, GL_FLOAT, GL_FALSE, _strideLength, reinterpret_cast<GLvoid*>(2 * sizeof(GLfloat)));
-
 	}
 
 	GLint err = glGetError();
 	s2d_assert(err == 0);
-	
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
-	err = glGetError();
-	s2d_assert(err == 0);
 
+}
+
+void BufferManager::bindBuffers()
+{
+	if (_vertices.size() != 0)
+		_vertexBuffer.setBufferData(_vertices.data(), _vertices.size());
+
+	if (_indices.size() != 0)
+		_indexBuffer.setBufferData(_indices.data(), _indices.size());
+
+	_vertexBuffer.bindBuffer();
+	_indexBuffer.bindBuffer();
+
+	GLint err = glGetError();
+	s2d_assert(err == 0);
+}
+
+void BufferManager::unbindBuffers()
+{
 	_vertexBuffer.unbindBuffer();
 	_indexBuffer.unbindBuffer();
 }
