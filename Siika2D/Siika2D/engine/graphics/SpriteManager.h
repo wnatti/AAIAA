@@ -15,7 +15,7 @@ namespace graphics
 	class SpriteManager
 	{
 	public:
-		SpriteManager(ShaderManager * shdrMngr) :_shdrMngr(shdrMngr){};
+		SpriteManager(ShaderManager * shdrMngr);
 		~SpriteManager(){};
 		Sprite * createSprite();
 		Sprite * createSprite(glm::vec2 location, glm::vec2 spriteSize, glm::vec2 spriteOrigin, Texture * texture, glm::vec2 textureUL, glm::vec2 textureLR);

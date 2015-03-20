@@ -99,8 +99,8 @@ bool Shader::linkProgram()
 {
 	GLint status;
 	glBindAttribLocation(_program, shdrAtrib::position, _posString);
-	if(_color)
-		glBindAttribLocation(_program, shdrAtrib::color, _colString);
+	//if(_color)
+	glBindAttribLocation(_program, shdrAtrib::color, _colString);
 	if(_texture)
 		glBindAttribLocation(_program, shdrAtrib::texture, _texString);
 	glLinkProgram(_program);

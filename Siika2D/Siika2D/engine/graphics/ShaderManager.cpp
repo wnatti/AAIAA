@@ -9,7 +9,7 @@ void ShaderManager::useShader(void)
 		//Gets default shader
 		if(_defaultIndx == -1)
 		{
-			_currentShader = new Shader();
+			_currentShader = new Shader(true,false);
 			_shaders.push_back(_currentShader);
 			_defaultIndx = _shaders.size()-1;
 		}

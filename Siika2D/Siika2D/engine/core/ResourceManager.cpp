@@ -31,7 +31,7 @@ Image* ResourceManager::loadImage(std::string filename)
 
 		unsigned error = lodepng::decode(loadedImage.data, loadedImage.width, loadedImage.height, assetData);
 
-		s2d_assert(error);
+		s2d_assert(error == 0);
 
 		_loadedImages.insert(std::make_pair(filename, loadedImage));
 
@@ -59,16 +59,18 @@ std::string* ResourceManager::loadTextFile(std::string filename)
 std::vector<unsigned char> ResourceManager::loadAsset(std::string filename)
 {
 	std::vector<unsigned char> assetData;
-
 	AAsset* asset = nullptr;
-	asset = AAssetManager_open(_androidAssetManager, filename.c_str(), 0);
+	asset = AAssetManager_open(_androidAssetManager, filename.c_str(), 2);
 
 	s2d_assert((asset != nullptr));
 
 	unsigned int assetLength = AAsset_getLength(asset);
-	AAsset_read(asset, assetData.data(), assetLength);
-
+	//AAsset_read(asset, assetData.data(), assetLength);
+	unsigned char * data = new unsigned char[assetLength];
+	AAsset_read(asset, data, assetLength);
+	for(int i = 0; i < assetLength; i++)
+		assetData.push_back(data[i]);
 	AAsset_close(asset);
-
+	delete [] data;
 	return assetData;
 }

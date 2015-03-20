@@ -30,12 +30,18 @@ Sprite * SpriteManager::createSprite()
 {
 	return createSprite(nullptr);
 }
+SpriteManager::SpriteManager(ShaderManager * shdrMngr):_shdrMngr(shdrMngr)
+{
+	int size = _sprites.size();
+}
+
 Sprite * SpriteManager::createSprite(Sprite * sprite)
 {
-	Shader * shdr; //= _shdrMngr->getShader();
+	Shader * shdr = nullptr; //= _shdrMngr->getShader();
 	if(!sprite)
 		sprite = new Sprite();
 	sprites_buffer * bfr;
+	if(_sprites.size() != 0)
 	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 	{
 		if(it->first == shdr) // Sprites with this shader already exist
