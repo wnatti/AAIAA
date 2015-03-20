@@ -11,8 +11,6 @@ namespace graphics
 		friend class SpriteManager;
 
 	public:
-		BufferManager();
-		~BufferManager();
 
 		/**
 			Creates vertex- and index-buffers
@@ -23,7 +21,10 @@ namespace graphics
 		void addVertices(GLfloat* vertices, GLsizei size);
 		void addIndices(GLint* indices, GLsizei size);
 		void draw();
-	private:
+
+	protected:
+		BufferManager();
+		~BufferManager();
 		std::vector<GLfloat> _vertices;
 		std::vector<GLint> _indices;
 		Buffer _indexBuffer;

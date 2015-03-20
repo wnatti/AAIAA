@@ -4,6 +4,7 @@ using namespace graphics;
 
 BufferManager::BufferManager() :_indexBuffer(GL_ELEMENT_ARRAY_BUFFER), _vertexBuffer(GL_ARRAY_BUFFER)
 {
+	s2d_info("BUFFERMANAGER CREATED");
 	_positionId = -1;
 	_colorId = -1;
 	_textureId = -1;

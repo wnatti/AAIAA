@@ -1,13 +1,11 @@
 #include "Siika2D.h"
 
-
-
 void extern siika_main();
 
 void android_main(android_app* app)
 {
 	core::Siika2D *siika = core::Siika2D::UI();
-	siika->init(app);
+	siika->initialize(app);
 	int animating = 1;
 	int ident;
 	int events;

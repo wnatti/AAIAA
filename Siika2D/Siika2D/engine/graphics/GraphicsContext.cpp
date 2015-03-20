@@ -2,9 +2,10 @@
 
 using namespace graphics;
 
-GraphicsContext::GraphicsContext()
+GraphicsContext::GraphicsContext(android_app *app)
 {
-	//wipeContext();
+	s2d_info("GRAPHICS CONTEXT CREATED");
+	init(app);
 }
 
 
@@ -32,7 +33,6 @@ void GraphicsContext::wipeContext()
 		eglTerminate(_display);
 	}
 
-
 	s2d_info("WIPED GRAPHICS_CONTEXT");
 	_display = EGL_NO_DISPLAY;
 	_context = EGL_NO_CONTEXT;
@@ -43,7 +43,6 @@ void GraphicsContext::wipeContext()
 
 void GraphicsContext::init(android_app* app)
 {
-
 
 	s2d_info("INITING GRAPHICS CONTEXT");
 	//Setting the color buffers' sizes etc.
@@ -94,9 +93,9 @@ void GraphicsContext::init(android_app* app)
 	result = eglMakeCurrent(_display, _surface, _surface, _context);
 	s2d_assert(result == EGL_TRUE);
 
-	result = eglQuerySurface(_display, _surface, EGL_WIDTH, &_width);
+	result = eglQuerySurface(_display, _surface, EGL_WIDTH, &_windowWidth);
 	s2d_assert(result == EGL_TRUE);
-	result = eglQuerySurface(_display, _surface, EGL_HEIGHT, &_height);
+	result = eglQuerySurface(_display, _surface, EGL_HEIGHT, &_windowHeight);
 	s2d_assert(result == EGL_TRUE);
 	
 

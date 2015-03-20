@@ -23,23 +23,19 @@ void doStuff()
 {
 	if (!managersDone)
 	{
-		//shaderManager = new graphics::ShaderManager(&siika->_resourceManager);
-		//buffManager = new graphics::BufferManager;
-		//buffManager->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
-		//shaderManager->useShader();
+	
+		siika->GRAPHICS->setAttributes(graphics::shdrAtrib::position, graphics::shdrAtrib::color, graphics::shdrAtrib::unknown);
+		siika->GRAPHICS->useShader();
 
-		//siika->addVertices(vertices, sizeof(vertices));
-		//buffManager->addIndices(indices, sizeof(indices));
-
+		siika->GRAPHICS->addVertices(vertices, sizeof(vertices));
+		siika->GRAPHICS->addIndices(indices, sizeof(indices));
+		
 		managersDone = true;
 	}
 
-	siika->clear();
-
-	
-	
-	//buffManager->draw();
-	siika->swap();
+	siika->GRAPHICS->clear();
+	siika->GRAPHICS->draw();
+	siika->GRAPHICS->swap();
 }
 
 

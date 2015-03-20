@@ -33,7 +33,7 @@ Siika2D::~Siika2D()
 	_instance = nullptr;
 }
 
-void Siika2D::init(android_app* app)
+void Siika2D::initialize(android_app* app)
 {
 	_drawReady = false;
 	_application = app;
@@ -47,17 +47,22 @@ void Siika2D::init(android_app* app)
 
 }
 
-void Siika2D::initGraphics()
+void Siika2D::terminate()
 {
-	_instance->GRAPHICS._graphicsContext.init(_instance->_application);
-	_instance->_drawReady = true;
 
 }
 
-void Siika2D::releaseGraphics()
+void Siika2D::initializeGraphics()
 {
-	_instance->GRAPHICS._graphicsContext.wipeContext();
-	_instance->_drawReady = false;
+	GRAPHICS = new graphics::Graphics(_application, &_resourceManager);
+	_drawReady = true;
+
+}
+
+void Siika2D::terminateGraphics()
+{
+	delete GRAPHICS;
+	_drawReady = false;
 }
 
 void Siika2D::processCommands(android_app* app,int32_t command)
@@ -73,13 +78,13 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		s2d_info(cmdString.c_str());
 		//Application started,
 		//initialize siika (get saved_state)
-		_instance->init(app);
+		_instance->initialize(app);
 		break;
 
 	case APP_CMD_DESTROY:
 		cmdString += "DESTROY";
 		s2d_info(cmdString.c_str());
-		delete _instance;
+		_instance->terminate();
 		break;
 
 	case APP_CMD_SAVE_STATE:
@@ -95,7 +100,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_INIT_WINDOW:
 		cmdString += "INIT_WINDOW";
 		s2d_info(cmdString.c_str());
-		_instance->initGraphics();
+		_instance->initializeGraphics();
 		break;
 
 	case APP_CMD_GAINED_FOCUS:
@@ -114,7 +119,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_TERM_WINDOW:
 		cmdString += "TERM_WINDOW";
 		s2d_info(cmdString.c_str());
-		_instance->releaseGraphics();
+		_instance->terminateGraphics();
 		break;
 
 	case APP_CMD_LOW_MEMORY:
@@ -137,16 +142,15 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		s2d_info(cmdString.c_str());
 		break;
 
+	case APP_CMD_RESUME:
+		cmdString += "RESUME";
+		s2d_info(cmdString.c_str());
+		break;
+
+	case APP_CMD_WINDOW_REDRAW_NEEDED:
+		cmdString += "RESUME";
+		s2d_info(cmdString.c_str());
+		break;
+
 	}
-}
-
-
-void Siika2D::swap()
-{
-	GRAPHICS.swap();
-}
-
-void Siika2D::clear()
-{
-	GRAPHICS.clear();
 }

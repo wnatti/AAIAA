@@ -11,21 +11,21 @@ namespace core
 
 namespace graphics
 {
-	class Graphics
+	class Graphics :  public GraphicsContext, public ShaderManager, public BufferManager
 	{
 		friend class core::Siika2D;
 		
 	public:
-		void swap();
-		void clear();
+	
 
 	private:
-		Graphics();
+		/**
+		Create Graphics context, buffer- and shadermanagers
+		*/
+		Graphics(android_app* application, core::ResourceManager* resourceManager);
 		~Graphics();
-		void initializeGraphics(core::ResourceManager *resourceManager);
-		void wipeContext();
-		graphics::ShaderManager *_shaderManager;
-		graphics::GraphicsContext _graphicsContext;
-		graphics::BufferManager _buffManager;
+
+	
+
 	};
 }

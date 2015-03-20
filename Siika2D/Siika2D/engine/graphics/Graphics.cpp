@@ -2,25 +2,11 @@
 
 using namespace graphics;
 
-Graphics::Graphics()
+Graphics::Graphics(android_app* application, core::ResourceManager* resourceManager) : GraphicsContext(application), ShaderManager(resourceManager)
 {
 	
 }
 
-void Graphics::clear()
-{
-
-}
-
-void Graphics::swap()
-{
-
-}
-
-void Graphics::initializeGraphics(core::ResourceManager *resourceManager)
-{
-	_shaderManager = new graphics::ShaderManager(resourceManager);
-}
 Graphics::~Graphics()
 {
 }

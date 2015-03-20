@@ -17,15 +17,8 @@ namespace graphics
 	{
 
 	public:
-		GraphicsContext();
-		~GraphicsContext();
 	
-
-		/**
-			Initializes OpenGL ES 2.0 context
-		*/
-		void init(android_app* app);
-
+	
 		/**
 			Clears the context thoroughly
 		*/
@@ -40,12 +33,20 @@ namespace graphics
 		void swap();
 
 
+	protected:
 
-	private:
+		/**
+			Initializes OpenGL ES 2.0 context
+		*/
+
+
+		GraphicsContext(android_app *app);
+		~GraphicsContext();
+
+		void init(android_app* app);
 
 		EGLDisplay _display;
-		EGLint _width, _height, _format;
-		EGLint _numConfig;
+		EGLint _windowWidth, _windowHeight, _format, _numConfig;
 		EGLConfig _config;
 		EGLSurface _surface;
 		EGLContext _context;

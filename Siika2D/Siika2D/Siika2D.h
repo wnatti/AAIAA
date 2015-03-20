@@ -31,17 +31,7 @@ namespace core
 			*/
 		static Siika2D* UI();
 		virtual ~Siika2D();
-		void init(android_app *app);
 
-		/**
-			Clears the screen
-			*/
-		void clear();
-
-		/**
-			Asks GraphicsContext to swap buffers
-			*/
-		void swap();
 
 		ASensorManager* _sensorManager;
 		const ASensor* _accelerometerSensor;
@@ -55,13 +45,17 @@ namespace core
 		{
 			return _drawReady;
 		}
+		/**
+			Initializes siika, this should only happen in Siika_main.cpp
+		*/
+		void initialize(android_app *app);
 
 
 
+		graphics::Graphics *GRAPHICS;
 
 
 	protected:
-		graphics::Graphics GRAPHICS;
 		Siika2D();
 		Siika2D(const Siika2D& s2d);
 		Siika2D& operator=(const Siika2D& s2d);
@@ -71,8 +65,9 @@ namespace core
 		//std::vector<int> _appCommandList;
 
 		static void processCommands(android_app* app, int32_t command);
-		void initGraphics();
-		void releaseGraphics();
+		void initializeGraphics();
+		void terminateGraphics();
+		void terminate();
 
 		core::ResourceManager _resourceManager;
 		bool _drawReady;
