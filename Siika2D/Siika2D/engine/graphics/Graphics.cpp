@@ -9,4 +9,5 @@ Graphics::Graphics(android_app* application, core::ResourceManager* resourceMana
 
 Graphics::~Graphics()
 {
+
 }

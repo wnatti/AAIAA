@@ -19,10 +19,7 @@ namespace graphics
 	public:
 	
 	
-		/**
-			Clears the context thoroughly
-		*/
-		void wipeContext();
+	
 		/**
 			Clears the screen with a color (default green)
 		*/
@@ -35,14 +32,19 @@ namespace graphics
 
 	protected:
 
-		/**
-			Initializes OpenGL ES 2.0 context
-		*/
+	
 
+		/**
+			Clears the context thoroughly
+		*/
+		void wipeContext();
 
 		GraphicsContext(android_app *app);
 		~GraphicsContext();
 
+		/**
+			Initializes OpenGL ES 2.0 context
+		*/
 		void init(android_app* app);
 
 		EGLDisplay _display;

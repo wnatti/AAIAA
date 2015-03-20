@@ -41,10 +41,9 @@ void Siika2D::initialize(android_app* app)
 	_application->onAppCmd = this->processCommands;
 
 	//Loading saved state if there is one
-	if (app->savedState != nullptr)
-		_savedState = *(struct saved_state*)app->savedState;
-	_resourceManager.init(_application->activity->assetManager);
+	loadState(app);
 
+	_resourceManager.init(_application->activity->assetManager);
 }
 
 void Siika2D::terminate()
@@ -56,7 +55,6 @@ void Siika2D::initializeGraphics()
 {
 	GRAPHICS = new graphics::Graphics(_application, &_resourceManager);
 	_drawReady = true;
-
 }
 
 void Siika2D::terminateGraphics()
@@ -64,11 +62,32 @@ void Siika2D::terminateGraphics()
 	delete GRAPHICS;
 	_drawReady = false;
 }
+void Siika2D::saveState(android_app* app)
+{	
+	//Creating state to restore from
+	//malloc is recommended by native_app_glue
+	_savedState = (saved_state*)app->userData;
+	app->savedState = malloc(sizeof(_savedState));
+	*((saved_state*)app->savedState) = *_savedState;
+	app->savedStateSize = sizeof(_savedState);
+}
+
+void Siika2D::loadState(android_app* app)
+{
+	if (app->savedState != nullptr)
+		_savedState = (struct saved_state*)app->savedState;
+}
+
+void Siika2D::getLatestState(android_app* app)
+{
+	_savedState = (saved_state*)app->userData;
+}
 
 void Siika2D::processCommands(android_app* app,int32_t command)
 {
 	//Getting latest state
-	saved_state *state = (saved_state*)app->userData;
+	_instance->getLatestState(app);
+
 	std::string cmdString = "APP_CMD_";
 
 	switch (command)
@@ -90,11 +109,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_SAVE_STATE:
 		cmdString += "SAVE_STATE";
 		s2d_info(cmdString.c_str());
-		//Creating state to restore from
-		//malloc is recommended by native_app_glue
-		app->savedState = malloc(sizeof(state));
-		*((saved_state*)app->savedState) = *state;
-		app->savedStateSize = sizeof(state);
+		_instance->saveState(app);
 		break;
 
 	case APP_CMD_INIT_WINDOW:
@@ -148,9 +163,8 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		break;
 
 	case APP_CMD_WINDOW_REDRAW_NEEDED:
-		cmdString += "RESUME";
+		cmdString += "REDRAW_NEEDED";
 		s2d_info(cmdString.c_str());
 		break;
-
 	}
 }

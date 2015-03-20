@@ -35,7 +35,7 @@ namespace core
 
 		ASensorManager* _sensorManager;
 		const ASensor* _accelerometerSensor;
-		saved_state _savedState;
+		saved_state* _savedState;
 		ASensorEventQueue* _sensorEventQueue;
 
 		/**
@@ -68,6 +68,10 @@ namespace core
 		void initializeGraphics();
 		void terminateGraphics();
 		void terminate();
+		
+		void saveState(android_app *app);
+		void loadState(android_app *app);
+		void getLatestState(android_app *app);
 
 		core::ResourceManager _resourceManager;
 		bool _drawReady;

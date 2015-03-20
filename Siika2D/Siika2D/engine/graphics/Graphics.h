@@ -19,13 +19,11 @@ namespace graphics
 	
 
 	private:
+		
 		/**
-		Create Graphics context, buffer- and shadermanagers
+			Create Graphics context, buffer- and shadermanagers
 		*/
 		Graphics(android_app* application, core::ResourceManager* resourceManager);
 		~Graphics();
-
-	
-
 	};
 }
