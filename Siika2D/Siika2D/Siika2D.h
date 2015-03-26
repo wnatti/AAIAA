@@ -22,9 +22,10 @@ namespace core
 
 	class Siika2D
 	{
-		//friend class Graphics;
+		friend class Looper;
 
 	public:
+
 
 		/**
 			Pointter to the UI
@@ -71,7 +72,7 @@ namespace core
 		
 		void saveState(android_app *app);
 		void loadState(android_app *app);
-		void getLatestState(android_app *app);
+		Siika2D* getLatestState(android_app *app);
 
 		core::ResourceManager _resourceManager;
 		bool _drawReady;

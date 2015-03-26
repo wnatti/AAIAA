@@ -20,6 +20,7 @@ Siika2D* Siika2D::UI()
 Siika2D::Siika2D()
 {
 	s2d_info("SIIKA CREATED");
+	GRAPHICS = nullptr;
 }
 
 Siika2D::~Siika2D()
@@ -36,30 +37,35 @@ Siika2D::~Siika2D()
 void Siika2D::initialize(android_app* app)
 {
 	_drawReady = false;
+	app->userData = this;
+	app->onAppCmd = this->processCommands;
 	_application = app;
-	_application->userData = this;
-	_application->onAppCmd = this->processCommands;
 
 	//Loading saved state if there is one
+	//getLatestState(app);
 	loadState(app);
-
 	_resourceManager.init(_application->activity->assetManager);
 }
 
 void Siika2D::terminate()
 {
-
+	//delete this;
 }
 
 void Siika2D::initializeGraphics()
 {
-	GRAPHICS = new graphics::Graphics(_application, &_resourceManager);
+	if (GRAPHICS == nullptr)
+		GRAPHICS = new graphics::Graphics(_application, &_resourceManager);
+	else
+		GRAPHICS->initializeContext(_application);
 	_drawReady = true;
 }
 
 void Siika2D::terminateGraphics()
 {
 	delete GRAPHICS;
+	GRAPHICS = nullptr;
+	//GRAPHICS->wipeContext();
 	_drawReady = false;
 }
 void Siika2D::saveState(android_app* app)
@@ -78,15 +84,16 @@ void Siika2D::loadState(android_app* app)
 		_savedState = (struct saved_state*)app->savedState;
 }
 
-void Siika2D::getLatestState(android_app* app)
+Siika2D* Siika2D::getLatestState(android_app* app)
 {
-	_savedState = (saved_state*)app->userData;
+	Siika2D *siika = (Siika2D*)app->userData;
+	return siika;
 }
 
 void Siika2D::processCommands(android_app* app,int32_t command)
 {
 	//Getting latest state
-	_instance->getLatestState(app);
+	_instance = (Siika2D*)app->userData;
 
 	std::string cmdString = "APP_CMD_";
 
@@ -103,7 +110,7 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_DESTROY:
 		cmdString += "DESTROY";
 		s2d_info(cmdString.c_str());
-		_instance->terminate();
+		//delete _instance;
 		break;
 
 	case APP_CMD_SAVE_STATE:

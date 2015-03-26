@@ -45,7 +45,7 @@ namespace graphics
 		/**
 			Initializes OpenGL ES 2.0 context
 		*/
-		void init(android_app* app);
+		void initializeContext(android_app* app);
 
 		EGLDisplay _display;
 		EGLint _windowWidth, _windowHeight, _format, _numConfig;

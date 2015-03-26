@@ -5,7 +5,7 @@ using namespace graphics;
 GraphicsContext::GraphicsContext(android_app *app)
 {
 	s2d_info("GRAPHICS CONTEXT CREATED");
-	init(app);
+	initializeContext(app);
 }
 
 
@@ -41,7 +41,7 @@ void GraphicsContext::wipeContext()
 }
 
 
-void GraphicsContext::init(android_app* app)
+void GraphicsContext::initializeContext(android_app* app)
 {
 
 	s2d_info("INITING GRAPHICS CONTEXT");
@@ -109,6 +109,7 @@ void GraphicsContext::init(android_app* app)
 
 void GraphicsContext::swap()
 {
+	if (_display != EGL_NO_DISPLAY && _surface != EGL_NO_SURFACE)
 	eglSwapBuffers(_display, _surface);
 }
 void GraphicsContext::clear()
