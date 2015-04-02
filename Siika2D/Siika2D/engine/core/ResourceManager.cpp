@@ -56,6 +56,20 @@ std::string* ResourceManager::loadTextFile(std::string filename)
 	}
 }
 
+std::vector<unsigned char>* ResourceManager::loadFile(std::string filename)
+{
+	std::map<std::string, std::vector<unsigned char>>::iterator it = _loadedData.find(filename);
+	if (it != _loadedData.end())
+		return &it->second;
+
+	else
+	{
+		std::vector<unsigned char> assetData = loadAsset(filename);
+		_loadedData.insert(std::make_pair(filename, assetData));
+		return &_loadedData.at(filename);
+	}
+}
+
 std::vector<unsigned char> ResourceManager::loadAsset(std::string filename)
 {
 	std::vector<unsigned char> assetData;

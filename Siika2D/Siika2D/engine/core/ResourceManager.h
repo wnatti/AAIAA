@@ -40,6 +40,7 @@ namespace core
 			*/
 		Image* loadImage(std::string filename);
 
+
 		/**
 			Loads text file with given filename or returns an existing one.
 			Uses android assetmanager.
@@ -47,6 +48,13 @@ namespace core
 			*/
 		std::string* loadTextFile(std::string filename);
 
+
+		/**
+			Loads any file type or returns an existing one.
+			Returns file data as a vector of unsigned characters.
+		
+			*/
+		std::vector<unsigned char>* loadFile(std::string filename);
 		//TODO:
 		//loadSound()
 		//loadFont()
@@ -55,6 +63,7 @@ namespace core
 	private:
 		std::map<std::string, Image> _loadedImages;
 		std::map<std::string, std::string> _loadedTextFiles;
+		std::map<std::string, std::vector<unsigned char>> _loadedData;
 		AAssetManager* _androidAssetManager;
 
 		//Load asset file from android's assetmanager
