@@ -20,13 +20,12 @@ Siika2D* Siika2D::UI()
 Siika2D::Siika2D()
 {
 	s2d_info("SIIKA CREATED");
+	INPUT = nullptr;
 	GRAPHICS = nullptr;
 }
 
 Siika2D::~Siika2D()
 {
-	//GRAPHICS->
-	//_graphicsContext.wipeContext();
 	//TODO: Release resources
 
 	s2d_info("SIIKA DESTROYED");
@@ -45,6 +44,9 @@ void Siika2D::initialize(android_app* app)
 	//getLatestState(app);
 	loadState(app);
 	_resourceManager.init(_application->activity->assetManager);
+
+	int ident;
+
 }
 
 void Siika2D::terminate()
@@ -61,11 +63,27 @@ void Siika2D::initializeGraphics()
 	_drawReady = true;
 }
 
+void Siika2D::initializeInput()
+{
+	if (INPUT == nullptr)
+		INPUT = new misc::Input(_application);
+
+	if (_instance->INPUT->_accelerometerEnabled)
+	{
+		_instance->INPUT->enableAccelerometer();
+	}
+}
+
+void Siika2D::terminateInput()
+{
+	if (_instance->INPUT->_accelerometerEnabled)
+	{
+		_instance->INPUT->disableAccelerometer();
+	}
+}
 void Siika2D::terminateGraphics()
 {
-	delete GRAPHICS;
-	GRAPHICS = nullptr;
-	//GRAPHICS->wipeContext();
+	GRAPHICS->wipeContext();
 	_drawReady = false;
 }
 void Siika2D::saveState(android_app* app)
@@ -84,11 +102,6 @@ void Siika2D::loadState(android_app* app)
 		_savedState = (struct saved_state*)app->savedState;
 }
 
-Siika2D* Siika2D::getLatestState(android_app* app)
-{
-	Siika2D *siika = (Siika2D*)app->userData;
-	return siika;
-}
 
 void Siika2D::processCommands(android_app* app,int32_t command)
 {
@@ -128,14 +141,12 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 	case APP_CMD_GAINED_FOCUS:
 		cmdString += "GAINED_FOCUS";
 		s2d_info(cmdString.c_str());
-		//TODO: go to input
+		_instance->initializeInput();
 		break;
 
 	case APP_CMD_LOST_FOCUS:
 		cmdString += "LOST_FOCUS";
 		s2d_info(cmdString.c_str());
-		//TODO: go to input
-		//here was draw
 		break;
 
 	case APP_CMD_TERM_WINDOW:
@@ -173,5 +184,28 @@ void Siika2D::processCommands(android_app* app,int32_t command)
 		cmdString += "REDRAW_NEEDED";
 		s2d_info(cmdString.c_str());
 		break;
+	}
+}
+
+void Siika2D::loop(android_app* app)
+{
+	int id;
+	int events;
+	android_poll_source* _source;
+
+	while ((id = ALooper_pollAll(0, nullptr, &events, (void**)&_source)) >= 0)
+	{
+		if (INPUT != nullptr)
+		{
+			if (id == INPUT_ID::ACCELEROMETER)
+			{
+				INPUT->processAccelerometer();
+			}
+		}
+
+		if (_source != NULL)
+		{
+			_source->process(app, _source);
+		}
 	}
 }

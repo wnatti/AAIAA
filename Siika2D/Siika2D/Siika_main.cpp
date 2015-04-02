@@ -1,73 +1,47 @@
 #include "Siika2D.h"
-
+#include "Input.h"
+#include "engine\graphics\Buffer.h"
+#include "LooperManager.h"
 void extern siika_main();
 
-class Looper
+#pragma once
+namespace core
 {
-public:
-
-	Looper()
-	{}
-
-	~Looper()
-	{}
-	
-	void loop(android_app *app)
+	class AndroidInterface
 	{
-		while ((_ident = ALooper_pollAll(1, nullptr, &_events,
-			(void**)&_source)) >= 0)
+
+	public:
+		AndroidInterface()
+		{}
+		void initialize(android_app *app)
 		{
-
-			// Process this event.
-			if (_source != NULL)
-			{
-				_source->process(app,_source);
-			}
+			_siika->initialize(app);
 		}
-	}
+		~AndroidInterface()
+		{}
 
-private:
+		void processAndroidCmds(android_app* app)
+		{
+			_siika->loop(app);
+		}
 
-	android_poll_source* _source;
-	int _ident;
-	int _events;
-
-};
-
+		core::Siika2D *_siika;
+	};
+}
 
 void android_main(android_app* app)
 {
 	app_dummy();
-	core::Siika2D *siika = core::Siika2D::UI();
-	siika->initialize(app);
-	int animating = 1;
-	int ident;
-	int events;
+	core::AndroidInterface AIF;
+	AIF._siika = core::Siika2D::UI();
+	AIF.initialize(app);
 
-	//Looper looper;
-
-	while (1)
+	while (!app->destroyRequested)
 	{
-		if (app->activityState != APP_CMD_STOP && siika->drawReady())
-		siika_main();
-	
+		if (app->activityState != APP_CMD_STOP && AIF._siika->drawReady() == true)
+			siika_main();
 
-		struct android_poll_source* source; //This goes to input
-
-		while ((ident = ALooper_pollAll(animating ? 0 : -1, nullptr, &events,
-			(void**)&source)) >= 0)
-		{
-
-			// Process this event.
-			if (source != NULL)
-			{
-				source->process(app, source);
-			}
-			if (app->destroyRequested != 0)
-			{
-				return;
-			}
-			
-		}
+		AIF.processAndroidCmds(app);
 	}
 }
+	

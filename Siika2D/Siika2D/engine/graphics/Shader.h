@@ -59,7 +59,7 @@ namespace graphics
 			//"uniform mat4 viewProjection;\n"
 
 			//"varying vec2 UV;\n"
-			"varying  vec4 varyCol;\n"
+			"varying vec4 varyCol;\n"
 			//"uniform sampler2D sampler;\n"
 			"void main() {\n"
 			//"	UV = texture;\n"

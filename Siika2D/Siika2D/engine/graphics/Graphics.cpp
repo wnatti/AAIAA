@@ -7,6 +7,14 @@ Graphics::Graphics(android_app* application, core::ResourceManager* resourceMana
 	
 }
 
+void Graphics::clearGraphics()
+{
+	wipeContext();
+	_indexBuffer.~Buffer();
+	_vertexBuffer.~Buffer();
+
+}
+
 Graphics::~Graphics()
 {
 

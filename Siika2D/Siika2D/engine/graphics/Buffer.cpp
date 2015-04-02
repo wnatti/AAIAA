@@ -13,7 +13,6 @@ Buffer::Buffer(GLenum bufferType, GLenum usagePattern)
 	_usagePattern = usagePattern;
 }
 
-
 Buffer::~Buffer()
 {
 	glBindBuffer(_bufferType, 0);

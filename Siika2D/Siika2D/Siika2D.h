@@ -3,6 +3,7 @@
 #include "engine\core\ResourceManager.h"
 #include "engine\graphics\Graphics.h"
 #include <android/sensor.h>
+#include "Input.h"
 //#include "engine\core\MemoryManager.h"
 
 
@@ -10,9 +11,9 @@
 	Singleton User interface used for the engine's subsystems.
 	To be used everywhere engine's subsystems are needed
 */
+
 namespace core
 {
-
 
 	struct saved_state {
 		float angle;
@@ -22,7 +23,7 @@ namespace core
 
 	class Siika2D
 	{
-		friend class Looper;
+		friend class AndroidInterface;
 
 	public:
 
@@ -34,10 +35,8 @@ namespace core
 		virtual ~Siika2D();
 
 
-		ASensorManager* _sensorManager;
-		const ASensor* _accelerometerSensor;
 		saved_state* _savedState;
-		ASensorEventQueue* _sensorEventQueue;
+	
 
 		/**
 			Tells when graphics has been initialized
@@ -46,16 +45,12 @@ namespace core
 		{
 			return _drawReady;
 		}
-		/**
-			Initializes siika, this should only happen in Siika_main.cpp
-		*/
-		void initialize(android_app *app);
 
 
 
 		graphics::Graphics *GRAPHICS;
-
-
+		misc::Input *INPUT;
+		
 	protected:
 		Siika2D();
 		Siika2D(const Siika2D& s2d);
@@ -66,16 +61,45 @@ namespace core
 		//std::vector<int> _appCommandList;
 
 		static void processCommands(android_app* app, int32_t command);
+
+		/**
+			Create a Graphics class if ran the first time.
+			Else initializes wiped Graphics context to a new display.
+		*/
 		void initializeGraphics();
+
+
+		void initializeInput();
+
+
+		void terminateInput();
+		/**
+			Wipes the graphics context only.
+		*/
+
 		void terminateGraphics();
 		void terminate();
 		
+		/**
+			Saves the application to the system memory,
+			when the user decides to switch away from the application.
+		*/
 		void saveState(android_app *app);
+
+		/**
+			Gets the saved application if there is one.
+		*/
 		void loadState(android_app *app);
-		Siika2D* getLatestState(android_app *app);
 
 		core::ResourceManager _resourceManager;
 		bool _drawReady;
+
+		void loop(android_app* app);
+
+		/**
+		Initializes siika, this should only happen in Siika_main.cpp
+		*/
+		void initialize(android_app *app);
 
 	};
 }

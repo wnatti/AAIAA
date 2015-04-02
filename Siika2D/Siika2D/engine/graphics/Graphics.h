@@ -24,6 +24,8 @@ namespace graphics
 			Create Graphics context, buffer- and shadermanagers
 		*/
 		Graphics(android_app* application, core::ResourceManager* resourceManager);
+
+		void clearGraphics();
 		~Graphics();
 	};
 }
