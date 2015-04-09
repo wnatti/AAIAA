@@ -2,8 +2,9 @@
 
 using namespace misc;
 
-Timer::Timer()
+Timer::Timer(std::clock_t start)
 {
+	start = _start;
 }
 
 
@@ -13,13 +14,13 @@ Timer::~Timer()
 
 void Timer::reset()
 {
-	auto start = std::chrono::high_resolution_clock::now();
+	std::clock_t start;
 }
 
-float Timer::getElapsedTime()
+double Timer::getElapsedTime()
 {
-	float elapsed = std::chrono::high_resolution_clock::now();
-	return std::chrono::duration_cast<std::chrono::duration<float, std::<milli>>>
-		(clock.now() - start).count();
+	double elapsed;
+	elapsed = (std::clock() - _start) / (double)CLOCKS_PER_SEC;
+	return elapsed;
 }
 

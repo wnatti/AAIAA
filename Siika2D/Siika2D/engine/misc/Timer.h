@@ -7,12 +7,18 @@ namespace misc
 	class Timer
 	{
 	public:
-		Timer();
+		Timer(std::clock_t start);
 		~Timer();
+		/**
+		Function for reseting the start time
+		*/
 		void reset();
-		float getElapsedTime();
+		/**
+		Gets time in seconds
+		*/
+		double getElapsedTime();
 
 	private:
-		double _start;
+		std::clock_t _start;
 	};
 }
