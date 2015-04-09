@@ -23,23 +23,23 @@ glm::mat4 Camera::getView()
 }
 
 
-void Camera::moveCamera(GLfloat _cameraSpeed, Camera_Movement movement)
+void Camera::moveCamera(Camera_Movement movement)
 {
 	if (movement == UP)
-		/*is code for up*/;
-	if (movement == DOWN)
-		/*is code for down*/;
-	if (movement == RIGHT)
-		/*is code for right*/;
-	if (movement == LEFT)
-		/*is code for left*/;
-	if (movement == ZOOM_IN)
-		/*is code for zoom in*/;
-	if (movement == ZOOM_OUT)
-		/*is code for zoom out*/;
-	if (movement == ROTATE_CLOCKWISE)
+		_posY -= _cameraSpeed;
+	else if (movement == DOWN)
+		_posY += _cameraSpeed;
+	else if (movement == RIGHT)
+		_posX += _cameraSpeed;
+	else if (movement == LEFT)
+		_posX -= _cameraSpeed;
+	else if (movement == ZOOM_IN)
+		_posZ -= _cameraSpeed;
+	else if (movement == ZOOM_OUT)
+		_posZ += _cameraSpeed;
+	else if (movement == ROTATE_CLOCKWISE)
 		/*is code for rotate clockwise*/;
-	if (movement == ROTATE_COUNTER_CLOCKWISE)
+	else if (movement == ROTATE_COUNTER_CLOCKWISE)
 		/*is code for rotate counter clockwise*/;
 }
 
@@ -49,7 +49,12 @@ void Camera::setCameraPosition(GLfloat posX, GLfloat posY, GLfloat posZ)
 	posY = _posY;
 	posZ = _posZ;
 	_cameraPos = glm::vec3(_posX, _posY, _posZ);
-	updateCamera()
+	updateCamera();
+}
+
+void Camera::setCameraSpeed(GLfloat speed)
+{
+	_cameraSpeed = speed;
 }
 
 void Camera::updateCamera()

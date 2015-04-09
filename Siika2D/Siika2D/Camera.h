@@ -37,11 +37,15 @@ namespace graphics
 		/**
 		Camera is move
 		*/
-		void moveCamera(GLfloat _cameraSpeed, Camera_Movement movement);
+		void moveCamera(Camera_Movement movement);
 		/**
 		Set camera position
 		*/
 		void setCameraPosition(GLfloat posX, GLfloat posY, GLfloat posZ);
+		/**
+		Set the speed of the camera
+		*/
+		void setCameraSpeed(GLfloat speed);
 	protected:
 		Camera(GLfloat posX, GLfloat posZ, GLfloat posY, GLfloat frontX, GLfloat frontY, GLfloat frontZ) :_posZ(posZ){};
 		~Camera(){};
