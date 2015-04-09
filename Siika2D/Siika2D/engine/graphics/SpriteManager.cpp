@@ -10,7 +10,8 @@ void SpriteManager::drawSprites()
 	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 	{
 		
-		it->first->use(); // shader->use()
+		//it->first->use(); // shader->use()
+		//_shdrMngr->useShader();
 		// TODO: Check for changes before recreating buffer
 		//BufferManager buf = (*it->second).buffer;
 		BufferManager buf;
@@ -22,7 +23,8 @@ void SpriteManager::drawSprites()
 			glm::vec2 * positions = (*sit)->getPositions();
 			glm::vec2 * textures = (*sit)->getTexturePos();
 			//graphics::Color * col = (*sit)->getColor();
-			buf.addRectangle(positions, nullptr, sprt->getColor());
+			//buf.addRectangle(positions, nullptr, sprt->getColor());
+			buf.addRectangle(positions, nullptr, new Color(255,0,0,255));
 			//buf.addRectangle(positions, textures,nullptr);
 		}
 		; //First sprite
