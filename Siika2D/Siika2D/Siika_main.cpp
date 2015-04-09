@@ -1,6 +1,7 @@
 #include "Siika2D.h"
-#include "engine\misc\Input.h"
+#include "Input.h"
 #include "engine\graphics\Buffer.h"
+#include "LooperManager.h"
 void extern siika_main();
 
 #pragma once
@@ -10,30 +11,28 @@ namespace core
 	{
 
 	public:
-		AndroidInterface()
-		{}
-		void initialize(android_app *app)
+		AndroidInterface(android_app *app)
 		{
+			_siika = core::Siika2D::UI();
 			_siika->initialize(app);
 		}
+	
 		~AndroidInterface()
 		{}
 
 		void processAndroidCmds(android_app* app)
 		{
-			_siika->loop(app);
+			_siika->run(app);
 		}
 
 		core::Siika2D *_siika;
+		
 	};
 }
 
 void android_main(android_app* app)
 {
-	app_dummy();
-	core::AndroidInterface AIF;
-	AIF._siika = core::Siika2D::UI();
-	AIF.initialize(app);
+	core::AndroidInterface AIF(app);
 
 	while (!app->destroyRequested)
 	{
