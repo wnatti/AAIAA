@@ -18,17 +18,24 @@
     <AndroidBuild Include="res\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BufferManager.cpp" />
     <ClCompile Include="engine\core\ErrorHandler.cpp" />
     <ClCompile Include="engine\core\ResourceManager.cpp" />
     <ClCompile Include="engine\graphics\Buffer.cpp" />
+    <ClCompile Include="engine\graphics\BufferManager.cpp" />
+    <ClCompile Include="engine\graphics\Camera.cpp" />
+    <ClCompile Include="engine\graphics\Font.cpp" />
+    <ClCompile Include="engine\graphics\Graphics.cpp" />
     <ClCompile Include="engine\graphics\GraphicsContext.cpp" />
     <ClCompile Include="engine\graphics\Shader.cpp" />
     <ClCompile Include="engine\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\graphics\Sprite.cpp" />
+    <ClCompile Include="engine\graphics\SpriteManager.cpp" />
+    <ClCompile Include="engine\graphics\Text.cpp" />
     <ClCompile Include="engine\graphics\Texture.cpp" />
     <ClCompile Include="engine\graphics\TextureManager.cpp" />
     <ClCompile Include="engine\misc\Color.cpp" />
+    <ClCompile Include="engine\misc\Input.cpp" />
+    <ClCompile Include="engine\misc\Timer.cpp" />
     <ClCompile Include="inc\lodepng\lodepng.cpp" />
     <ClCompile Include="jni\main.cpp" />
     <ClCompile Include="meini.cpp">
@@ -39,18 +46,31 @@
     <ClCompile Include="Siika_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BufferManager.h" />
+    <ClInclude Include="engine\audio\Audio.h" />
     <ClInclude Include="engine\core\ErrorHandler.h" />
     <ClInclude Include="engine\core\MemoryManager.h" />
     <ClInclude Include="engine\core\ResourceManager.h" />
     <ClInclude Include="engine\graphics\Buffer.h" />
+    <ClInclude Include="engine\graphics\BufferManager.h" />
+    <ClInclude Include="engine\graphics\Camera.h" />
+    <ClInclude Include="engine\graphics\Font.h" />
+    <ClInclude Include="engine\graphics\Graphics.h" />
     <ClInclude Include="engine\graphics\GraphicsContext.h" />
     <ClInclude Include="engine\graphics\Shader.h" />
     <ClInclude Include="engine\graphics\ShaderManager.h" />
+    <ClInclude Include="engine\graphics\Shaders.h" />
     <ClInclude Include="engine\graphics\Sprite.h" />
+    <ClInclude Include="engine\graphics\SpriteManager.h" />
+    <ClInclude Include="engine\graphics\Text.h" />
     <ClInclude Include="engine\graphics\Texture.h" />
     <ClInclude Include="engine\graphics\TextureManager.h" />
     <ClInclude Include="engine\misc\Color.h" />
+    <ClInclude Include="engine\misc\Component.h" />
+    <ClInclude Include="engine\misc\GameObject.h" />
+    <ClInclude Include="engine\misc\Input.h" />
+    <ClInclude Include="engine\misc\System.h" />
+    <ClInclude Include="engine\misc\SystemManager.h" />
+    <ClInclude Include="engine\misc\Timer.h" />
     <ClInclude Include="inc\lodepng\lodepng.h" />
     <ClInclude Include="native_app_glue\android_native_app_glue.h" />
     <ClInclude Include="Siika2D.h" />
