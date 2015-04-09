@@ -42,8 +42,9 @@ namespace graphics
 		Shader * createShader(char * vertPath, char * fragPath);
 		
 		///Compiles shaders links program for _currentShader if its not set uses default shaders
-		void useShader(void);
-
+		void useShader(bool color = true, bool texture = false);
+		//Gets current shader
+		Shader * getShader(){return _currentShader;}
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	protected:

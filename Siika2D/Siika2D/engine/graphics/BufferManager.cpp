@@ -80,8 +80,8 @@ void BufferManager::draw()
 	bindBuffers();
 	setAttribPointers();
 
-	GLint err;
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
+	GLint err = glGetError();
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
 	err = glGetError();
 	s2d_assert(err == 0);
 

@@ -4,10 +4,10 @@ using namespace graphics;
 
 Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-	_glRed = red / 255.f;
-	_glGreen = green / 255.f;
-	_glBlue = blue / 255.f;
-	_glAlpha = alpha / 255.f;
+	_glRed = ((float) red) / 255.f;
+	_glGreen =((float) green) / 255.f;
+	_glBlue = ((float) blue) / 255.f;
+	_glAlpha = ((float) alpha) / 255.f;
 }
 
 Color::Color(COLOR color)

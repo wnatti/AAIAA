@@ -16,13 +16,13 @@ namespace graphics
 		void setOrigin(glm::vec2 origin){ _origin = origin; }
 		void setColor(Color col){ _col = &col; }
 		void setZ(int Z){ _posZ = Z; }
-		const glm::vec2 getPostion(){ return _position; }
+		const glm::vec2 * getPosition(){ return &_position; }
 		Color * getColor(){ return _col; };
 
 
 		///Gets next sprite in spritesheet
 		void step();
-	protected:
+//	protected:
 		Sprite(){};
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin) :
 			_position(position), _size(size), _origin(origin), _texture(nullptr), _col(nullptr){};
@@ -30,7 +30,7 @@ namespace graphics
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin, Texture * TextureToSet, glm::vec2 textureUpperLeft, glm::vec2 textureLowerRigth) :
 			_position(position), _size(size), _origin(origin), _texture(TextureToSet), _textureUL(textureUpperLeft), _textureLR(textureLowerRigth){};
 		~Sprite(){};
-	private:
+//	private:
 		glm::vec2 * getPositions();
 		glm::vec2 * getTexturePos();
 		Texture * _texture;
