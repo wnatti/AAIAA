@@ -3,7 +3,7 @@
 #include "engine\core\ResourceManager.h"
 #include "engine\graphics\Graphics.h"
 #include <android/sensor.h>
-#include "Input.h"
+#include "engine\misc\Input.h"
 //#include "engine\core\MemoryManager.h"
 
 
