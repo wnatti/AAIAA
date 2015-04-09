@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Shaders.h"
 using namespace graphics;
 
 Shader::Shader(bool color, bool texture):
@@ -6,18 +7,27 @@ _color(color), _texture(texture)
 {
 	_default = true;
 	init();
-	//TODO: More default shader codes 
-	/*
+	
 	if(color && texture)
-	{}
+	{
+		_fragSource = defVertexWithBoth;
+		_vertSource = defFragmentWithBoth;
+	}
 	else
 	{
-		if(color){}
-		if(texture){}
+		if(texture)
+		{
+			_fragSource = defFragmentWithTexture;
+			_vertSource = defVertexWithTexture;
+		}
+		else  //Will always have atleast the default color shaders
+		{
+			_fragSource = defFragmentWithColor;
+			_vertSource = defVertexWithColor;
+		}
+
 	}
-	*/
-	_fragSource = _defFragmentSource;
-	_vertSource = _defVertexSource;
+	
 	_valid = compileShaders();
 	if(_valid)
 		_valid = linkProgram();
@@ -32,7 +42,7 @@ _fragSource(fragmentSource), _vertSource(vertexSource), _color(color), _texture(
 	_valid = compileShaders();
 	if(_valid)
 		_valid = linkProgram();
-	//valid = true if neither complie or link returned false
+	//valid = true if neither compile or link returned false
 }
 
 Shader::~Shader()
@@ -99,8 +109,8 @@ bool Shader::linkProgram()
 {
 	GLint status;
 	glBindAttribLocation(_program, shdrAtrib::position, _posString);
-	//if(_color)
-	glBindAttribLocation(_program, shdrAtrib::color, _colString);
+	if(_color)
+		glBindAttribLocation(_program, shdrAtrib::color, _colString);
 	if(_texture)
 		glBindAttribLocation(_program, shdrAtrib::texture, _texString);
 	glLinkProgram(_program);
@@ -113,17 +123,20 @@ bool Shader::linkProgram()
 	}
 	return true;
 }
-/*
-void Shader::use(GLint posId, GLint colId, GLint textureId)
+
+void Shader::use(bool toUse)
 {
-	glEnableVertexAttribArray(posId);
-	glEnableVertexAttribArray(colId);
-	glUseProgram(_program);
-}
-*/
-void Shader::use()
-{
-	glUseProgram(_program);
+	if(toUse)
+	{
+		glUseProgram(_program);
+		if(_texture)
+			useSampler();
+	}
+	else
+	{
+		glUseProgram(0u);
+	}
+	// Moved to linkProgram()
 	glEnableVertexAttribArray(shdrAtrib::position);
 	if(_color)
 		glEnableVertexAttribArray(shdrAtrib::color);
@@ -137,4 +150,10 @@ void Shader::init()
 	_program = -1;
 	_fragHandle = -1;
 	_vertHandle = -1;
+	_samplerHandle = -1;
+}
+void Shader::useSampler()
+{
+	_samplerHandle = glGetUniformLocation(_program, "sampler");
+	glUniform1i(_samplerHandle, 0u);
 }

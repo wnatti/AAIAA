@@ -25,7 +25,7 @@ namespace graphics
 		struct sprites_buffer
 		{
 			std::vector<Sprite*> sprites;
-			BufferManager buffer;
+			//BufferManager buffer;
 		};
 		void batchSprites(std::vector<Sprite*> *toBatch){};
 		ShaderManager * _shdrMngr;

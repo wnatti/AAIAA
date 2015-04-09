@@ -4,14 +4,17 @@ using namespace graphics;
 
 Buffer::Buffer(GLenum bufferType, GLenum usagePattern)
 {
+	GLuint temp;
 	int err = glGetError();
 	glGenBuffers(1, &_buffer);
 	err = glGetError();
+	temp = _buffer;
 	s2d_assert(err == 0);
 
 	_bufferType = bufferType;
 	_usagePattern = usagePattern;
 }
+
 
 Buffer::~Buffer()
 {
@@ -45,9 +48,9 @@ void Buffer::subBufferData(void* bufferData, GLsizei size, GLint offset)
 
 void Buffer::setBufferData(void* bufferData, GLsizei size)
 {
-	
-	glBindBuffer(_bufferType, _buffer);
 	int err = glGetError();
+	glBindBuffer(_bufferType, _buffer);
+	err = glGetError();
 	s2d_assert(err == 0);
 	glBufferData(_bufferType, size, bufferData, _usagePattern);
 	err = glGetError();

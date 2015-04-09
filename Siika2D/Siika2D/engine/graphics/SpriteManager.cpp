@@ -6,24 +6,35 @@ using namespace graphics;
 
 void SpriteManager::drawSprites()
 {
+	GLint err = glGetError();
 	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 	{
-
+		
 		it->first->use(); // shader->use()
 		// TODO: Check for changes before recreating buffer
-		BufferManager buf = (*it->second).buffer;
-		
+		//BufferManager buf = (*it->second).buffer;
+		BufferManager buf;
+		buf.setAttributes(position, color, unknown);
+		Sprite * sprt = *(*it->second).sprites.begin();
 		for(std::vector<Sprite*>::iterator sit = (*it->second).sprites.begin(); sit != (*it->second).sprites.end(); sit++)
 		{
+			//spriteBatcher((*sit));
 			glm::vec2 * positions = (*sit)->getPositions();
 			glm::vec2 * textures = (*sit)->getTexturePos();
-			graphics::Color * col = (*sit)->getColor();
-			buf.addRectangle(positions, textures,col);
+			//graphics::Color * col = (*sit)->getColor();
+			buf.addRectangle(positions, nullptr, sprt->getColor());
+			//buf.addRectangle(positions, textures,nullptr);
 		}
-		//buf.bindIndexBuffer();
-		//buf.bindVertexBuffer();
+		; //First sprite
+		//glActiveTexture(GL_TEXTURE0);
+		err = glGetError();
+		//glBindTexture(GL_TEXTURE_2D, sprt->_texture->getTexture());
+		err = glGetError();
 		buf.draw();
-		glUseProgram(0u);
+		err = glGetError();
+		//glBindTexture(GL_TEXTURE_2D, 0u);
+		//glActiveTexture(0u);
+//		it->first->use(false);
 	}
 }
 Sprite * SpriteManager::createSprite()
@@ -37,21 +48,22 @@ SpriteManager::SpriteManager(ShaderManager * shdrMngr):_shdrMngr(shdrMngr)
 
 Sprite * SpriteManager::createSprite(Sprite * sprite)
 {
-	Shader * shdr = nullptr; //= _shdrMngr->getShader();
+	
+	Shader * shdr = _shdrMngr->getShader();
 	if(!sprite)
 		sprite = new Sprite();
 	sprites_buffer * bfr;
 	if(_sprites.size() != 0)
-	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
-	{
-		if(it->first == shdr) // Sprites with this shader already exist
+		for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 		{
-			(*it->second).sprites.push_back(sprite);
-			return sprite;
+			if(it->first == shdr) // Sprites with this shader already exist
+			{
+				(*it->second).sprites.push_back(sprite);
+				return sprite;
+			}
 		}
-	}
 	bfr = new sprites_buffer;
-	bfr->buffer.setAttributes(position, color, texture);
+	//bfr->buffer.setAttributes(position, unknown, texture);
 	bfr->sprites.push_back(sprite);
 	_sprites.insert(std::pair<Shader*, sprites_buffer*>(shdr, bfr));
 	return sprite;

@@ -2,14 +2,14 @@
 using namespace graphics;
 
 
-void ShaderManager::useShader(void)
+void ShaderManager::useShader(bool color, bool texture)
 {
 	if(!_currentShader)
 	{
 		//Gets default shader
 		if(_defaultIndx == -1)
 		{
-			_currentShader = new Shader(true,false);
+			_currentShader = new Shader(color,texture);
 			_shaders.push_back(_currentShader);
 			_defaultIndx = _shaders.size()-1;
 		}
