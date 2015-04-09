@@ -7,14 +7,24 @@
 class SystemManager
 {
 public:
-	SystemManager();
-	~SystemManager();
+	SystemManager(){}
+	~SystemManager(){}
 
+	/**
+	Adds a system to the SystemManager
+	*/
 	void addSystem(System* system);
 
+	/**
+	Returns system of given type if found.
+	Otherwise returns nullptr.
+	*/
 	template<typename T>
 	T* getSystem();
 
+	/**
+	Removes system of given type.
+	*/
 	template<typename T>
 	void removeSystem();
 
@@ -47,7 +57,7 @@ void SystemManager::removeSystem()
 	it = _systems.find(type);
 	if (it != _systems.end())
 	{
-		delete dynamic_cast<T*>(it->second);
+		delete it->second;
 		it = _systems.erase(it);
 	}
 }
