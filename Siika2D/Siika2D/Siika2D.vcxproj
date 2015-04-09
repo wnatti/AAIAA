@@ -98,8 +98,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\include;$(SolutionDir)\Siika2D\inc\lodepng;$(SolutionDir)\Siika2D\inc\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>android;EGL;GLESv2</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>android;EGL;GLESv2;freetype</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
@@ -109,8 +109,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\include;$(SolutionDir)\Siika2D\inc\lodepng;$(SolutionDir)\Siika2D\inc\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>android;EGL;GLESv2</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>android;EGL;GLESv2;freetype</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
