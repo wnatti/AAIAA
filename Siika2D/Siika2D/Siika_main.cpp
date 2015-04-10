@@ -1,7 +1,7 @@
-#include "Siika2D.h"
-#include "Input.h"
-#include "engine\graphics\Buffer.h"
-#include "LooperManager.h"
+#include "engine/core/Siika2D.h"
+#include "engine/misc/Input.h"
+#include "engine/graphics/Buffer.h"
+
 void extern siika_main();
 
 #pragma once
