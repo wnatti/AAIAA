@@ -8,6 +8,7 @@ Text::Text(core::ResourceManager* resourceManager) :_buffer(GL_ARRAY_BUFFER, GL_
 
 	setPosition(0, 0);
 	_size = 18;
+	isInitialized = false;
 
 	initFreetype();
 }
@@ -26,6 +27,8 @@ void Text::setFont(std::string filename)
 	s2d_assert(error == 0);
 
 	setFontSize(_size);
+
+	isInitialized = true;
 }
 
 
@@ -45,7 +48,7 @@ void Text::setText(std::string text)
 
 void Text::setPosition(GLfloat x, GLfloat y)
 {
-	_position = glm::vec2(x, y);
+	_position = glm::vec2(x, -y);
 }
 
 

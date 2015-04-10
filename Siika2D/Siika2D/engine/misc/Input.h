@@ -1,6 +1,7 @@
 #pragma once
-#include "native_app_glue\android_native_app_glue.h"
+#include "..\..\native_app_glue\android_native_app_glue.h"
 #include "android\sensor.h"
+#include "..\core\ErrorHandler.h"
 #include <algorithm>
 #include <vec3.hpp>
 #include <vector>

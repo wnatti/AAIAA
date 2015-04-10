@@ -11,19 +11,53 @@
 
 namespace graphics
 {
+	/**
+		Class for drawable text.
+		Uses FreeType to load .ttf fonts.
+	*/
 	class Text
 	{
+
+		friend class TextManager;
+
 	public:
+		/**
+		Constructor.
+		Initializes FreeType and sets default values for position and font size.
+		*/
 		Text(core::ResourceManager* resourceManager);
 		~Text();
-
+		/**
+			Load font from file
+		*/
 		void setFont(std::string filename);
+
+		/**
+			Set font size in pixels
+		*/
 		void setFontSize(GLint size);
+
+		/**
+			Set the string of characters to display
+		*/
 		void setText(std::string text);
+
+		/**
+			Set text position. Origin: bottom-left
+		*/
 		void setPosition(GLfloat x, GLfloat y);
+
+	protected:
+		/**
+			Draws text. Generates textures for each character of the text and draws them.
+		*/
 		void draw(glm::vec2 displaySize);
+		bool isInitialized;
 
 	private:
+		/**
+			Initializes FreeType.
+		*/
 		void initFreetype();
 
 		core::ResourceManager* _resourceManager;
