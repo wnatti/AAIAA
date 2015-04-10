@@ -14,7 +14,7 @@ Timer::~Timer()
 
 void Timer::reset()
 {
-	std::clock_t start;
+	std::clock_t _start;
 }
 
 double Timer::getElapsedTime()
