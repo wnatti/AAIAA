@@ -90,6 +90,7 @@ void BufferManager::draw()
 
 void BufferManager::setAttribPointers()
 {
+	GLint err = glGetError();
 	glVertexAttribPointer(_positionId, 2, GL_FLOAT, GL_FALSE, _strideLength, reinterpret_cast<GLvoid*>(0));
 
 	if (_textureId != -1)
@@ -103,7 +104,7 @@ void BufferManager::setAttribPointers()
 			glVertexAttribPointer(_colorId, 4, GL_FLOAT, GL_FALSE, _strideLength, reinterpret_cast<GLvoid*>(2 * sizeof(GLfloat)));
 	}
 
-	GLint err = glGetError();
+	err = glGetError();
 	s2d_assert(err == 0);
 
 }
@@ -111,10 +112,10 @@ void BufferManager::setAttribPointers()
 void BufferManager::bindBuffers()
 {
 	if (_vertices.size() != 0)
-		_vertexBuffer.setBufferData(_vertices.data(), _vertices.size());
+		_vertexBuffer.setBufferData(_vertices.data(), _vertices.size() * sizeof(GLfloat));
 
 	if (_indices.size() != 0)
-		_indexBuffer.setBufferData(_indices.data(), _indices.size());
+		_indexBuffer.setBufferData(_indices.data(), _indices.size() * sizeof(GLint));
 
 	_vertexBuffer.bindBuffer();
 	_indexBuffer.bindBuffer();

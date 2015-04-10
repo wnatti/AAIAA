@@ -8,6 +8,7 @@
 #include "../glm/vec2.hpp"
 #include "Texture.h"
 #include <algorithm>
+#include "BufferManager.h"
 
 namespace graphics
 {
@@ -15,7 +16,7 @@ namespace graphics
 	class SpriteManager
 	{
 	public:
-		SpriteManager(ShaderManager * shdrMngr);
+		SpriteManager(ShaderManager * shdrMngr, BufferManager * bfr);
 		~SpriteManager(){};
 		Sprite * createSprite();
 		Sprite * createSprite(glm::vec2 location, glm::vec2 spriteSize, glm::vec2 spriteOrigin, Texture * texture, glm::vec2 textureUL, glm::vec2 textureLR);
@@ -30,7 +31,7 @@ namespace graphics
 		void batchSprites(std::vector<Sprite*> *toBatch){};
 		ShaderManager * _shdrMngr;
 		std::map<Shader*, sprites_buffer*> _sprites;
-
+		BufferManager * _bfr;
 		void spriteBatcher(std::vector<Sprite> *toBatch);
 		//std::map<Shader*, sprites_buffer> _sprites;
 		/**
