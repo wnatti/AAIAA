@@ -14,7 +14,12 @@ namespace graphics
 		void setPosition(glm::vec2 position);
 		void setSize(glm::vec2 size){ _size = size; }
 		void setOrigin(glm::vec2 origin){ _origin = origin; }
-		void setColor(Color col){ _col = &col; }
+		void setColor(Color col)
+		{ 
+			if(!_col)
+				_col = new Color(0,0,0,0);
+			_col->setRGBA(col.getR(), col.getG(), col.getB(), col.getA()); 
+		}
 		void setZ(int Z){ _posZ = Z; }
 		const glm::vec2 * getPosition(){ return &_position; }
 		Color * getColor(){ return _col; };
@@ -22,15 +27,18 @@ namespace graphics
 
 		///Gets next sprite in spritesheet
 		void step();
-//	protected:
+	protected:
 		Sprite(){};
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin) :
 			_position(position), _size(size), _origin(origin), _texture(nullptr), _col(nullptr){};
 
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin, Texture * TextureToSet, glm::vec2 textureUpperLeft, glm::vec2 textureLowerRigth) :
-			_position(position), _size(size), _origin(origin), _texture(TextureToSet), _textureUL(textureUpperLeft), _textureLR(textureLowerRigth){};
-		~Sprite(){};
-//	private:
+			_position(position), _size(size), _origin(origin), _texture(TextureToSet), _textureUL(textureUpperLeft), _textureLR(textureLowerRigth),_col(nullptr){};
+		~Sprite()
+		{
+			delete _col;
+		};
+	private:
 		glm::vec2 * getPositions();
 		glm::vec2 * getTexturePos();
 		Texture * _texture;

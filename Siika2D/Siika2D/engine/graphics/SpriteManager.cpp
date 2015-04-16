@@ -14,63 +14,41 @@ void SpriteManager::drawSprites()
 
 	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
 	{
-		
+		GLint p = position, c = color, t = texture;
+		Shader * curShader = it->first;
+		curShader->use();
 		//it->first->use(); // shader->use()
 		// TODO: Check for changes before recreating buffer
-		//BufferManager buf = (*it->second).buffer;
-		//BufferManager buf;
-		//buf.setAttributes(position, color, unknown);
-		//_shdrMngr->useShader(false,true);
-		//_bfr->setAttributes(position, unknown, texture);
+		BufferManager buf = (*it->second).buffer;
+		if(!curShader->hasColor())
+			c = unknown;
+		if(!curShader->hasTexture())
+			t = unknown;
+		buf.setAttributes(p, c, t);
+		_bfr = &buf;
 		Sprite * sprt = *(*it->second).sprites.begin();
 		for(std::vector<Sprite*>::iterator sit = (*it->second).sprites.begin(); sit != (*it->second).sprites.end(); sit++)
 		{
-			//spriteBatcher((*sit));
 			glm::vec2 * positions = (*sit)->getPositions();
 			glm::vec2 * textures = (*sit)->getTexturePos();
-			for(int i = 0; i <= 3; i++)
-			{
-				vertices.push_back(positions[i].x);
-				vertices.push_back(positions[i].y);
+			graphics::Color * col = (*sit)->getColor();
 
-				vertices.push_back(positions[i].x);
-				vertices.push_back(positions[i].y);
-
-				//vertices.push_back(textures[i].x);
-				//vertices.push_back(textures[i].y);
-
-				//vertices.push_back(1.0f);
-				//vertices.push_back(0.0f);
-				//vertices.push_back(0.0f);
-				//vertices.push_back(1.0f);
-			}
-			indecis.push_back(1);
-			indecis.push_back(2);
-			indecis.push_back(4);
-			indecis.push_back(2);
-			indecis.push_back(3);
-			indecis.push_back(4);
-			//graphics::Color * col = (*sit)->getColor();
+			//_bfr->addVertices(vertices.data(), sizeof(GLfloat) * 16);// 24);
+			//_bfr->addIndices(indecis.data(), sizeof(GLint) * 6);
+			_bfr->addRectangle(positions, textures, col);
 			//buf.addRectangle(positions, nullptr, sprt->getColor());
-			//buf.addRectangle(positions, nullptr, new Color(255,0,0,255));
-			//buf.addRectangle(positions, textures,nullptr);
-			_bfr->addVertices(vertices.data(), sizeof(GLfloat) * 16);// 24);
-			_bfr->addIndices(indecis.data(), sizeof(GLint) * 6);
-
 		}
-		//First sprite
 		
 		err = glGetError();
 		glBindTexture(GL_TEXTURE_2D, sprt->_texture->getTexture());
-		//glActiveTexture(GL_TEXTURE0);
 		err = glGetError();
 		_bfr->draw();
 		//buf.draw();
 		err = glGetError();
-		bool check = false;
-		//glBindTexture(GL_TEXTURE_2D, 0u);
-		//glActiveTexture(0u);
-//		it->first->use(false);
+
+		glBindTexture(GL_TEXTURE_2D, 0u);
+		glActiveTexture(0u);
+		it->first->use(false);
 	}
 }
 Sprite * SpriteManager::createSprite()
@@ -81,7 +59,14 @@ SpriteManager::SpriteManager(ShaderManager * shdrMngr, BufferManager * bfr) :_sh
 {
 	int size = _sprites.size();
 }
+SpriteManager::~SpriteManager()
+{
+	for(std::map<Shader*, sprites_buffer*>::iterator it = _sprites.begin(); it != _sprites.end(); it++)
+	{
+		(*it->second).sprites.clear();
+	}
 
+}
 Sprite * SpriteManager::createSprite(Sprite * sprite)
 {
 	

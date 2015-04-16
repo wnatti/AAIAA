@@ -15,9 +15,12 @@ namespace graphics
 
 	class SpriteManager
 	{
+		/***
+			Class for managing sprites
+		*/
 	public:
 		SpriteManager(ShaderManager * shdrMngr, BufferManager * bfr);
-		~SpriteManager(){};
+		~SpriteManager();
 		Sprite * createSprite();
 		Sprite * createSprite(glm::vec2 location, glm::vec2 spriteSize, glm::vec2 spriteOrigin, Texture * texture, glm::vec2 textureUL, glm::vec2 textureLR);
 		void drawSprites();
@@ -26,7 +29,7 @@ namespace graphics
 		struct sprites_buffer
 		{
 			std::vector<Sprite*> sprites;
-			//BufferManager buffer;
+			BufferManager buffer;
 		};
 		void batchSprites(std::vector<Sprite*> *toBatch){};
 		ShaderManager * _shdrMngr;

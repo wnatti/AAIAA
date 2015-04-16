@@ -45,6 +45,8 @@ namespace graphics
 		void useShader(bool color = true, bool texture = false);
 		//Gets current shader
 		Shader * getShader(){return _currentShader;}
+		//Uses desired default shader
+		void useDefaultShader(bool color, bool texture);
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	protected:

@@ -29,7 +29,7 @@ namespace graphics
 		"attribute vec2 position;\n"
 		"attribute vec2 texture;\n"
 		"varying vec2 UV;\n"
-		"uniform sampler2D sampler;\n"
+		//"uniform sampler2D sampler;\n"
 		"void main() {\n"
 		"	UV = texture;\n"
 		"   gl_Position = vec4(position, 0, 1);\n"
@@ -44,22 +44,22 @@ namespace graphics
 
 	const GLchar* defVertexWithBoth =
 		"attribute vec2 position;\n"
-		"attribute vec4 color;\n"
 		"attribute vec2 texture;\n"
 		"varying vec2 UV;\n"
-		"varying  vec4 varyCol;\n"
-		"uniform sampler2D sampler;\n"
+		"attribute vec4 color;\n"
+		"varying vec4 varyCol;\n"
 		"void main() {\n"
 		"	UV = texture;\n"
 		"	varyCol = color; \n"
 		"   gl_Position = vec4(position, 0, 1);\n"
 		"}\n";
 	const GLchar* defFragmentWithBoth =
-		"varying vec2 UV;\n"
+		"varying lowp vec4 varyCol;\n"
+		"varying lowp vec2 UV;\n"
 		"uniform sampler2D sampler;\n"
 		"void main()\n"
 		"{\n"
-		"   gl_FragColor = texture(sampler, UV) * varyCol;\n"
+		"   gl_FragColor = texture2D(sampler, UV) + varyCol;\n"
 		"}\n";;
 	
 }

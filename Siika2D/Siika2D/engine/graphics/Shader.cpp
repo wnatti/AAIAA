@@ -10,8 +10,8 @@ _color(color), _texture(texture)
 	
 	if(color && texture)
 	{
-		_fragSource = defVertexWithBoth;
-		_vertSource = defFragmentWithBoth;
+		_fragSource = defFragmentWithBoth;
+		_vertSource = defVertexWithBoth;
 	}
 	else
 	{

@@ -20,11 +20,12 @@ glm::vec2 * Sprite::getPositions()
 }
 void Sprite::setPosition(glm::vec2 position)
 {
-	_position.x = position.x - _origin.x;
-	_position.y = position.y - _origin.y;
+	_position.x = position.x;// -_origin.x;
+	_position.y = position.y;// -_origin.y;
 }
 glm::vec2 * Sprite::getTexturePos()
 {
+	
 	_texPos[0] = _textureUL;
 	_texPos[1].x = _textureUL.x;
 	_texPos[1].y = _textureLR.y;

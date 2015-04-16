@@ -22,6 +22,22 @@ void ShaderManager::useShader(bool color, bool texture)
 	s2d_assert(_currentShader);
 	_currentShader->use();
 }
+void ShaderManager::useDefaultShader(bool color, bool texture)
+{
+	Shader * shdr = new Shader(color, texture);
+	Shader * found = findShader(shdr->_vertSource, shdr->_fragSource);
+	if(found)
+	{
+		_currentShader = found;
+		useShader();
+		delete shdr;
+	}
+	else
+	{
+		_shaders.push_back(shdr);
+		_currentShader = shdr;
+	}
+}
 Shader * ShaderManager::createShader(char * vertPath, char * fragPath)
 { 
 	std::string * fragSource;

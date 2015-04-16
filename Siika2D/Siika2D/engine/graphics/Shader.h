@@ -20,6 +20,9 @@ namespace graphics
 		const GLuint getProgram(){ return _program; }
 		///calls glUseProgram() and enables shader attributes. This is for default shader only, also gets and enables default shader atributes
 		void use(bool toUse = true);
+		bool hasColor(){ return _color; }
+		bool hasTexture(){ return _texture; }
+
 	private:
 		///Shader must be created using ShaderManager::createShader()
 		void useSampler();
