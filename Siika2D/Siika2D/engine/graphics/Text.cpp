@@ -2,7 +2,7 @@
 
 using namespace graphics;
 
-Text::Text(core::ResourceManager* resourceManager) :_buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW)
+Text::Text(core::ResourceManager* resourceManager) :_buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW), _color(0, 0, 0, 1)
 {
 	_resourceManager = resourceManager;
 
@@ -51,6 +51,11 @@ void Text::setPosition(GLfloat x, GLfloat y)
 	_position = glm::vec2(x, -y);
 }
 
+
+void Text::setColor(Color color)
+{
+	_color = color;
+}
 
 void Text::draw(glm::vec2 displaySize)
 {
