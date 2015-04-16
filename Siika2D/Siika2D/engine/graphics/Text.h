@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../core/ResourceManager.h"
+#include "../misc/Color.h"
 #include "Buffer.h"
 
 #include <EGL/egl.h>
@@ -47,6 +48,11 @@ namespace graphics
 		*/
 		void setPosition(GLfloat x, GLfloat y);
 
+		/**
+			Set text color.
+		*/
+		void setColor(Color color);
+
 	protected:
 		/**
 			Draws text. Generates textures for each character of the text and draws them.
@@ -67,5 +73,6 @@ namespace graphics
 		glm::vec2 _position;
 		FT_Face _fontFace;
 		FT_Library _library;
+		Color _color;
 	};
 }
