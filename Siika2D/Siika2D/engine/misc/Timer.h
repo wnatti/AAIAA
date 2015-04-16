@@ -1,6 +1,7 @@
 #pragma once
-#include <chrono>
 #include <ctime>
+enum TIME
+{SECONDS, MILLISECONDS, MICROSECONDS};
 
 namespace misc
 {
@@ -16,7 +17,7 @@ namespace misc
 		/**
 		Gets time in seconds
 		*/
-		double getElapsedTime();
+		double getElapsedTime(TIME time);
 
 	private:
 		std::clock_t _start;
