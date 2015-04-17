@@ -53,12 +53,16 @@ namespace graphics
 		*/
 		void setColor(Color color);
 
+		/**
+			Get text color.
+		*/
+		Color getColor();
 	protected:
 		/**
 			Draws text. Generates textures for each character of the text and draws them.
 		*/
 		void draw(glm::vec2 displaySize);
-		bool isInitialized;
+		bool isInitialized; //Gives OK to textManager for drawing if true.
 
 	private:
 		/**
