@@ -35,10 +35,27 @@ namespace graphics
 		*/
 		Shader* createShaders();
 
+		/**
+			Get attribute location for position and texture coordinates.
+			Set attribute pointers.
+		*/
+		void setAttributes();
+
+		/**
+			Get color uniform location and set it's color value.
+		*/
+		void setColorUniform(Color color);
+
+		/**
+			Get texture sampler location, generate texture for text and set texture parameters.
+		*/
+		void setTextureUniform(); // Text needs it's own texture initialization because of reasons.
+
 		core::ResourceManager* _resourceManager;
 		ShaderManager* _shaderManager;
 		Shader* _textShader;
 		std::vector<Text> _texts;
 		glm::vec2 _displaySize;
+		GLuint _program;
 	};
 }

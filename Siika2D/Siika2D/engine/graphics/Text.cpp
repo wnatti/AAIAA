@@ -57,6 +57,11 @@ void Text::setColor(Color color)
 	_color = color;
 }
 
+Color Text::getColor()
+{
+	return _color;
+}
+
 void Text::draw(glm::vec2 displaySize)
 {
 	_buffer.bindBuffer();
@@ -70,7 +75,7 @@ void Text::draw(glm::vec2 displaySize)
 	float scaleX = 2.0 / displaySize.x;
 	float scaleY = 2.0 / displaySize.y;
 
-
+	// T‰m‰ silmukka piirt‰‰ tekstin. Joka kirjaimelle oma kuva (tekstuuri)
 	for (pointerToText = _text.c_str(); *pointerToText; pointerToText++) {
 		if (FT_Load_Char(_fontFace, *pointerToText, FT_LOAD_RENDER))
 			continue;
