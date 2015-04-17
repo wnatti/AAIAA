@@ -92,6 +92,9 @@ void Text::draw(glm::vec2 displaySize)
 			glyph->bitmap.buffer
 			);
 
+		GLint error = glGetError();
+		s2d_assert(error == 0);
+
 		float x2 = x + glyph->bitmap_left * scaleX;
 		float y2 = -y - glyph->bitmap_top * scaleY;
 		float w = glyph->bitmap.width * scaleX;
@@ -104,8 +107,15 @@ void Text::draw(glm::vec2 displaySize)
 			{ x2 + w, -y2 - h, 1, 1 },
 		};
 
-		_buffer.setBufferData(box, sizeof(box));
+		_buffer.setBufferData(box, sizeof box);
+
+		error = glGetError();
+		s2d_assert(error == 0);
+
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		error = glGetError();
+		s2d_assert(error == 0);
 
 		x += (glyph->advance.x >> 6) * scaleX;
 		y += (glyph->advance.y >> 6) * scaleY;

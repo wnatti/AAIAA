@@ -35,6 +35,8 @@ void TextManager::drawTexts()
 
 	setAttributes();
 	setTextureUniform();
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 	for (int i = 0; i < _texts.size(); i++)
 	{
 		if (_texts.at(i).isInitialized)
@@ -60,11 +62,11 @@ void TextManager::setAttributes()
 	s2d_assert(error == 0);
 
 	GLint positionLoc = glGetAttribLocation(_program, "coord");
-	s2d_assert(positionLoc != -1);
+	s2d_assert(!(positionLoc == -1));
 
 	glEnableVertexAttribArray(positionLoc);
 
-	glVertexAttribPointer(positionLoc, 4, GL_FLOAT, EGL_FALSE, 0, 0);
+	glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
 	error = glGetError();
 	s2d_assert(error == 0);

@@ -116,3 +116,8 @@ void GraphicsContext::clear()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
+
+glm::vec2 GraphicsContext::getDisplaySize()
+{
+	return glm::vec2(_windowWidth, _windowHeight);
+}

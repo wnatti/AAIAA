@@ -2,6 +2,7 @@
 
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
+#include <../glm/vec2.hpp>
 #include "../../native_app_glue/android_native_app_glue.h"
 #include "../core/ErrorHandler.h"
 
@@ -28,6 +29,8 @@ namespace graphics
 			Swap buffers
 		*/
 		void swap();
+
+		glm::vec2 getDisplaySize();
 
 
 	protected:
