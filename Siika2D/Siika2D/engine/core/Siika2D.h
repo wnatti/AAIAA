@@ -50,7 +50,7 @@ namespace core
 
 		graphics::Graphics *GRAPHICS;
 		misc::Input *INPUT;
-		
+		core::ResourceManager _resourceManager;
 	protected:
 		Siika2D();
 		Siika2D(const Siika2D& s2d);
@@ -89,8 +89,6 @@ namespace core
 			Gets the saved application if there is one.
 		*/
 		void loadState(android_app *app);
-
-		core::ResourceManager _resourceManager;
 		bool _drawReady;
 
 		void run(android_app* app);

@@ -18,6 +18,7 @@
     <AndroidBuild Include="res\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\audio\Audio.cpp" />
     <ClCompile Include="engine\core\ErrorHandler.cpp" />
     <ClCompile Include="engine\core\ResourceManager.cpp" />
     <ClCompile Include="engine\core\Siika2D.cpp" />
@@ -98,7 +99,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\include;$(SolutionDir)\Siika2D\inc\lodepng;$(SolutionDir)\Siika2D\inc\glm;$(SolutionDir)\freetype\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>android;EGL;GLESv2;freetype</AdditionalDependencies>
+      <AdditionalDependencies>android;EGL;GLESv2;freetype;OpenSLES</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -109,7 +110,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\include;$(SolutionDir)\Siika2D\inc\lodepng;$(SolutionDir)\Siika2D\inc\glm;$(SolutionDir)\freetype\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>android;EGL;GLESv2;freetype</AdditionalDependencies>
+      <AdditionalDependencies>android;EGL;GLESv2;freetype;OpenSLES</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Siika2D\inc\SDL2-2.0.3\lib\x86;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
