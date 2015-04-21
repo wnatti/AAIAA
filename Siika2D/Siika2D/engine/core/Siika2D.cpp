@@ -63,14 +63,14 @@ void Siika2D::initializeGraphics()
 void Siika2D::initializeInput()
 {
 	if (INPUT == nullptr)
-		INPUT = new misc::Input(_application);
+		INPUT = INPUT->getInstance(_application);
 }
 
 void Siika2D::terminateInput()
 {
-	if (_instance->INPUT->_accelerometerEnabled)
+	if (INPUT->_accelerometerEnabled)
 	{
-		_instance->INPUT->disableAccelerometer();
+		INPUT->disableAccelerometer();
 	}
 }
 void Siika2D::terminateGraphics()
@@ -195,7 +195,6 @@ void Siika2D::run(android_app* app)
 				INPUT->processAccelerometer();
 			}
 
-			INPUT->processTouch();
 			
 		}
 

@@ -2,16 +2,29 @@
 
 using namespace misc;
 
+Input* Input::_instance = nullptr;
+
+Input* Input::getInstance(android_app* app)
+{
+	if (_instance == nullptr)
+	{
+		_instance = new Input(app);
+	}
+	return _instance;
+}
+
+
 Input::Input(android_app* app)
 {
+	_touchingScreen = false;
 	_app = app;
 	initializeAccelerometer(app);
-	enableTouch(app);
+	initializeInput(app);
 }
 
 Input::~Input()
 {
-
+	_instance = nullptr;
 }
 
 void Input::initializeAccelerometer(android_app *app)
@@ -27,59 +40,66 @@ void Input::enableAccelerometer()
 	ASensorEventQueue_setEventRate(_sensorEventQueue, _accelerometerSensor, ((1000l / _tickRate) * 1000));
 }
 
-void Input::enableTouch(android_app *app)
+void Input::initializeInput(android_app *app)
 {
-	_inputQueue = app->inputQueue;
+	app->onInputEvent = this->processKey;
 }
 
-void Input::disableTouch()
+int Input::processKey(android_app *app, AInputEvent *event)
 {
-}
 
-void Input::processTouch()
-{
-	android_poll_source source = _app->inputPollSource;
-	int id;
-	int events;
+	switch (AInputEvent_getType(event))
+	{
+		case AINPUT_EVENT_TYPE_KEY:
 
-		AInputEvent *event;
-
-		while (AInputQueue_getEvent(_inputQueue, &event) > 0)
+		if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
 		{
-			switch (AInputEvent_getType(event))
-			{
-			case AINPUT_EVENT_TYPE_KEY:
-				processKey(event);
-				break;
+			KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
 
-			case AINPUT_EVENT_TYPE_MOTION:
-				processMotion(event);
-				break;
-
-			}
+			std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+			if (it == _instance->_keysDown.end())
+				_instance->_keysDown.push_back(keyCode);
 		}
-}
 
-void Input::processKey(AInputEvent *event)
-{
-	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
-	{
-		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
-		_keysDown.push_back(keyCode);
+		if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+		{
+			KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
+
+			std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+			if (it != _instance->_keysDown.end())
+				_instance->_keysDown.erase(it);
+		}
+		break;
+
+
+		case AINPUT_EVENT_TYPE_MOTION:
+			_instance->processMotion(event);
+			break;
 	}
 
-	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-	{
-		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
-
-		std::vector<KEY_CODE>::iterator it = std::find(_keysDown.begin(), _keysDown.end(), keyCode);
-		if (it != _keysDown.end())
-			_keysDown.erase(it);
-	}
+	return 1;
 }
 
 void Input::processMotion(AInputEvent *event)
 {
+
+	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+	{
+		glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
+		_instance->_touchPosition = pos;
+	}
+
+	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
+	{
+		_instance->_touchingScreen = true;
+	}
+
+	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
+	{
+		_instance->_touchingScreen = false;
+	}
+
+
 
 }
 

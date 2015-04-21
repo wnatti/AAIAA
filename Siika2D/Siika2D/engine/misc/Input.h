@@ -3,7 +3,7 @@
 #include "android\sensor.h"
 #include "..\core\ErrorHandler.h"
 #include <algorithm>
-#include <vec3.hpp>
+#include <glm.hpp>
 #include <vector>
 
 namespace core
@@ -51,29 +51,45 @@ namespace misc
 
 	public:
 
-		std::vector<KEY_CODE>_keysDown;
+		static Input* getInstance(android_app *app);
+		virtual ~Input();
 
 		std::vector < glm::vec3 > _accelerometerData;
 		void enableAccelerometer();
 		void setTickRate(float ticksPerSecond);
 		void disableAccelerometer();
-		void enableTouch(android_app *app);
-		void disableTouch();
+		std::vector<KEY_CODE> getDownKeys()
+		{
+			return _keysDown;
+		}
 
-	private:
+		bool touchingScreen()
+		{
+			return _touchingScreen;
+		}
+		glm::vec2 getTouchPosition()
+		{
+			return _touchPosition;
+		}
+	protected:
+		bool _touchingScreen;
+		std::vector<KEY_CODE>_keysDown;
+		glm::vec2 _touchPosition;
 		void processAccelerometer();
-		void processTouch();
 		void initializeAccelerometer(android_app *app);
-		void processKey(AInputEvent *event);
+		void initializeInput(android_app *app);
+		static int processKey(android_app *app, AInputEvent *event);
 		void processMotion(AInputEvent *event);
+
+		//Input();
 		Input(android_app* app);
-		~Input();
+		Input(const Input& input);
+		Input& operator=(const Input& input);
+		static Input* _instance;
 
 		bool _accelerometerEnabled = false;
 		float _tickRate = 1.0;
 
-		AInputQueue* _inputQueue;
-		ALooper* _looper;
 		android_app *_app;
 		ASensorEventQueue* _sensorEventQueue;
 		ASensorManager* _sensorManager;

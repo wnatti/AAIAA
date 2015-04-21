@@ -30,23 +30,19 @@ namespace core
 
 		/**
 			Pointter to the UI
-			*/
+		*/
 		static Siika2D* UI();
 		virtual ~Siika2D();
 
-
-		saved_state* _savedState;
-	
+		saved_state* _savedState;	
 
 		/**
 			Tells when graphics has been initialized
-			*/
+		*/
 		bool drawReady()
 		{
 			return _drawReady;
 		}
-
-
 
 		graphics::Graphics *GRAPHICS;
 		misc::Input *INPUT;
@@ -68,9 +64,7 @@ namespace core
 		*/
 		void initializeGraphics();
 
-
 		void initializeInput();
-
 
 		void terminateInput();
 		/**
