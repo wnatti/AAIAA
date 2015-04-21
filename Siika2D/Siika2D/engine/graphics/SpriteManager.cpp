@@ -24,8 +24,10 @@ void SpriteManager::drawSprites()
 			c = unknown;
 		if(!curShader->hasTexture())
 			t = unknown;
-		buf.setAttributes(p, c, t);
-		_bfr = &buf;
+
+		_bufferManager = &buf;
+
+		_bufferManager->setAttributes(p, c, t);
 		Sprite * sprt = *(*it->second).sprites.begin();
 		for(std::vector<Sprite*>::iterator sit = (*it->second).sprites.begin(); sit != (*it->second).sprites.end(); sit++)
 		{
@@ -35,14 +37,14 @@ void SpriteManager::drawSprites()
 
 			//_bfr->addVertices(vertices.data(), sizeof(GLfloat) * 16);// 24);
 			//_bfr->addIndices(indecis.data(), sizeof(GLint) * 6);
-			_bfr->addRectangle(positions, textures, col);
+			_bufferManager->addRectangle(positions, textures, col);
 			//buf.addRectangle(positions, nullptr, sprt->getColor());
 		}
 		
 		err = glGetError();
 		glBindTexture(GL_TEXTURE_2D, sprt->_texture->getTexture());
 		err = glGetError();
-		_bfr->draw();
+		_bufferManager->draw();
 		//buf.draw();
 		err = glGetError();
 
@@ -55,7 +57,7 @@ Sprite * SpriteManager::createSprite()
 {
 	return createSprite(nullptr);
 }
-SpriteManager::SpriteManager(ShaderManager * shdrMngr, BufferManager * bfr) :_shdrMngr(shdrMngr), _bfr(bfr)
+SpriteManager::SpriteManager(core::ResourceManager * rsmgr) : ShaderManager(rsmgr)
 {
 	int size = _sprites.size();
 }
@@ -70,7 +72,7 @@ SpriteManager::~SpriteManager()
 Sprite * SpriteManager::createSprite(Sprite * sprite)
 {
 	
-	Shader * shdr = _shdrMngr->getShader();
+	Shader * shdr = getShader();
 	if(!sprite)
 		sprite = new Sprite();
 	sprites_buffer * bfr;

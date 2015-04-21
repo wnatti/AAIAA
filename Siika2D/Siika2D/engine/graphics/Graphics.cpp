@@ -2,7 +2,7 @@
 
 using namespace graphics;
 
-Graphics::Graphics(android_app* application, core::ResourceManager* resourceManager) : GraphicsContext(application), ShaderManager(resourceManager)
+Graphics::Graphics(android_app* application, core::ResourceManager* resourceManager) : GraphicsContext(application), TextureManager(resourceManager), SpriteManager(resourceManager)
 {
 	
 }
@@ -10,8 +10,8 @@ Graphics::Graphics(android_app* application, core::ResourceManager* resourceMana
 void Graphics::clearGraphics()
 {
 	wipeContext();
-	_indexBuffer.~Buffer();
-	_vertexBuffer.~Buffer();
+	/*_indexBuffer.~Buffer();
+	_vertexBuffer.~Buffer();*/
 
 }
 

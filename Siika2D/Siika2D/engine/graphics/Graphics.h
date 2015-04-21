@@ -1,8 +1,8 @@
 #pragma once
-#include "../core/ResourceManager.h"
+//#include "../core/ResourceManager.h"
 #include "GraphicsContext.h"
-#include "BufferManager.h"
-#include "ShaderManager.h"
+#include "SpriteManager.h"
+#include "TextureManager.h"
 
 namespace core
 {
@@ -11,7 +11,7 @@ namespace core
 
 namespace graphics
 {
-	class Graphics :  public GraphicsContext, public ShaderManager, public BufferManager
+	class Graphics : public SpriteManager, public TextureManager, public GraphicsContext
 	{
 		friend class core::Siika2D;
 		
