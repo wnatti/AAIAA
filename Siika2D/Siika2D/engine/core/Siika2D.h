@@ -7,10 +7,7 @@
 //#include "engine\core\MemoryManager.h"
 
 
-/** 
-	Singleton User interface used for the engine's subsystems.
-	To be used everywhere engine's subsystems are needed
-*/
+
 
 namespace core
 {
@@ -21,6 +18,10 @@ namespace core
 		int32_t y;
 	};
 
+	/**
+		Singleton User interface used for the engine's subsystems.
+		To be used everywhere engine's subsystems are needed
+	*/
 	class Siika2D
 	{
 		friend class AndroidInterface;
@@ -64,6 +65,9 @@ namespace core
 		*/
 		void initializeGraphics();
 
+		/**
+			Creates instance of the Input -class, so that it won't explode
+		*/
 		void initializeInput();
 
 		void terminateInput();

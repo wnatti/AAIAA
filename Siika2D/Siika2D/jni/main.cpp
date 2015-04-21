@@ -13,7 +13,6 @@ uint blue = 1;
 uint green = 128;
 void doStuff()
 {
-	
 
 	if(!managersDone)
 	{

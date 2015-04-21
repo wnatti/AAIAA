@@ -18,6 +18,8 @@ enum INPUT_ID
 	TOUCH = 20
 };
 
+
+//TODO: more KEY_CODES
 enum KEY_CODE
 {
 	KEYCODE_BUTTON_A = 96,
@@ -43,7 +45,10 @@ enum KEY_CODE
 };
 namespace misc
 {
-
+	/**
+		Singleton class that handles all the input coming from the device
+							Used from Siika2D-class
+	*/
 	class Input
 	{
 
@@ -54,15 +59,28 @@ namespace misc
 		static Input* getInstance(android_app *app);
 		virtual ~Input();
 
-		std::vector < glm::vec3 > _accelerometerData;
+		/**
+			Sets the accelerometer active
+		*/
 		void enableAccelerometer();
+
+		/**
+			Sets the approx. tickrate/second for the accelerometer
+		*/
 		void setTickRate(float ticksPerSecond);
+
+		/**
+			Stops accelerometer processing
+		*/
 		void disableAccelerometer();
+
 		std::vector<KEY_CODE> getDownKeys()
 		{
 			return _keysDown;
 		}
-
+		/**
+			Is the screen being pressed?
+		*/
 		bool touchingScreen()
 		{
 			return _touchingScreen;
@@ -72,16 +90,46 @@ namespace misc
 			return _touchPosition;
 		}
 	protected:
+		/**
+			Is the screen being pressed
+		*/
 		bool _touchingScreen;
+		/**
+			Saved data depended on _tickRate
+		*/
+		std::vector < glm::vec3 > _accelerometerData;
+		/**
+			Analog keys currently pressed
+		*/
 		std::vector<KEY_CODE>_keysDown;
+		/**
+			Press location
+		*/
 		glm::vec2 _touchPosition;
+
+		/**
+			Processes accelerometer
+		*/
 		void processAccelerometer();
+		
 		void initializeAccelerometer(android_app *app);
+		/**
+			Sets processInput to read Android -device's input-data
+		*/
 		void initializeInput(android_app *app);
-		static int processKey(android_app *app, AInputEvent *event);
+		/**
+			Processes the device's latest data
+		*/
+		static int processInput(android_app *app, AInputEvent *event);
+		/**
+			Processes key-input
+		*/
+		void processKey(AInputEvent *event);
+		/**
+			Processes motion-input
+		*/
 		void processMotion(AInputEvent *event);
 
-		//Input();
 		Input(android_app* app);
 		Input(const Input& input);
 		Input& operator=(const Input& input);

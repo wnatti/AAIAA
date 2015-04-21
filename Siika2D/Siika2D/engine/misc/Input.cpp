@@ -42,35 +42,17 @@ void Input::enableAccelerometer()
 
 void Input::initializeInput(android_app *app)
 {
-	app->onInputEvent = this->processKey;
+	app->onInputEvent = this->processInput;
 }
 
-int Input::processKey(android_app *app, AInputEvent *event)
+int Input::processInput(android_app *app, AInputEvent *event)
 {
 
 	switch (AInputEvent_getType(event))
 	{
 		case AINPUT_EVENT_TYPE_KEY:
-
-		if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
-		{
-			KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
-
-			std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
-			if (it == _instance->_keysDown.end())
-				_instance->_keysDown.push_back(keyCode);
-		}
-
-		if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-		{
-			KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
-
-			std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
-			if (it != _instance->_keysDown.end())
-				_instance->_keysDown.erase(it);
-		}
-		break;
-
+			_instance->processKey(event);
+			break;
 
 		case AINPUT_EVENT_TYPE_MOTION:
 			_instance->processMotion(event);
@@ -78,6 +60,27 @@ int Input::processKey(android_app *app, AInputEvent *event)
 	}
 
 	return 1;
+}
+
+void Input::processKey(AInputEvent *event)
+{
+	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
+	{
+		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
+
+		std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+		if (it == _instance->_keysDown.end())
+			_instance->_keysDown.push_back(keyCode);
+	}
+
+	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
+	{
+		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
+
+		std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+		if (it != _instance->_keysDown.end())
+			_instance->_keysDown.erase(it);
+	}
 }
 
 void Input::processMotion(AInputEvent *event)
