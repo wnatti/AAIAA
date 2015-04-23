@@ -7,6 +7,8 @@ using namespace graphics;
 void SpriteManager::drawSprites()
 {
 	GLint err = glGetError();
+	s2d_assert(err == 0);
+
 	std::vector<GLfloat> vertices;
 	std::vector<GLint> indecis;
 	int spriteCount = 0;
@@ -16,7 +18,14 @@ void SpriteManager::drawSprites()
 	{
 		GLint p = position, c = color, t = texture;
 		Shader * curShader = it->first;
+
+		err = glGetError();
+		s2d_assert(err == 0);
+
 		curShader->use();
+
+		err = glGetError();
+		s2d_assert(err == 0);
 		//it->first->use(); // shader->use()
 		// TODO: Check for changes before recreating buffer
 		BufferManager buf = (*it->second).buffer;
@@ -24,6 +33,9 @@ void SpriteManager::drawSprites()
 			c = unknown;
 		if(!curShader->hasTexture())
 			t = unknown;
+
+		err = glGetError();
+		s2d_assert(err == 0);
 
 		_bufferManager = &buf;
 
@@ -42,14 +54,20 @@ void SpriteManager::drawSprites()
 		}
 		
 		err = glGetError();
+		s2d_assert(err == 0);
 		glBindTexture(GL_TEXTURE_2D, sprt->_texture->getTexture());
 		err = glGetError();
 		_bufferManager->draw();
 		//buf.draw();
 		err = glGetError();
+		s2d_assert(err == 0);
 
 		glBindTexture(GL_TEXTURE_2D, 0u);
-		glActiveTexture(0u);
+		//glActiveTexture(0);
+
+		err = glGetError();
+		s2d_assert(err == 0);
+
 		it->first->use(false);
 	}
 }

@@ -126,6 +126,9 @@ bool Shader::linkProgram()
 
 void Shader::use(bool toUse)
 {
+	GLint err = glGetError();
+	s2d_assert(err == 0);
+
 	if(toUse)
 	{
 		glUseProgram(_program);
@@ -142,6 +145,10 @@ void Shader::use(bool toUse)
 		glEnableVertexAttribArray(shdrAtrib::color);
 	if(_texture)
 		glEnableVertexAttribArray(shdrAtrib::texture);
+
+	err = glGetError();
+	s2d_assert(err == 0);
+
 	return;
 }
 

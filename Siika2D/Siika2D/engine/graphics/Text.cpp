@@ -62,9 +62,10 @@ Color Text::getColor()
 	return _color;
 }
 
-void Text::draw(glm::vec2 displaySize)
+void Text::draw(glm::vec2 displaySize, GLint posLoc)
 {
 	_buffer.bindBuffer();
+	glVertexAttribPointer(posLoc, 4, GL_FLOAT, GL_FALSE, 0, reinterpret_cast <GLvoid*>(0));
 
 	const char* pointerToText;
 
@@ -107,7 +108,9 @@ void Text::draw(glm::vec2 displaySize)
 			{ x2 + w, -y2 - h, 1, 1 },
 		};
 
-		_buffer.setBufferData(box, sizeof box);
+		_buffer.setBufferData(box, sizeof(box));
+		_buffer.bindBuffer();
+
 
 		error = glGetError();
 		s2d_assert(error == 0);

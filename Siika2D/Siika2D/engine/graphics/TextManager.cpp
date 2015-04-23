@@ -11,6 +11,8 @@ TextManager::TextManager(core::ResourceManager* resourceManager, ShaderManager* 
 
 	_textShader = createShaders();
 	_program = _textShader->getProgram();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 
@@ -29,9 +31,15 @@ Text* TextManager::createText()
 
 void TextManager::drawTexts()
 {
+	GLint error = glGetError();
+	s2d_assert(error == 0);
+
 	Shader* previousShader =_shaderManager->getShader();
 	_shaderManager->setCurrentShader(_textShader);
 	glUseProgram(_program);
+
+	error = glGetError();
+	s2d_assert(error == 0);
 
 	GLint textureSampler;
 	GLuint texture;
@@ -46,7 +54,7 @@ void TextManager::drawTexts()
 		if (_texts.at(i).isInitialized)
 		{
 			setColorUniform(_texts.at(i).getColor());
-			_texts.at(i).draw(_displaySize);
+			_texts.at(i).draw(_displaySize, positionLoc);
 		}
 	}
 
@@ -57,7 +65,17 @@ void TextManager::drawTexts()
 
 Shader* TextManager::createShaders()
 {
-	return _shaderManager->createShader("vertexTextShader.glsl", "fragmentTextShader.glsl");
+	GLint error = glGetError();
+	s2d_assert(error == 0);
+
+	Shader* previousShader = _shaderManager->getShader();
+	Shader* textShader = _shaderManager->createShader("vertexTextShader.glsl", "fragmentTextShader.glsl");
+	_shaderManager->setCurrentShader(previousShader);
+
+	error = glGetError();
+	s2d_assert(error == 0);
+
+	return textShader;
 }
 
 void TextManager::setAttributes(GLint& positionLoc)
@@ -70,7 +88,7 @@ void TextManager::setAttributes(GLint& positionLoc)
 
 	glEnableVertexAttribArray(positionLoc);
 
-	glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	//glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, 0, reinterpret_cast <GLvoid*>(0));
 
 	error = glGetError();
 	s2d_assert(error == 0);

@@ -12,6 +12,9 @@ BufferManager::BufferManager() :_indexBuffer(GL_ELEMENT_ARRAY_BUFFER), _vertexBu
 
 void BufferManager::setAttributes(GLint pos, GLint col, GLint textr)
 {
+	GLint err = glGetError();
+	s2d_assert(err == 0);
+
 	_positionId = pos;
 	_colorId = col;
 	_textureId = textr;
@@ -27,6 +30,9 @@ void BufferManager::setAttributes(GLint pos, GLint col, GLint textr)
 	if (textr != -1)
 		_strideLength += 2 * sizeof(GLfloat);
 
+	err = glGetError();
+	s2d_assert(err == 0);
+
 }
 
 void BufferManager::addVertices(GLfloat* vertices, GLsizei size)
@@ -41,7 +47,8 @@ void BufferManager::addIndices(GLint* indices, GLsizei size)
 
 void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 {
-	
+	GLint err = glGetError();
+	s2d_assert(err == 0);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -66,6 +73,9 @@ void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 		}
 	}
 
+	err = glGetError();
+	s2d_assert(err == 0);
+
 	int indicesSize = _indices.size();
 	_indices.push_back(indicesSize+1);
 	_indices.push_back(indicesSize+1+1);
@@ -73,6 +83,9 @@ void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 	_indices.push_back(indicesSize+1+1);
 	_indices.push_back(indicesSize+2+1);
 	_indices.push_back(indicesSize+3+1);
+
+	err = glGetError();
+	s2d_assert(err == 0);
 }
 
 void BufferManager::draw()
