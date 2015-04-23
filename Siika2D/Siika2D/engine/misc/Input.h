@@ -13,28 +13,29 @@ namespace core
 	class LooperManager;
 }
 
-enum INPUT_ID
+enum SENSOR_ID
 {
 	ACCELEROMETER = 10,
-	TOUCH = 20
+	GYROSCOPE = 20
 };
 
-struct Finger{
+struct Finger
+{
 
 	/**
 		Current press location
 	*/
-	glm::vec2 _touchPositionCurrent;
+	glm::vec2 _touchPositionCurrent = glm::vec2(0.f, 0.f);
 
 	/**
 		Location where the last touch event started
 	*/
-	glm::vec2 _touchPositionStart;
+	glm::vec2 _touchPositionStart = glm::vec2(0.f, 0.f);
 
 	/**
 		Location where the touch event ended
 	*/
-	glm::vec2 _touchPositionEnd;
+	glm::vec2 _touchPositionEnd = glm::vec2(0.f, 0.f);
 
 };
 
@@ -56,9 +57,9 @@ namespace misc
 		virtual ~Input();
 
 		/**
-			Sets the accelerometer active
+			Sets the sensor active
 		*/
-		void enableAccelerometer();
+		void enableSensor(SENSOR_ID sensorId);
 
 		/**
 			Sets the approx. tickrate/second for the accelerometer
@@ -68,7 +69,7 @@ namespace misc
 		/**
 			Stops accelerometer processing
 		*/
-		void disableAccelerometer();
+		void accelerometerDisable();
 
 		std::vector<int> getDownKeys()
 		{
@@ -79,7 +80,7 @@ namespace misc
 		*/
 		bool touchingScreen()
 		{
-			return _touchingScreen;
+			return _fingersDown;
 		}
 		glm::vec2 touchPositionCurrent(int finger)
 		{
@@ -98,10 +99,11 @@ namespace misc
 			Is the screen being pressed
 		*/
 		bool _touchingScreen;
-		/**
-			Saved data depended on _tickRate
-		*/
-		std::vector < glm::vec3 > _accelerometerData;
+
+		ASensorVector *_accelerometerData;
+
+		ASensorVector *_gyroscopeData;
+
 		/**
 			Analog keys currently pressed
 		*/
@@ -110,12 +112,18 @@ namespace misc
 
 		Finger _fingers[2];
 
+		int _fingersDown;
+
 		/**
 			Processes accelerometer
 		*/
 		void processAccelerometer();
-		
-		void initializeAccelerometer(android_app *app);
+
+		void processGyroscope();
+
+		void initializeGyroscope(android_app *app);
+
+		void initializeSensor(android_app *app, SENSOR_ID sensorId);
 		/**
 			Sets processInput to read Android -device's input-data
 		*/
@@ -145,6 +153,7 @@ namespace misc
 		ASensorEventQueue* _sensorEventQueue;
 		ASensorManager* _sensorManager;
 		const ASensor* _accelerometerSensor;
+		const ASensor* _gyroscopeSensor;
 	};
 
 }

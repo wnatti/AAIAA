@@ -13,13 +13,14 @@ Input* Input::getInstance(android_app* app)
 	return _instance;
 }
 
-
 Input::Input(android_app* app)
 {
 	_touchingScreen = false;
 	_app = app;
-	initializeAccelerometer(app);
+	initializeSensor(app,SENSOR_ID::ACCELEROMETER);
+	initializeSensor(app, SENSOR_ID::GYROSCOPE);
 	initializeInput(app);
+	_fingersDown = 0;
 }
 
 Input::~Input()
@@ -27,17 +28,36 @@ Input::~Input()
 	_instance = nullptr;
 }
 
-void Input::initializeAccelerometer(android_app *app)
+void Input::initializeSensor(android_app *app, SENSOR_ID sensorId)
 {
 	_sensorManager = ASensorManager_getInstance();
-	_accelerometerSensor = ASensorManager_getDefaultSensor(_sensorManager, ASENSOR_TYPE_ACCELEROMETER);
-	_sensorEventQueue = ASensorManager_createEventQueue(_sensorManager, _app->looper, INPUT_ID::ACCELEROMETER, NULL, NULL);
+
+	switch (sensorId)
+	{
+	case ACCELEROMETER:
+		_accelerometerSensor = ASensorManager_getDefaultSensor(_sensorManager, ASENSOR_TYPE_ACCELEROMETER);
+		break;
+	case GYROSCOPE:
+		_gyroscopeSensor = ASensorManager_getDefaultSensor(_sensorManager, ASENSOR_TYPE_GYROSCOPE);
+	}
+
+	_sensorEventQueue = ASensorManager_createEventQueue(_sensorManager, _app->looper, sensorId, NULL, NULL);
+
 }
 
-void Input::enableAccelerometer()
+void Input::enableSensor(SENSOR_ID sensorId)
 {
-	ASensorEventQueue_enableSensor(_sensorEventQueue, _accelerometerSensor);
-	ASensorEventQueue_setEventRate(_sensorEventQueue, _accelerometerSensor, ((1000l / _tickRate) * 1000));
+	switch (sensorId)
+	{
+	case ACCELEROMETER:
+		ASensorEventQueue_enableSensor(_sensorEventQueue, _accelerometerSensor);
+		ASensorEventQueue_setEventRate(_sensorEventQueue, _accelerometerSensor, ((1000l / _tickRate) * 1000));
+		break;
+	case GYROSCOPE:
+		ASensorEventQueue_enableSensor(_sensorEventQueue,_gyroscopeSensor);
+		ASensorEventQueue_setEventRate(_sensorEventQueue, _gyroscopeSensor, ((1000l / _tickRate) * 1000));
+	}
+	
 }
 
 void Input::initializeInput(android_app *app)
@@ -86,34 +106,28 @@ void Input::processKey(AInputEvent *event)
 void Input::processMotion(AInputEvent *event)
 {
 
-	int fingersOnTheScreen = AMotionEvent_getPointerCount(event);
-	{
-		for (int i = 0; i < fingersOnTheScreen; i++)
-		{
-			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
-			{
-				glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-				_instance->_fingers[i]._touchPositionCurrent = pos;
-			}
-
-			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
-			{
-				glm::vec2 fingerFirst(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
-				_instance->_fingers[i]._touchPositionStart = fingerFirst;
-
-			}
-			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
-			{
-				glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-				_instance->_fingers[i]._touchPositionEnd = pos;
-			}
-		}
-		//TODO:touchingscreen check
-	}
-
-	//if (AMotionEvent_getPointerCount(event) == 2)
-		
+	_fingersDown = AMotionEvent_getPointerCount(event);
 	
+	for (int i = 0; i < _fingersDown; i++)
+	{
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+		{
+			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
+			_instance->_fingers[i]._touchPositionCurrent = pos;
+		}
+
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
+		{
+			glm::vec2 fingerFirst(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
+			_instance->_fingers[i]._touchPositionStart = fingerFirst;
+
+		}
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
+		{
+			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
+			_instance->_fingers[i]._touchPositionEnd = pos;
+		}
+	}
 }
 
 void Input::setTickRate(float ticksPerSecond)
@@ -121,7 +135,7 @@ void Input::setTickRate(float ticksPerSecond)
 	_tickRate = ticksPerSecond;
 }
 
-void Input::disableAccelerometer()
+void Input::accelerometerDisable()
 {
 	ASensorEventQueue_disableSensor(_sensorEventQueue, _accelerometerSensor);
 }
@@ -129,15 +143,23 @@ void Input::disableAccelerometer()
 void Input::processAccelerometer()
 {
 	ASensorEvent event;
-	_accelerometerData.clear();
+	_accelerometerData = nullptr;
 
-	glm::vec3 data;
 	while (ASensorEventQueue_getEvents(_sensorEventQueue, &event, 1) > 0)
 	{
-		data.x = event.acceleration.x;
-		data.y = event.acceleration.y;
-		data.z = event.acceleration.z;
-		_accelerometerData.push_back(data);
+		*_accelerometerData = event.acceleration;
+	}
+
+}
+
+void Input::processGyroscope()
+{
+	ASensorEvent event;
+	_gyroscopeData = nullptr;
+
+	while (ASensorEventQueue_getEvents(_sensorEventQueue, &event, 1) > 0)
+	{
+		*_gyroscopeData = event.acceleration;
 	}
 
 }

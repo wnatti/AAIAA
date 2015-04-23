@@ -70,7 +70,7 @@ void Siika2D::terminateInput()
 {
 	if (INPUT->_accelerometerEnabled)
 	{
-		INPUT->disableAccelerometer();
+		INPUT->accelerometerDisable();
 	}
 }
 void Siika2D::terminateGraphics()
@@ -190,9 +190,14 @@ void Siika2D::run(android_app* app)
 	{
 		if (INPUT != nullptr)
 		{
-			if (id == INPUT_ID::ACCELEROMETER)
+			if (id == SENSOR_ID::ACCELEROMETER)
 			{
 				INPUT->processAccelerometer();
+			}
+
+			if (id == SENSOR_ID::GYROSCOPE)
+			{
+				INPUT->processGyroscope();
 			}
 
 			
