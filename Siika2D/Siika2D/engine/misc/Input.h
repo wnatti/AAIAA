@@ -5,7 +5,8 @@
 #include <algorithm>
 #include <glm.hpp>
 #include <vector>
-#include "android\keycodes.h"
+
+
 
 namespace core
 {
@@ -17,7 +18,8 @@ enum SENSOR_ID
 {
 	ACCELEROMETER = 10,
 	GYROSCOPE = 20
-};
+}; 
+
 
 struct Finger
 {
@@ -25,18 +27,24 @@ struct Finger
 	/**
 		Current press location
 	*/
-	glm::vec2 _touchPositionCurrent = glm::vec2(0.f, 0.f);
+	glm::vec2 _positionCurrent = glm::vec2(0.f, 0.f);
 
 	/**
 		Location where the last touch event started
 	*/
-	glm::vec2 _touchPositionStart = glm::vec2(0.f, 0.f);
+	glm::vec2 _positionStart = glm::vec2(0.f, 0.f);
 
 	/**
 		Location where the touch event ended
 	*/
-	glm::vec2 _touchPositionEnd = glm::vec2(0.f, 0.f);
+	glm::vec2 _positionEnd = glm::vec2(0.f, 0.f);
 
+};
+
+struct Stick
+{
+	float _pointingDirection = 0;
+	bool _pressedDown = false;
 };
 
 
@@ -82,25 +90,26 @@ namespace misc
 		/**
 			Is the screen being pressed?
 		*/
-		bool touchingScreen()
+		bool touchActive()
 		{
 			return _fingersDown;
 		}
 
-		glm::vec2 touchPositionCurrent(int finger)
+		bool stickActive()
 		{
-			return _fingers[finger]._touchPositionCurrent;
+			return _sticksActive;
 		}
 
-		glm::vec2 touchPositionStart(int finger)
+		Finger touchPosition(int finger)
 		{
-			return _fingers[finger]._touchPositionStart;
+			return _fingers[finger];
 		}
 
-		glm::vec2 touchPositionEnd(int finger)
+		Stick stickOrientation(int stick)
 		{
-			return _fingers[finger]._touchPositionEnd;
+			return _sticks[stick];
 		}
+
 	protected:
 		/**
 			Is the screen being pressed
@@ -113,9 +122,13 @@ namespace misc
 		std::vector<int>_keysDown;
 
 
-		Finger _fingers[2];
+		Finger _fingers[8];
 
-		int _fingersDown;
+		Stick _sticks[4];
+
+		int _fingersDown = 0;
+
+		int _sticksActive = 0;
 
 		/**
 			Processes accelerometer
@@ -142,7 +155,11 @@ namespace misc
 		/**
 			Processes motion-input
 		*/
-		void processMotion(AInputEvent *event);
+		void processMotion(AInputEvent *event, int source);
+
+		void processTouchscreen(AInputEvent *event);
+
+		void processStickOrDpad(AInputEvent *event);
 
 		Input(android_app* app);
 		Input(const Input& input);

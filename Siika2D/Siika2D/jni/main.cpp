@@ -35,10 +35,15 @@ void doStuff()
 		s2d_info("%i",keys[i]);
 	}
 
-	if (siika->INPUT->touchingScreen())
+	if (siika->INPUT->touchActive())
 	{
-		position = siika->INPUT->touchPositionCurrent(0);
-		s2d_info("%f %f", position.x, position.y);
+		position = siika->INPUT->touchPosition(0)._positionCurrent;
+	}
+
+
+	if (siika->INPUT->stickActive())
+	{
+		position += siika->INPUT->stickOrientation(0)._pointingDirection;
 	}
 	
 	green += 2;

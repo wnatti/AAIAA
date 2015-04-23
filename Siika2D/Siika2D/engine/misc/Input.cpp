@@ -20,7 +20,6 @@ Input::Input(android_app* app)
 	initializeSensor(app,SENSOR_ID::ACCELEROMETER);
 	initializeSensor(app, SENSOR_ID::GYROSCOPE);
 	initializeInput(app);
-	_fingersDown = 0;
 }
 
 Input::~Input()
@@ -73,9 +72,8 @@ int Input::processInput(android_app *app, AInputEvent *event)
 		case AINPUT_EVENT_TYPE_KEY:
 			_instance->processKey(event);
 			break;
-
 		case AINPUT_EVENT_TYPE_MOTION:
-			_instance->processMotion(event);
+			_instance->processMotion(event, AInputEvent_getSource(event));
 			break;
 	}
 
@@ -103,29 +101,71 @@ void Input::processKey(AInputEvent *event)
 	}
 }
 
-void Input::processMotion(AInputEvent *event)
+void Input::processMotion(AInputEvent *event, int source)
 {
+	if (source == AINPUT_SOURCE_TOUCHSCREEN)
+		processTouchscreen(event);
 
-	_fingersDown = AMotionEvent_getPointerCount(event);
+	if (source == AINPUT_SOURCE_DPAD || source == AINPUT_SOURCE_TRACKBALL || source == 16777232)
+		processStickOrDpad(event);
+}
+
+void Input::processTouchscreen(AInputEvent *event)
+{
 	
+	_fingersDown = AMotionEvent_getPointerCount(event);
+
 	for (int i = 0; i < _fingersDown; i++)
 	{
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
 		{
 			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-			_instance->_fingers[i]._touchPositionCurrent = pos;
+			_instance->_fingers[i]._positionCurrent = pos;
 		}
 
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
 		{
-			glm::vec2 fingerFirst(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
-			_instance->_fingers[i]._touchPositionStart = fingerFirst;
+			glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
+			_instance->_fingers[i]._positionStart = pos;
 
 		}
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
 		{
 			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-			_instance->_fingers[i]._touchPositionEnd = pos;
+			_instance->_fingers[i]._positionEnd = pos;
+		}
+	}
+
+}
+
+void Input::processStickOrDpad(AInputEvent *event)
+{
+	_sticksActive = AMotionEvent_getPointerCount(event);
+
+	for (int i = 0; i < _sticksActive; i++)
+	{
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+		{
+			float orientation(AMotionEvent_getOrientation(event,i));
+			float x = AMotionEvent_getX(event, i);
+			x;
+			s2d_info("%f", orientation);
+			AINPUT_MOTION_RANGE_Y;
+			_instance->_sticks->_pointingDirection = orientation;
+		}
+
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
+		{
+			float orientation(AMotionEvent_getOrientation(event, i));
+			_instance->_sticks->_pointingDirection = orientation;
+			_instance->_sticks->_pressedDown = true;
+		}
+
+		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
+		{
+			float orientation(AMotionEvent_getOrientation(event, i));
+			_instance->_sticks->_pointingDirection = orientation;
+			_instance->_sticks->_pressedDown = false;
 		}
 	}
 }
