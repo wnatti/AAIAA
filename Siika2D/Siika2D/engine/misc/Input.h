@@ -85,9 +85,9 @@ namespace misc
 		{
 			return _touchingScreen;
 		}
-		glm::vec2 getTouchPosition()
+		glm::vec2 touchPosition()
 		{
-			return _touchPosition;
+			//return _touchPosition;
 		}
 	protected:
 		/**
@@ -103,9 +103,20 @@ namespace misc
 		*/
 		std::vector<KEY_CODE>_keysDown;
 		/**
-			Press location
+			Current press location
 		*/
-		glm::vec2 _touchPosition;
+		glm::vec2 _currentTouchPosition;
+
+		/**
+			Location where the last touch event started
+		*/
+		glm::vec2 _startTouchPosition;
+
+		/**
+			Location where the touch event ended
+		*/
+
+		glm::vec2 _endTouchPosition;
 
 		/**
 			Processes accelerometer

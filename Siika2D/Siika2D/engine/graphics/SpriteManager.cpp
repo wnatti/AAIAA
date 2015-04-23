@@ -57,8 +57,9 @@ Sprite * SpriteManager::createSprite()
 {
 	return createSprite(nullptr);
 }
-SpriteManager::SpriteManager(core::ResourceManager * rsmgr) : ShaderManager(rsmgr)
+SpriteManager::SpriteManager(ShaderManager *shaderManager)
 {
+	_shaderManager = shaderManager;
 	int size = _sprites.size();
 }
 SpriteManager::~SpriteManager()
@@ -72,7 +73,7 @@ SpriteManager::~SpriteManager()
 Sprite * SpriteManager::createSprite(Sprite * sprite)
 {
 	
-	Shader * shdr = getShader();
+	Shader * shdr = _shaderManager->getShader();
 	if(!sprite)
 		sprite = new Sprite();
 	sprites_buffer * bfr;

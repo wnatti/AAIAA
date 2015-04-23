@@ -2,7 +2,7 @@
 
 using namespace graphics;
 
-Graphics::Graphics(android_app* application, core::ResourceManager* resourceManager) : GraphicsContext(application), TextureManager(resourceManager), SpriteManager(resourceManager)
+Graphics::Graphics(android_app* application, core::ResourceManager* resourceManager) : GraphicsContext(application), TextureManager(resourceManager), SHADING(), SpriteManager(SHADING)
 {
 	
 }

@@ -16,7 +16,8 @@ namespace graphics
 		friend class core::Siika2D;
 		
 	public:
-	
+
+		graphics::ShaderManager *SHADING;
 
 	private:
 		
@@ -24,7 +25,6 @@ namespace graphics
 			Create Graphics context, buffer- and shadermanagers
 		*/
 		Graphics(android_app* application, core::ResourceManager* resourceManager);
-
 		void clearGraphics();
 		~Graphics();
 	};

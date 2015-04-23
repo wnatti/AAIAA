@@ -89,11 +89,12 @@ void Input::processMotion(AInputEvent *event)
 	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
 	{
 		glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
-		_instance->_touchPosition = pos;
+		//_instance->_touchPosition = pos;
 	}
 
 	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
 	{
+		glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
 		_instance->_touchingScreen = true;
 	}
 

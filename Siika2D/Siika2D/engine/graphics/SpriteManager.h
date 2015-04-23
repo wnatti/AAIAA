@@ -14,13 +14,13 @@
 namespace graphics
 {
 
-	class SpriteManager : public ShaderManager
+	class SpriteManager
 	{
 		/***
 			Class for managing sprites
 		*/
 	public:
-		SpriteManager(core::ResourceManager *rsmngr);
+		SpriteManager(ShaderManager *shaderManager);
 		~SpriteManager();
 		Sprite * createSprite();
 		Sprite * createSprite(glm::vec2 location, glm::vec2 spriteSize, glm::vec2 spriteOrigin, Texture * texture, glm::vec2 textureUL, glm::vec2 textureLR);
@@ -36,6 +36,7 @@ namespace graphics
 		void batchSprites(std::vector<Sprite*> *toBatch){};
 		std::map<Shader*, sprites_buffer*> _sprites;
 		void spriteBatcher(std::vector<Sprite> *toBatch);
+		ShaderManager* _shaderManager;
 		//std::map<Shader*, sprites_buffer> _sprites;
 		/**
 		Compares Z position between 2 sprites from the 'sprites' vector

@@ -16,11 +16,11 @@ void doStuff()
 
 	if(!managersDone)
 	{
-		siika->GRAPHICS->useShader(true, true);
+		siika->GRAPHICS->SHADING->useShader(true, true);
 		graphics::Texture * tex = siika->GRAPHICS->createTexture("tekstuuri.png");
 		sprite = siika->GRAPHICS->createSprite(glm::vec2(0, 0), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
 		
-		siika->GRAPHICS->useDefaultShader(false, true);
+		siika->GRAPHICS->SHADING->useDefaultShader(false, true);
 		sprite2 = siika->GRAPHICS->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(1, 0), glm::vec2(0, 1));
 
 		managersDone = true;
@@ -37,7 +37,7 @@ void doStuff()
 
 	if (siika->INPUT->touchingScreen())
 	{
-		position = siika->INPUT->getTouchPosition();
+		//position = siika->INPUT->getTouchPosition();
 		s2d_info("%f %f", position.x, position.y);
 	}
 	
