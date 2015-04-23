@@ -56,6 +56,10 @@ namespace misc
 		static Input* getInstance(android_app *app);
 		virtual ~Input();
 
+		ASensorVector *_accelerometerData;
+
+		ASensorVector *_gyroscopeData;
+
 		/**
 			Sets the sensor active
 		*/
@@ -82,14 +86,17 @@ namespace misc
 		{
 			return _fingersDown;
 		}
+
 		glm::vec2 touchPositionCurrent(int finger)
 		{
 			return _fingers[finger]._touchPositionCurrent;
 		}
+
 		glm::vec2 touchPositionStart(int finger)
 		{
 			return _fingers[finger]._touchPositionStart;
 		}
+
 		glm::vec2 touchPositionEnd(int finger)
 		{
 			return _fingers[finger]._touchPositionEnd;
@@ -99,10 +106,6 @@ namespace misc
 			Is the screen being pressed
 		*/
 		bool _touchingScreen;
-
-		ASensorVector *_accelerometerData;
-
-		ASensorVector *_gyroscopeData;
 
 		/**
 			Analog keys currently pressed
