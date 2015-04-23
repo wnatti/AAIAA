@@ -3,6 +3,11 @@
 #include "../core/ResourceManager.h"
 #include "Texture.h"
 
+namespace core
+{
+	class Siika2D;
+}
+
 namespace graphics
 {
 	/**
@@ -11,6 +16,9 @@ namespace graphics
 		*/
 	class TextureManager
 	{
+
+	friend class core::Siika2D;
+
 	public:
 		/**
 			Constructor.

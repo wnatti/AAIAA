@@ -21,7 +21,6 @@ Siika2D::Siika2D()
 {
 	s2d_info("SIIKA CREATED");
 	INPUT = nullptr;
-	GRAPHICS = nullptr;
 }
 
 Siika2D::~Siika2D()
@@ -31,6 +30,7 @@ Siika2D::~Siika2D()
 	s2d_info("SIIKA DESTROYED");
 	_application = nullptr;
 	_instance = nullptr;
+	delete _graphicsContext;
 }
 
 void Siika2D::initialize(android_app* app)
@@ -53,10 +53,10 @@ void Siika2D::terminate()
 
 void Siika2D::initializeGraphics()
 {
-	if (GRAPHICS == nullptr)
-		GRAPHICS = new graphics::Graphics(_application, &_resourceManager);
-	else
-		GRAPHICS->initializeContext(_application);
+	_graphicsContext = new graphics::GraphicsContext(_application);
+	_shaderManager = new graphics::ShaderManager(&_resourceManager);
+	_textureManager = new graphics::TextureManager(&_resourceManager);
+	_spriteManager = new graphics::SpriteManager(_shaderManager);
 	_drawReady = true;
 }
 
@@ -75,7 +75,7 @@ void Siika2D::terminateInput()
 }
 void Siika2D::terminateGraphics()
 {
-	GRAPHICS->wipeContext();
+	_graphicsContext->wipeContext();
 	_drawReady = false;
 }
 void Siika2D::saveState(android_app* app)

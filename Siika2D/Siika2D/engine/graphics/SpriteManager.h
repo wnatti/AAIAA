@@ -11,14 +11,21 @@
 #include "BufferManager.h"
 #include <algorithm>
 
+namespace core
+{
+	class Siika2D;
+}
+
 namespace graphics
 {
-
+	/**
+		Class for managing sprites
+	*/
 	class SpriteManager
 	{
-		/***
-			Class for managing sprites
-		*/
+		
+		friend class core::Siika2D;
+
 	public:
 		SpriteManager(ShaderManager *shaderManager);
 		~SpriteManager();

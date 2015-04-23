@@ -10,12 +10,18 @@
 	Initializes OpenGL ES 2.0 context
 		and wipes it when needed
 */
+namespace core
+{
+	class Siika2D;
+}
 
 namespace graphics
 {
 
 	class GraphicsContext
 	{
+
+		friend class core::Siika2D;
 
 	public:
 	

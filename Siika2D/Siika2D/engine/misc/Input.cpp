@@ -66,18 +66,18 @@ void Input::processKey(AInputEvent *event)
 {
 	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN)
 	{
-		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
+		int keyCode = AKeyEvent_getKeyCode(event);
 
-		std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+		std::vector<int>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
 		if (it == _instance->_keysDown.end())
 			_instance->_keysDown.push_back(keyCode);
 	}
 
 	if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
 	{
-		KEY_CODE keyCode = (KEY_CODE)AKeyEvent_getKeyCode(event);
+		int keyCode = AKeyEvent_getKeyCode(event);
 
-		std::vector<KEY_CODE>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
+		std::vector<int>::iterator it = std::find(_instance->_keysDown.begin(), _instance->_keysDown.end(), keyCode);
 		if (it != _instance->_keysDown.end())
 			_instance->_keysDown.erase(it);
 	}
@@ -86,25 +86,34 @@ void Input::processKey(AInputEvent *event)
 void Input::processMotion(AInputEvent *event)
 {
 
-	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+	int fingersOnTheScreen = AMotionEvent_getPointerCount(event);
 	{
-		glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
-		//_instance->_touchPosition = pos;
+		for (int i = 0; i < fingersOnTheScreen; i++)
+		{
+			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+			{
+				glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
+				_instance->_fingers[i]._touchPositionCurrent = pos;
+			}
+
+			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
+			{
+				glm::vec2 fingerFirst(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
+				_instance->_fingers[i]._touchPositionStart = fingerFirst;
+
+			}
+			if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
+			{
+				glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
+				_instance->_fingers[i]._touchPositionEnd = pos;
+			}
+		}
+		//TODO:touchingscreen check
 	}
 
-	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
-	{
-		glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
-		_instance->_touchingScreen = true;
-	}
-
-	if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
-	{
-		_instance->_touchingScreen = false;
-	}
-
-
-
+	//if (AMotionEvent_getPointerCount(event) == 2)
+		
+	
 }
 
 void Input::setTickRate(float ticksPerSecond)

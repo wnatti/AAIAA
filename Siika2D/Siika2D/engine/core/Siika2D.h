@@ -1,13 +1,15 @@
 #pragma once
 #include "../../native_app_glue/android_native_app_glue.h" //TODO: includeen projektiin siististi tämän jossain vaiheessa
 #include "ResourceManager.h"
-#include "../graphics/Graphics.h"
+#include "../graphics/ShaderManager.h"
+#include "../graphics/TextManager.h"
+#include "../graphics/TextureManager.h"
+#include "../graphics/SpriteManager.h"
+#include "../graphics/GraphicsContext.h"
+
 #include <android/sensor.h>
 #include "../misc/Input.h"
 //#include "engine\core\MemoryManager.h"
-
-
-
 
 namespace core
 {
@@ -45,14 +47,21 @@ namespace core
 			return _drawReady;
 		}
 
-		graphics::Graphics *GRAPHICS;
 		misc::Input *INPUT;
-		core::ResourceManager _resourceManager;
+		graphics::ShaderManager *_shaderManager;
+		graphics::SpriteManager *_spriteManager;
+		graphics::TextureManager *_textureManager;
+		graphics::TextManager *_textManager;
+		graphics::GraphicsContext *_graphicsContext;
 	protected:
 		Siika2D();
 		Siika2D(const Siika2D& s2d);
 		Siika2D& operator=(const Siika2D& s2d);
 		static Siika2D* _instance;
+
+	
+
+		core::ResourceManager _resourceManager;
 
 		android_app *_application;
 		//std::vector<int> _appCommandList;

@@ -3,6 +3,11 @@
 #include "Text.h"
 #include "ShaderManager.h"
 
+namespace core
+{
+	class Siika2D;
+}
+
 namespace graphics
 {
 	/**
@@ -10,6 +15,7 @@ namespace graphics
 	*/
 	class TextManager
 	{
+		friend class core::Siika2D;
 	public:
 		/**
 			Constructor.

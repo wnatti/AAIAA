@@ -9,6 +9,10 @@
 #include <vector>
 #include <map>
 
+namespace core
+{
+	class Siika2D;
+}
 
 
 namespace graphics
@@ -31,6 +35,9 @@ namespace graphics
 			If colors or textures are needed use shader::setColor and shader::setTexture
 
 		*/
+
+		friend class core::Siika2D;
+
 	public:
 		
 

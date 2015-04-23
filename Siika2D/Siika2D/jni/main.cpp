@@ -16,19 +16,19 @@ void doStuff()
 
 	if(!managersDone)
 	{
-		siika->GRAPHICS->SHADING->useShader(true, true);
-		graphics::Texture * tex = siika->GRAPHICS->createTexture("tekstuuri.png");
-		sprite = siika->GRAPHICS->createSprite(glm::vec2(0, 0), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
+		siika->_shaderManager->useShader(true, true);
+		graphics::Texture * tex = siika->_textureManager->createTexture("tekstuuri.png");
+		sprite = siika->_spriteManager->createSprite(glm::vec2(0, 0), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
 		
-		siika->GRAPHICS->SHADING->useDefaultShader(false, true);
-		sprite2 = siika->GRAPHICS->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(1, 0), glm::vec2(0, 1));
+		siika->_shaderManager->useDefaultShader(false, true);
+		sprite2 = siika->_spriteManager->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(1, 0), glm::vec2(0, 1));
 
 		managersDone = true;
 		glActiveTexture(GL_TEXTURE0);
 		//Audio ad;
 	}
 
-	std::vector<KEY_CODE> keys = siika->INPUT->getDownKeys();
+	std::vector<int> keys = siika->INPUT->getDownKeys();
 	
 	for (int i = 0; i < keys.size(); i++)
 	{
@@ -37,7 +37,7 @@ void doStuff()
 
 	if (siika->INPUT->touchingScreen())
 	{
-		//position = siika->INPUT->getTouchPosition();
+		position = siika->INPUT->touchPositionCurrent(0);
 		s2d_info("%f %f", position.x, position.y);
 	}
 	
@@ -52,11 +52,9 @@ void doStuff()
 		pos = -1.0;
 
 	sprite->setPosition(glm::vec2(position.x/635.f - 1, -position.y/360.f + 1));
-	siika->GRAPHICS->clear();
-	siika->GRAPHICS->drawSprites();
-	siika->GRAPHICS->swap();
-
-
+	siika->_graphicsContext->clear();
+	siika->_spriteManager->drawSprites();
+	siika->_graphicsContext->swap();
 }
 
 void siika_main()

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <glm.hpp>
 #include <vector>
+#include "android\keycodes.h"
 
 namespace core
 {
@@ -18,31 +19,26 @@ enum INPUT_ID
 	TOUCH = 20
 };
 
+struct Finger{
 
-//TODO: more KEY_CODES
-enum KEY_CODE
-{
-	KEYCODE_BUTTON_A = 96,
-	KEYCODE_BUTTON_B = 97,
-	KEYCODE_BUTTON_C = 98,
-	KEYCODE_BUTTON_X = 99,
-	KEYCODE_BUTTON_Y = 100,
-	KEYCODE_BUTTON_Z = 101,
-	KEYCODE_BUTTON_L1 = 102,
-	KEYCODE_BUTTON_R1 = 103,
-	KEYCODE_BUTTON_L2 = 104,
-	KEYCODE_BUTTON_R2 = 105,
+	/**
+		Current press location
+	*/
+	glm::vec2 _touchPositionCurrent;
 
+	/**
+		Location where the last touch event started
+	*/
+	glm::vec2 _touchPositionStart;
 
-	KEYCODE_DPAD_UP = 19,
-	KEYCODE_DPAD_DOWN = 20,
-	KEYCODE_DPAD_LEFT = 21,
-	KEYCODE_DPAD_RIGHT = 22,
-	KEYCODE_DPAD_CENTER = 23,
-	KEYCODE_VOLUME_UP = 24,
-	KEYCODE_VOLUME_DOWN = 25,
+	/**
+		Location where the touch event ended
+	*/
+	glm::vec2 _touchPositionEnd;
 
 };
+
+
 namespace misc
 {
 	/**
@@ -74,7 +70,7 @@ namespace misc
 		*/
 		void disableAccelerometer();
 
-		std::vector<KEY_CODE> getDownKeys()
+		std::vector<int> getDownKeys()
 		{
 			return _keysDown;
 		}
@@ -85,9 +81,17 @@ namespace misc
 		{
 			return _touchingScreen;
 		}
-		glm::vec2 touchPosition()
+		glm::vec2 touchPositionCurrent(int finger)
 		{
-			//return _touchPosition;
+			return _fingers[finger]._touchPositionCurrent;
+		}
+		glm::vec2 touchPositionStart(int finger)
+		{
+			return _fingers[finger]._touchPositionStart;
+		}
+		glm::vec2 touchPositionEnd(int finger)
+		{
+			return _fingers[finger]._touchPositionEnd;
 		}
 	protected:
 		/**
@@ -101,22 +105,10 @@ namespace misc
 		/**
 			Analog keys currently pressed
 		*/
-		std::vector<KEY_CODE>_keysDown;
-		/**
-			Current press location
-		*/
-		glm::vec2 _currentTouchPosition;
+		std::vector<int>_keysDown;
 
-		/**
-			Location where the last touch event started
-		*/
-		glm::vec2 _startTouchPosition;
 
-		/**
-			Location where the touch event ended
-		*/
-
-		glm::vec2 _endTouchPosition;
+		Finger _fingers[2];
 
 		/**
 			Processes accelerometer
