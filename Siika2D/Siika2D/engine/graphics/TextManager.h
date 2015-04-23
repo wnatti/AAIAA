@@ -45,7 +45,7 @@ namespace graphics
 			Get attribute location for position and texture coordinates.
 			Set attribute pointers.
 		*/
-		void setAttributes();
+		void setAttributes(GLint& positionLoc);
 
 		/**
 			Get color uniform location and set it's color value.
@@ -55,7 +55,7 @@ namespace graphics
 		/**
 			Get texture sampler location, generate texture for text and set texture parameters.
 		*/
-		void setTextureUniform(); // Text needs it's own texture initialization because of reasons.
+		void setTextureUniform(GLint& textureSampler, GLuint& texture); // Text needs it's own texture initialization because of reasons.
 
 		core::ResourceManager* _resourceManager;
 		ShaderManager* _shaderManager;

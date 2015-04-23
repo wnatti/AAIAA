@@ -33,8 +33,12 @@ void TextManager::drawTexts()
 	_shaderManager->setCurrentShader(_textShader);
 	glUseProgram(_program);
 
-	setAttributes();
-	setTextureUniform();
+	GLint textureSampler;
+	GLuint texture;
+	GLint positionLoc;
+
+	setAttributes(positionLoc);
+	setTextureUniform(textureSampler, texture);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	for (int i = 0; i < _texts.size(); i++)
@@ -56,12 +60,12 @@ Shader* TextManager::createShaders()
 	return _shaderManager->createShader("vertexTextShader.glsl", "fragmentTextShader.glsl");
 }
 
-void TextManager::setAttributes()
+void TextManager::setAttributes(GLint& positionLoc)
 {
 	GLint error = glGetError();
 	s2d_assert(error == 0);
 
-	GLint positionLoc = glGetAttribLocation(_program, "coord");
+	positionLoc = glGetAttribLocation(_program, "coord");
 	s2d_assert(!(positionLoc == -1));
 
 	glEnableVertexAttribArray(positionLoc);
@@ -86,13 +90,12 @@ void TextManager::setColorUniform(Color color)
 	s2d_assert(error == 0);
 }
 
-void TextManager::setTextureUniform()
+void TextManager::setTextureUniform(GLint& textureSampler, GLuint& texture )
 {
 	GLint error = glGetError();
 	s2d_assert(error == 0);
 
-	GLint textureSampler = glGetUniformLocation(_program, "tex");
-	GLuint texture;
+	textureSampler = glGetUniformLocation(_program, "tex");
 
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &texture);
