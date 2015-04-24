@@ -43,18 +43,18 @@ void TextManager::drawTexts()
 
 	GLint textureSampler;
 	GLuint texture;
-	GLint positionLoc;
+	GLint positionLoc, colorLoc;
 
 	setAttributes(positionLoc);
 	setTextureUniform(textureSampler, texture);
+	setColorUniform(colorLoc);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	for (int i = 0; i < _texts.size(); i++)
 	{
 		if (_texts.at(i).isInitialized)
 		{
-			setColorUniform(_texts.at(i).getColor());
-			_texts.at(i).draw(_displaySize, positionLoc);
+			_texts.at(i).draw(_displaySize, positionLoc, colorLoc);
 		}
 	}
 
@@ -88,21 +88,16 @@ void TextManager::setAttributes(GLint& positionLoc)
 
 	glEnableVertexAttribArray(positionLoc);
 
-	//glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, 0, reinterpret_cast <GLvoid*>(0));
-
 	error = glGetError();
 	s2d_assert(error == 0);
 }
 
-void TextManager::setColorUniform(Color color)
+void TextManager::setColorUniform(GLint &colLoc)
 {
 	GLint error = glGetError();
 	s2d_assert(error == 0);
 
-	GLint colorLoc = glGetUniformLocation(_program, "color");
-	glm::vec4 glCol = color.getGLColor();
-	GLfloat tempCol[4] = {glCol.r, glCol.g, glCol.b, glCol.a};
-	glUniform4fv(colorLoc, 1, tempCol);
+	colLoc = glGetUniformLocation(_program, "color");
 
 	error = glGetError();
 	s2d_assert(error == 0);

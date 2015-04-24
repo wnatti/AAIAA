@@ -57,6 +57,7 @@ void Siika2D::initializeGraphics()
 	_shaderManager = new graphics::ShaderManager(&_resourceManager);
 	_textureManager = new graphics::TextureManager(&_resourceManager);
 	_spriteManager = new graphics::SpriteManager(_shaderManager);
+	_textManager = new graphics::TextManager(&_resourceManager, _shaderManager, _graphicsContext->getDisplaySize());
 	_drawReady = true;
 }
 
