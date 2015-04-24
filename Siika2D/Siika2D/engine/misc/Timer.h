@@ -8,12 +8,17 @@ namespace misc
 	class Timer
 	{
 	public:
+		Timer(void){};
 		Timer(std::clock_t start);
 		~Timer();
 		/**
 		Function for reseting the start time
 		*/
 		void reset();
+		/**
+		Function for starting timer
+		*/
+		void start();
 		/**
 		Gets time in seconds
 		*/

@@ -16,7 +16,10 @@ void Timer::reset()
 {
 	std::clock_t _start;
 }
-
+void Timer::start()
+{
+	_start = std::clock();
+}
 double Timer::getElapsedTime(TIME time)
 {
 	double elapsed;
