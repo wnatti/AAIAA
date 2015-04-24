@@ -9,8 +9,9 @@ namespace audio
 	{
 	public:
 		friend class Audio;
-		Sound(std::vector<unsigned char>* soundData)
+		Sound(std::vector<unsigned char>* soundData, unsigned long clipLength = 5000)
 		{
+			_clipLength = clipLength;
 			unsigned long size = soundData->size() * sizeof(unsigned char);
 			clip_buffer = (void*)soundData->data();
 			clip_size = size;// soundData->size() * sizeof(unsigned char);
@@ -25,8 +26,9 @@ namespace audio
 				return false;
 
 			//TODO: needs to check clip length
-			long length = clip_size / clip_samples_per_sec;
-			if(timer.getElapsedTime(TIME::MILLISECONDS) > clip_size)
+			//long length = clip_size / clip_samples_per_sec;
+
+			if(timer.getElapsedTime(TIME::MILLISECONDS) > _clipLength)
 			{
 				_isDone = true;
 				return _isDone;
@@ -35,15 +37,18 @@ namespace audio
 		}
 		void play(void){};
 		bool operator==(const Sound rhs)
-		{ //TODO: better comparison
-			if(this->clip_buffer == rhs.clip_buffer)
+		{	
+			//Same clip at same position is Id of some kind needed?
+			if(this->clip_buffer == rhs.clip_buffer && this->timer == rhs.timer)
+			{
 				return true;
-			else
-				return false;
+
+			}
 		}
 		
 	private:
 		//Audio *_ad;
+		unsigned long _clipLength;
 		misc::Timer timer;
 		const void *clip_samples;             //the raw samples
 		unsigned int clip_num_samples;        //how many samples there are
