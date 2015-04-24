@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <glm.hpp>
 #include <vector>
+#include <map>
 
 
 
@@ -44,9 +45,9 @@ struct Finger
 struct Stick
 {
 	float _pointingDirection = 0;
+	glm::vec2 _pointingVector = glm::vec2(0.f, 0.f);
 	bool _pressedDown = false;
 };
-
 
 namespace misc
 {
@@ -76,7 +77,7 @@ namespace misc
 		/**
 			Sets the approx. tickrate/second for the accelerometer
 		*/
-		void setTickRate(float ticksPerSecond);
+		void setTickRate(float ticksPerSecond, SENSOR_ID sensorId);
 
 		/**
 			Stops accelerometer processing
@@ -114,13 +115,14 @@ namespace misc
 		/**
 			Is the screen being pressed
 		*/
-		bool _touchingScreen;
+		bool _touchingScreen = false;
 
 		/**
 			Analog keys currently pressed
 		*/
 		std::vector<int>_keysDown;
 
+		std::map<SENSOR_ID, float>_tickRates;
 
 		Finger _fingers[8];
 
@@ -167,7 +169,6 @@ namespace misc
 		static Input* _instance;
 
 		bool _accelerometerEnabled = false;
-		float _tickRate = 1.0;
 
 		android_app *_app;
 		ASensorEventQueue* _sensorEventQueue;

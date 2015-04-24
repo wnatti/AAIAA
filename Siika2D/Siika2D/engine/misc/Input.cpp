@@ -15,8 +15,9 @@ Input* Input::getInstance(android_app* app)
 
 Input::Input(android_app* app)
 {
-	_touchingScreen = false;
 	_app = app;
+	_tickRates.insert(std::make_pair(ACCELEROMETER, 1.0f));
+	_tickRates.insert(std::make_pair(GYROSCOPE, 1.0f));
 	initializeSensor(app,SENSOR_ID::ACCELEROMETER);
 	initializeSensor(app, SENSOR_ID::GYROSCOPE);
 	initializeInput(app);
@@ -50,11 +51,11 @@ void Input::enableSensor(SENSOR_ID sensorId)
 	{
 	case ACCELEROMETER:
 		ASensorEventQueue_enableSensor(_sensorEventQueue, _accelerometerSensor);
-		ASensorEventQueue_setEventRate(_sensorEventQueue, _accelerometerSensor, ((1000l / _tickRate) * 1000));
+		ASensorEventQueue_setEventRate(_sensorEventQueue, _accelerometerSensor, ((1000l / _tickRates[sensorId]) * 1000));
 		break;
 	case GYROSCOPE:
 		ASensorEventQueue_enableSensor(_sensorEventQueue,_gyroscopeSensor);
-		ASensorEventQueue_setEventRate(_sensorEventQueue, _gyroscopeSensor, ((1000l / _tickRate) * 1000));
+		ASensorEventQueue_setEventRate(_sensorEventQueue, _gyroscopeSensor, ((1000l / _tickRates[sensorId]) * 1000));
 	}
 	
 }
@@ -106,7 +107,7 @@ void Input::processMotion(AInputEvent *event, int source)
 	if (source == AINPUT_SOURCE_TOUCHSCREEN)
 		processTouchscreen(event);
 
-	if (source == AINPUT_SOURCE_DPAD || source == AINPUT_SOURCE_TRACKBALL || source == 16777232)
+	if (source == AINPUT_SOURCE_DPAD || source == AINPUT_SOURCE_JOYSTICK)
 		processStickOrDpad(event);
 }
 
@@ -125,7 +126,7 @@ void Input::processTouchscreen(AInputEvent *event)
 
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
 		{
-			glm::vec2 pos(AMotionEvent_getX(event, 0), AMotionEvent_getY(event, 0));
+			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
 			_instance->_fingers[i]._positionStart = pos;
 
 		}
@@ -135,7 +136,6 @@ void Input::processTouchscreen(AInputEvent *event)
 			_instance->_fingers[i]._positionEnd = pos;
 		}
 	}
-
 }
 
 void Input::processStickOrDpad(AInputEvent *event)
@@ -146,33 +146,17 @@ void Input::processStickOrDpad(AInputEvent *event)
 	{
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
 		{
-			float orientation(AMotionEvent_getOrientation(event,i));
-			float x = AMotionEvent_getX(event, i);
-			x;
-			s2d_info("%f", orientation);
-			AINPUT_MOTION_RANGE_Y;
-			_instance->_sticks->_pointingDirection = orientation;
-		}
-
-		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_DOWN)
-		{
 			float orientation(AMotionEvent_getOrientation(event, i));
-			_instance->_sticks->_pointingDirection = orientation;
-			_instance->_sticks->_pressedDown = true;
-		}
-
-		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_UP)
-		{
-			float orientation(AMotionEvent_getOrientation(event, i));
-			_instance->_sticks->_pointingDirection = orientation;
-			_instance->_sticks->_pressedDown = false;
+			_instance->_sticks[i]._pointingVector.x = std::sin(orientation);
+			_instance->_sticks[i]._pointingVector.y = std::cos(orientation);
+			_instance->_sticks[i]._pointingDirection = orientation;
 		}
 	}
 }
 
-void Input::setTickRate(float ticksPerSecond)
+void Input::setTickRate(float ticksPerSecond, SENSOR_ID sensorId)
 {
-	_tickRate = ticksPerSecond;
+	_tickRates[sensorId] = ticksPerSecond;
 }
 
 void Input::accelerometerDisable()
@@ -189,7 +173,6 @@ void Input::processAccelerometer()
 	{
 		*_accelerometerData = event.acceleration;
 	}
-
 }
 
 void Input::processGyroscope()
@@ -201,5 +184,4 @@ void Input::processGyroscope()
 	{
 		*_gyroscopeData = event.acceleration;
 	}
-
 }

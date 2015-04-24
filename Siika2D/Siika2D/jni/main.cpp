@@ -43,7 +43,8 @@ void doStuff()
 
 	if (siika->INPUT->stickActive())
 	{
-		position += siika->INPUT->stickOrientation(0)._pointingDirection;
+		position += siika->INPUT->stickOrientation(0)._pointingVector;
+
 	}
 	
 	green += 2;
