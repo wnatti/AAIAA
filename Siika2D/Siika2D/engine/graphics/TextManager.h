@@ -57,7 +57,14 @@ namespace graphics
 		*/
 		void setTextureUniform(GLint& textureSampler, GLuint& texture); // Text needs it's own texture initialization because of reasons.
 
+		/**
+			Initializes FreeType.
+		*/
+		void initFreetype();
+
+
 		core::ResourceManager* _resourceManager;
+		FT_Library _library;
 		ShaderManager* _shaderManager;
 		Shader* _textShader;
 		std::vector<Text> _texts;

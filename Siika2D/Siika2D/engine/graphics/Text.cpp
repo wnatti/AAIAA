@@ -2,15 +2,14 @@
 
 using namespace graphics;
 
-Text::Text(core::ResourceManager* resourceManager) :_buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW), _color(0, 0, 0, 1)
+Text::Text(core::ResourceManager* resourceManager, FT_Library* ftLibrary) :_buffer(GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW), _color(255, 255, 255, 255)
 {
 	_resourceManager = resourceManager;
+	_library = ftLibrary;
 
 	setPosition(0, 0);
 	_size = 18;
 	isInitialized = false;
-
-	initFreetype();
 }
 
 
@@ -23,7 +22,7 @@ Text::~Text()
 void Text::setFont(std::string filename)
 {
 	std::vector<unsigned char>* fontData = _resourceManager->loadFile(filename);
-	int error = FT_New_Memory_Face(_library, fontData->data(), sizeof(unsigned char)*fontData->size(), 0, &_fontFace);
+	int error = FT_New_Memory_Face(*_library, fontData->data(), sizeof(unsigned char)*fontData->size(), 0, &_fontFace);
 	s2d_assert(error == 0);
 
 	setFontSize(_size);
@@ -79,7 +78,7 @@ void Text::draw(glm::vec2 displaySize, GLint posLoc, GLint colLoc)
 	FT_GlyphSlot glyph = _fontFace->glyph;
 
 	float x = _position.x;
-	float y = _position.y;
+	float y = -_position.y;
 	float scaleX = 2.0 / displaySize.x;
 	float scaleY = 2.0 / displaySize.y;
 
@@ -133,11 +132,3 @@ void Text::draw(glm::vec2 displaySize, GLint posLoc, GLint colLoc)
 
 	_buffer.unbindBuffer();
 }
-
-
-void Text::initFreetype()
-{
-	int error = FT_Init_FreeType(&_library);
-	s2d_assert(error == 0);
-}
-
