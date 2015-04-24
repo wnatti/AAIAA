@@ -61,7 +61,7 @@ namespace graphics
 		/**
 			Draws text. Generates textures for each character of the text and draws them.
 		*/
-		void draw(glm::vec2 displaySize, GLint posLoc);
+		void draw(glm::vec2 displaySize, GLint posLoc, GLint colLoc);
 		bool isInitialized; //Gives OK to textManager for drawing if true.
 
 	private:

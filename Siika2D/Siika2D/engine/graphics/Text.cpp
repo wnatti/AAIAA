@@ -62,10 +62,17 @@ Color Text::getColor()
 	return _color;
 }
 
-void Text::draw(glm::vec2 displaySize, GLint posLoc)
+void Text::draw(glm::vec2 displaySize, GLint posLoc, GLint colLoc)
 {
 	_buffer.bindBuffer();
+
+	//Position vertex attribute pointer
 	glVertexAttribPointer(posLoc, 4, GL_FLOAT, GL_FALSE, 0, reinterpret_cast <GLvoid*>(0));
+
+	//Uniform color
+	glm::vec4 glCol = _color.getGLColor();
+	GLfloat tempCol[4] = { glCol.r, glCol.g, glCol.b, glCol.a };
+	glUniform4fv(colLoc, 1, tempCol);
 
 	const char* pointerToText;
 

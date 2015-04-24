@@ -50,7 +50,7 @@ namespace graphics
 		/**
 			Get color uniform location and set it's color value.
 		*/
-		void setColorUniform(Color color);
+		void setColorUniform(GLint &colLoc);
 
 		/**
 			Get texture sampler location, generate texture for text and set texture parameters.
