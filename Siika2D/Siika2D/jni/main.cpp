@@ -28,23 +28,21 @@ void doStuff()
 		//Audio ad;
 	}
 
-	std::vector<int> keys = siika->INPUT->getDownKeys();
+	std::vector<int> keys = siika->_input->getDownKeys();
 	
 	for (int i = 0; i < keys.size(); i++)
 	{
 		s2d_info("%i",keys[i]);
 	}
 
-	if (siika->INPUT->touchActive())
+	for (int i = 0; i < siika->_input->touchPositionsActive(); i++)
 	{
-		position = siika->INPUT->touchPosition(0)._positionCurrent;
+		position = siika->_input->touchPosition(i)._positionCurrent;
 	}
 
-
-	if (siika->INPUT->stickActive())
+	for (int i = 0; i < siika->_input->sticksActive(); i++)
 	{
-		position += siika->INPUT->stickOrientation(0)._pointingVector;
-
+		position += siika->_input->stickOrientation(i)._pointingVector;
 	}
 	
 	green += 2;

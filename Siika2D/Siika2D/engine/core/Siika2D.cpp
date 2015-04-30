@@ -20,7 +20,7 @@ Siika2D* Siika2D::UI()
 Siika2D::Siika2D()
 {
 	s2d_info("SIIKA CREATED");
-	INPUT = nullptr;
+	_input = nullptr;
 }
 
 Siika2D::~Siika2D()
@@ -31,6 +31,10 @@ Siika2D::~Siika2D()
 	_application = nullptr;
 	_instance = nullptr;
 	delete _graphicsContext;
+	delete _textManager;
+	delete _spriteManager;
+	delete _textureManager;
+	delete _shaderManager;
 }
 
 void Siika2D::initialize(android_app* app)
@@ -63,15 +67,15 @@ void Siika2D::initializeGraphics()
 
 void Siika2D::initializeInput()
 {
-	if (INPUT == nullptr)
-		INPUT = INPUT->getInstance(_application);
+	if (_input == nullptr)
+		_input = _input->getInstance(_application);
 }
 
 void Siika2D::terminateInput()
 {
-	if (INPUT->_accelerometerEnabled)
+	if (_input->_accelerometerEnabled)
 	{
-		INPUT->accelerometerDisable();
+		_input->accelerometerDisable();
 	}
 }
 void Siika2D::terminateGraphics()
@@ -94,7 +98,6 @@ void Siika2D::loadState(android_app* app)
 	if (app->savedState != nullptr)
 		_savedState = (struct saved_state*)app->savedState;
 }
-
 
 void Siika2D::processCommands(android_app* app,int32_t command)
 {
@@ -189,19 +192,17 @@ void Siika2D::run(android_app* app)
 
 	while ((id = ALooper_pollAll(0, nullptr, &events, (void**)&_source)) >= 0)
 	{
-		if (INPUT != nullptr)
+		if (_input != nullptr)
 		{
 			if (id == SENSOR_ID::ACCELEROMETER)
 			{
-				INPUT->processAccelerometer();
+				_input->processAccelerometer();
 			}
 
 			if (id == SENSOR_ID::GYROSCOPE)
 			{
-				INPUT->processGyroscope();
+				_input->processGyroscope();
 			}
-
-			
 		}
 
 		if (_source != NULL)

@@ -47,7 +47,7 @@ namespace core
 			return _drawReady;
 		}
 
-		misc::Input *INPUT;
+		misc::Input *_input;
 		graphics::ShaderManager *_shaderManager;
 		graphics::SpriteManager *_spriteManager;
 		graphics::TextureManager *_textureManager;

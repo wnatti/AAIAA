@@ -42,7 +42,6 @@ void Input::initializeSensor(android_app *app, SENSOR_ID sensorId)
 	}
 
 	_sensorEventQueue = ASensorManager_createEventQueue(_sensorManager, _app->looper, sensorId, NULL, NULL);
-
 }
 
 void Input::enableSensor(SENSOR_ID sensorId)
@@ -57,7 +56,6 @@ void Input::enableSensor(SENSOR_ID sensorId)
 		ASensorEventQueue_enableSensor(_sensorEventQueue,_gyroscopeSensor);
 		ASensorEventQueue_setEventRate(_sensorEventQueue, _gyroscopeSensor, ((1000l / _tickRates[sensorId]) * 1000));
 	}
-	
 }
 
 void Input::initializeInput(android_app *app)
@@ -67,7 +65,6 @@ void Input::initializeInput(android_app *app)
 
 int Input::processInput(android_app *app, AInputEvent *event)
 {
-
 	switch (AInputEvent_getType(event))
 	{
 		case AINPUT_EVENT_TYPE_KEY:
@@ -77,7 +74,6 @@ int Input::processInput(android_app *app, AInputEvent *event)
 			_instance->processMotion(event, AInputEvent_getSource(event));
 			break;
 	}
-
 	return 1;
 }
 
@@ -113,9 +109,8 @@ void Input::processMotion(AInputEvent *event, int source)
 
 void Input::processTouchscreen(AInputEvent *event)
 {
-	
 	_fingersDown = AMotionEvent_getPointerCount(event);
-
+	//TODO:: getOrientation?
 	for (int i = 0; i < _fingersDown; i++)
 	{
 		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
@@ -134,6 +129,8 @@ void Input::processTouchscreen(AInputEvent *event)
 		{
 			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
 			_instance->_fingers[i]._positionEnd = pos;
+			if (_fingersDown == 1)
+				_fingersDown = 0;
 		}
 	}
 }
@@ -144,12 +141,12 @@ void Input::processStickOrDpad(AInputEvent *event)
 
 	for (int i = 0; i < _sticksActive; i++)
 	{
-		if (AMotionEvent_getAction(event) == AMOTION_EVENT_ACTION_MOVE)
+		int action = AMotionEvent_getAction(event);
+
+		if (action == AMOTION_EVENT_ACTION_MOVE)
 		{
-			float orientation(AMotionEvent_getOrientation(event, i));
-			_instance->_sticks[i]._pointingVector.x = std::sin(orientation);
-			_instance->_sticks[i]._pointingVector.y = std::cos(orientation);
-			_instance->_sticks[i]._pointingDirection = orientation;
+			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
+			_sticks[i]._pointingVector = pos;
 		}
 	}
 }

@@ -44,9 +44,7 @@ struct Finger
 
 struct Stick
 {
-	float _pointingDirection = 0;
 	glm::vec2 _pointingVector = glm::vec2(0.f, 0.f);
-	bool _pressedDown = false;
 };
 
 namespace misc
@@ -91,12 +89,12 @@ namespace misc
 		/**
 			Is the screen being pressed?
 		*/
-		bool touchActive()
+		int touchPositionsActive()
 		{
 			return _fingersDown;
 		}
 
-		bool stickActive()
+		int sticksActive()
 		{
 			return _sticksActive;
 		}
