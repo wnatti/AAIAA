@@ -33,14 +33,11 @@ Text* TextManager::createText()
 
 void TextManager::drawTexts()
 {
-	GLint error = glGetError();
-	s2d_assert(error == 0);
-
 	Shader* previousShader =_shaderManager->getShader();
 	_shaderManager->setCurrentShader(_textShader);
 	glUseProgram(_program);
 
-	error = glGetError();
+	GLint error = glGetError();
 	s2d_assert(error == 0);
 
 	GLint textureSampler;
@@ -67,14 +64,11 @@ void TextManager::drawTexts()
 
 Shader* TextManager::createShaders()
 {
-	GLint error = glGetError();
-	s2d_assert(error == 0);
-
 	Shader* previousShader = _shaderManager->getShader();
 	Shader* textShader = _shaderManager->createShader("vertexTextShader.glsl", "fragmentTextShader.glsl");
 	_shaderManager->setCurrentShader(previousShader);
 
-	error = glGetError();
+	GLint error = glGetError();
 	s2d_assert(error == 0);
 
 	return textShader;
@@ -82,39 +76,30 @@ Shader* TextManager::createShaders()
 
 void TextManager::setAttributes(GLint& positionLoc)
 {
-	GLint error = glGetError();
-	s2d_assert(error == 0);
-
 	positionLoc = glGetAttribLocation(_program, "coord");
 	s2d_assert(!(positionLoc == -1));
 
 	glEnableVertexAttribArray(positionLoc);
 
-	error = glGetError();
+	GLint error = glGetError();
 	s2d_assert(error == 0);
 }
 
 void TextManager::setColorUniform(GLint &colLoc)
 {
-	GLint error = glGetError();
-	s2d_assert(error == 0);
-
 	colLoc = glGetUniformLocation(_program, "color");
 
-	error = glGetError();
+	GLint error = glGetError();
 	s2d_assert(error == 0);
 }
 
 void TextManager::setTextureUniform(GLint& textureSampler, GLuint& texture )
 {
-	GLint error = glGetError();
-	s2d_assert(error == 0);
-
 	textureSampler = glGetUniformLocation(_program, "tex");
 
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &texture);
-	error = glGetError();
+	GLint error = glGetError();
 	s2d_assert(error == 0);
 	
 	glBindTexture(GL_TEXTURE_2D, texture);
