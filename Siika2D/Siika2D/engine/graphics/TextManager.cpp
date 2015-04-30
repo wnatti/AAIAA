@@ -13,6 +13,8 @@ TextManager::TextManager(core::ResourceManager* resourceManager, ShaderManager* 
 	_program = _textShader->getProgram();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	initFreetype();
 }
 
 
@@ -24,7 +26,7 @@ TextManager::~TextManager()
 
 Text* TextManager::createText()
 {
-	_texts.push_back(Text(_resourceManager));
+	_texts.push_back(Text(_resourceManager, &_library));
 	return &_texts.at(_texts.size()-1);
 }
 
@@ -130,3 +132,11 @@ void TextManager::setTextureUniform(GLint& textureSampler, GLuint& texture )
 	error = glGetError();
 	s2d_assert(error == 0);
 }
+
+
+void TextManager::initFreetype()
+{
+	int error = FT_Init_FreeType(&_library);
+	s2d_assert(error == 0);
+}
+

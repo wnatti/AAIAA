@@ -8,6 +8,7 @@ namespace audio
 	public:
 		Effect(std::vector<unsigned char>* soundData) :Sound(soundData)
 		{
+
 		};
 		~Effect(){};
 	private:

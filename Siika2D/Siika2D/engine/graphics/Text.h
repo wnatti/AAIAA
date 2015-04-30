@@ -26,7 +26,7 @@ namespace graphics
 		Constructor.
 		Initializes FreeType and sets default values for position and font size.
 		*/
-		Text(core::ResourceManager* resourceManager);
+		Text(core::ResourceManager* resourceManager, FT_Library* ftLibrary);
 		~Text();
 		/**
 			Load font from file
@@ -65,10 +65,6 @@ namespace graphics
 		bool isInitialized; //Gives OK to textManager for drawing if true.
 
 	private:
-		/**
-			Initializes FreeType.
-		*/
-		void initFreetype();
 
 		core::ResourceManager* _resourceManager;
 		Buffer _buffer;
@@ -76,7 +72,7 @@ namespace graphics
 		GLint _size;
 		glm::vec2 _position;
 		FT_Face _fontFace;
-		FT_Library _library;
+		FT_Library* _library;
 		Color _color;
 	};
 }

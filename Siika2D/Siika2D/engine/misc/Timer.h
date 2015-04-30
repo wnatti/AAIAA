@@ -23,7 +23,12 @@ namespace misc
 		Gets time in seconds
 		*/
 		double getElapsedTime(TIME time);
-
+		bool operator==(const Timer rhs)
+		{
+			if(this->_start == rhs._start)
+				return true;
+			return false;
+		}
 	private:
 		std::clock_t _start;
 	};

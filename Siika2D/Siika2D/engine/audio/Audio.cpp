@@ -36,7 +36,7 @@ namespace audio
 		SLDataFormat_PCM format;
 		format.formatType = SL_DATAFORMAT_PCM;
 		format.numChannels = 1;
-		format.samplesPerSec = clip_samples_per_sec * 1000; //mHz
+		format.samplesPerSec = 22000;//clip_samples_per_sec * 1000; //mHz
 		format.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
 		format.containerSize = 16;
 		format.channelMask = SL_SPEAKER_FRONT_CENTER;
@@ -59,11 +59,12 @@ namespace audio
 
 
 		//create the object
+		SLresult res;
 		const SLInterfaceID ids[] = { SL_IID_VOLUME, SL_IID_ANDROIDSIMPLEBUFFERQUEUE };
 		SLuint32 idsCount = sizeof(ids) / sizeof((ids[0]));
 		const SLboolean req[] = { SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE };
 
-		(*_engine)->CreateAudioPlayer(_engine, &player_obj, &src, &dst, idsCount, ids, req);
+		res = (*_engine)->CreateAudioPlayer(_engine, &player_obj, &src, &dst, idsCount, ids, req);
 		(*player_obj)->Realize(player_obj, SL_BOOLEAN_FALSE);
 
 		(*player_obj)->GetInterface(player_obj, SL_IID_PLAY, &player);
@@ -100,7 +101,16 @@ namespace audio
 		}
 
 	}
-
+	void Audio::update(void)
+	{
+		checkPlaying();
+		//TODO: Needs to go through _sounds to see if anything is still playing
+		if(_isDone == true && _isPlaying == true) // If nothing is playing 
+		{
+			(*player_buf_q)->Clear(player_buf_q);
+			_isPlaying = false;
+		}
+	}
 	bool Audio::playSound(Sound * toPlay)
 	{
 		_playingSounds.push_back(*toPlay);
@@ -119,5 +129,20 @@ namespace audio
 	{
 		_sounds.push_back(new Effect(soundData));
 		return (Effect*)_sounds[_sounds.size()];
+	}
+	Audio::~Audio()
+	{
+		(*player_obj)->Destroy(player_obj);
+		player_obj = nullptr;
+		player = nullptr;
+		player_vol = nullptr;
+		player_buf_q = nullptr;
+
+		(*_output_mix_obj)->Destroy(_output_mix_obj);
+		_output_mix_obj = nullptr;
+		_output_mix_vol = nullptr;
+		(*_engine_obj)->Destroy(_engine_obj);
+		_engine_obj = nullptr;
+		_engine = nullptr;
 	}
 }
