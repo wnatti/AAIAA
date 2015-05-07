@@ -39,6 +39,29 @@ Image* ResourceManager::loadImage(std::string filename)
 	}
 }
 
+Audio* ResourceManager::loadAudio(std::string filename)
+{
+	std::map<std::string, Audio>::iterator it = _loadedAudio.find(filename);
+	if (it != _loadedAudio.end())
+		return &it->second;
+	else
+	{
+		Audio loadedAudio;
+
+		AAsset* audioAsset = AAssetManager_open(_androidAssetManager, filename.c_str(), 2);
+		s2d_assert((audioAsset != nullptr));
+
+		int tempFileDescriptor = AAsset_openFileDescriptor(audioAsset, &loadedAudio.start, &loadedAudio.length);
+		loadedAudio.fileDescriptor = tempFileDescriptor;
+
+		_loadedAudio.insert(std::make_pair(filename, loadedAudio));
+
+		AAsset_close(audioAsset);
+
+		return &_loadedAudio.at(filename);
+	}
+}
+
 std::string* ResourceManager::loadTextFile(std::string filename)
 {
 	std::map<std::string, std::string>::iterator it = _loadedTextFiles.find(filename);

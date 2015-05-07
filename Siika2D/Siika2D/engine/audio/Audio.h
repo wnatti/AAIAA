@@ -1,65 +1,62 @@
 #pragma once
-#include <SLES/OpenSLES.h>
-#include <SLES/OpenSLES_Android.h>
-#include "Sound.h"
-#include "Track.h"
-#include "Effect.h"
-#include <vector>
-#include <list>
-#include <math.h>
 
-// http://vec3.ca/getting-started-with-opensl-on-android/
-// https://audioprograming.wordpress.com/2012/03/03/android-audio-streaming-with-opensl-es-and-the-ndk/
+#include "AudioInitializer.h"
+#include "AudioPlayer.h"
+#include <string>
+#include <vector>
+
 namespace audio
 {
 	class Audio
 	{
-		friend class Sound;
 	public:
-		Audio();
+		
+		Audio(std::string fileName, core::ResourceManager* resourceManager);
+		Audio(){};
 		~Audio();
-		void createPlayer(void);
-		bool checkPlaying(void);
-		void SLAPIENTRY play_callback(SLPlayItf player, void *context, SLuint32 event)
-		{
-			if(event & SL_PLAYEVENT_HEADATEND)
-				_curPlaying->_isDone = true;
-			//_isDone = true;
-		}
-		Effect * createEffect(std::vector<unsigned char> * soundData);
-		//TODO: needs to create its own buffer for track data
-		Track *  createTrack(std::vector<unsigned char> * soundData);
-		bool playSound(Sound * toPlay);
-		void update(void);
-		void endPlayback()
-		{
-			(*player)->SetPlayState(player, SL_PLAYSTATE_STOPPED);
-			(*player_buf_q)->Clear(player_buf_q);
-			_isPlaying = false;
-		}
-		float gain_to_attenuation(float gain)
-		{
-			return gain < 0.01F ? -96.0F : 20 * log10(gain);
-		}
-		void changeVolume(float toChange)
-		{
-			(*player_vol)->SetVolumeLevel(player_vol, (SLmillibel)(gain_to_attenuation(toChange) * 100));
-		}
+
+		/**
+		* Starts a player.
+		* Returns false if there are no available audio players.
+		*/
+		bool Play();
+		/**
+		* Stops all the instances of this Audio object.
+		* Next time playing will start from the beginning.
+		*/
+		void Stop();
+		/**
+		* Pauses all the players of this Audio object.
+		* Next time playing will continue from the same point.
+		*/
+		void Pause();
+		
+		/**
+		* Sets the volume to given value.
+		* Give volumeLevel as percentage.
+		*/
+		void SetVolume(float volumeLevel);
+		/**
+		* Sets looping to given value.
+		* 'isEnabled = true' enables looping.
+		* 'isEnabled = false' disables looping.
+		*/
+		void SetLooping(bool isEnabled);
+
+		/**
+		/* MaxPlayerCount default = 3
+		* MaxPlayerCount defines how many instances of this Audio object
+		* can be played at once. 
+		*/
+		void SetMaxPlayerCount(unsigned newMaxCount);
+		
 	private:
-		float volume;
-		SLObjectItf _engine_obj;
-		SLEngineItf _engine;
-		SLObjectItf _output_mix_obj;
-		SLVolumeItf _output_mix_vol;
 
-		SLAndroidSimpleBufferQueueItf player_buf_q;
-		SLObjectItf player_obj;
-		SLPlayItf player;
-		SLVolumeItf player_vol;
-		std::vector<Sound *> _sounds;
-		std::list<Sound> _playingSounds;
-		Sound * _curPlaying;
+		AudioPlayer* GetAvailable();
 
-		bool _isPlaying, _isDone;
+		std::vector<AudioPlayer*> player;
+
+		unsigned playerCount;
+		unsigned maxPlayerCount;
 	};
 }

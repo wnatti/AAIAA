@@ -67,7 +67,7 @@ namespace graphics
 		FT_Library _library;
 		ShaderManager* _shaderManager;
 		Shader* _textShader;
-		std::vector<Text> _texts;
+		std::vector<Text*> _texts;
 		glm::vec2 _displaySize;
 		GLuint _program;
 	};

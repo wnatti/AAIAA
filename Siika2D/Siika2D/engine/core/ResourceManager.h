@@ -18,6 +18,14 @@ namespace core
 		unsigned int height, width;
 	};
 
+	/**
+		Struct for storing audio data, start and length
+	*/
+	struct Audio
+	{
+		int fileDescriptor;
+		off_t start, length;
+	};
 
 	/**
 		All assets are loaded through ResourceManager.
@@ -40,6 +48,12 @@ namespace core
 			*/
 		Image* loadImage(std::string filename);
 
+		/**
+			Loads audio file with given filename or returns an existing one.
+			Uses AAsset_openFileDescriptor. Only supports OGG files.
+			Returns Audio struct.
+		*/
+		Audio* loadAudio(std::string filename);
 
 		/**
 			Loads text file with given filename or returns an existing one.
@@ -62,6 +76,7 @@ namespace core
 		
 	private:
 		std::map<std::string, Image> _loadedImages;
+		std::map<std::string, Audio> _loadedAudio;
 		std::map<std::string, std::string> _loadedTextFiles;
 		std::map<std::string, std::vector<unsigned char>> _loadedData;
 		AAssetManager* _androidAssetManager;

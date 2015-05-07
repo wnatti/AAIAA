@@ -26,8 +26,8 @@ TextManager::~TextManager()
 
 Text* TextManager::createText()
 {
-	_texts.push_back(Text(_resourceManager, &_library));
-	return &_texts.at(_texts.size()-1);
+	_texts.push_back(new Text(_resourceManager, &_library));
+	return _texts.at(_texts.size()-1);
 }
 
 
@@ -51,9 +51,9 @@ void TextManager::drawTexts()
 
 	for (int i = 0; i < _texts.size(); i++)
 	{
-		if (_texts.at(i).isInitialized)
+		if (_texts.at(i)->isInitialized)
 		{
-			_texts.at(i).draw(_displaySize, positionLoc, colorLoc);
+			_texts.at(i)->draw(_displaySize, positionLoc, colorLoc);
 		}
 	}
 
