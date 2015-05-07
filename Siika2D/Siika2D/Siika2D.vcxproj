@@ -19,12 +19,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\audio\Audio.cpp" />
+    <ClCompile Include="engine\audio\AudioInitializer.cpp" />
+    <ClCompile Include="engine\audio\AudioManager.cpp" />
+    <ClCompile Include="engine\audio\AudioPlayer.cpp" />
     <ClCompile Include="engine\core\ErrorHandler.cpp" />
     <ClCompile Include="engine\core\ResourceManager.cpp" />
     <ClCompile Include="engine\core\Siika2D.cpp" />
     <ClCompile Include="engine\graphics\Buffer.cpp" />
     <ClCompile Include="engine\graphics\BufferManager.cpp" />
-    <ClCompile Include="engine\graphics\Camera.cpp" />
+    <ClCompile Include="engine\graphics\Camera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="engine\graphics\Graphics.cpp" />
     <ClCompile Include="engine\graphics\GraphicsContext.cpp" />
     <ClCompile Include="engine\graphics\Shader.cpp" />
@@ -48,13 +53,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\audio\Audio.h" />
+    <ClInclude Include="engine\audio\AudioInitializer.h" />
+    <ClInclude Include="engine\audio\AudioManager.h" />
+    <ClInclude Include="engine\audio\AudioPlayer.h" />
     <ClInclude Include="engine\core\ErrorHandler.h" />
     <ClInclude Include="engine\core\MemoryManager.h" />
     <ClInclude Include="engine\core\ResourceManager.h" />
     <ClInclude Include="engine\core\Siika2D.h" />
     <ClInclude Include="engine\graphics\Buffer.h" />
     <ClInclude Include="engine\graphics\BufferManager.h" />
-    <ClInclude Include="engine\graphics\Camera.h" />
+    <ClInclude Include="engine\graphics\Camera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="engine\graphics\Graphics.h" />
     <ClInclude Include="engine\graphics\GraphicsContext.h" />
     <ClInclude Include="engine\graphics\Shader.h" />
@@ -83,6 +93,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <AndroidTargetAPI>android-16</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <AndroidTargetAPI>android-16</AndroidTargetAPI>
