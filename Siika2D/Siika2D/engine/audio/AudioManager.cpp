@@ -15,15 +15,15 @@ AudioManager::~AudioManager()
 
 Audio* AudioManager::createAudio(std::string filename)
 {
-	std::map<std::string, Audio>::iterator it = _createdAudio.find(filename);
+	std::map<std::string, Audio*>::iterator it = _createdAudio.find(filename);
 	if (it != _createdAudio.end())
-		return &it->second;
+		return it->second;
 	else
 	{
-		Audio audio(filename, _resourceManager);
+		Audio* audio = new Audio(filename, _resourceManager);
 
 		_createdAudio.insert(std::make_pair(filename, audio));
 
-		return &_createdAudio.at(filename);
+		return _createdAudio.at(filename);
 	}
 }

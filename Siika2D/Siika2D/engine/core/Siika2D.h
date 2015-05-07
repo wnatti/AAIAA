@@ -6,6 +6,7 @@
 #include "../graphics/TextureManager.h"
 #include "../graphics/SpriteManager.h"
 #include "../graphics/GraphicsContext.h"
+#include "../audio/AudioManager.h"
 
 #include <android/sensor.h>
 #include "../misc/Input.h"
@@ -52,6 +53,8 @@ namespace core
 		graphics::TextureManager *_textureManager;
 		graphics::TextManager *_textManager;
 		graphics::GraphicsContext *_graphicsContext;
+		audio::AudioManager* _audioManager;
+
 	protected:
 		virtual ~Siika2D();
 		Siika2D();

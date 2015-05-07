@@ -35,6 +35,8 @@ Siika2D::~Siika2D()
 	delete _spriteManager;
 	delete _textureManager;
 	delete _shaderManager;
+	delete _textManager;
+	delete _audioManager;
 }
 
 void Siika2D::initialize(android_app* app)
@@ -62,6 +64,7 @@ void Siika2D::initializeGraphics()
 	_textureManager = new graphics::TextureManager(&_resourceManager);
 	_spriteManager = new graphics::SpriteManager(_shaderManager);
 	_textManager = new graphics::TextManager(&_resourceManager, _shaderManager, _graphicsContext->getDisplaySize());
+	_audioManager = new audio::AudioManager(&_resourceManager);
 	_drawReady = true;
 }
 

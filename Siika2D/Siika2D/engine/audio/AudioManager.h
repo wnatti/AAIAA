@@ -25,7 +25,7 @@ namespace audio
 		Audio* createAudio(std::string filename);
 	private:
 		core::ResourceManager* _resourceManager;
-		std::map<std::string, Audio> _createdAudio;
+		std::map<std::string, Audio*> _createdAudio;
 
 	};
 }
