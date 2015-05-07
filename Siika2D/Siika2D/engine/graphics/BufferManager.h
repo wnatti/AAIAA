@@ -9,6 +9,7 @@ namespace graphics
 	class BufferManager
 	{
 		friend class SpriteManager;
+		friend class Sprite;
 
 	public:
 

@@ -6,6 +6,8 @@
 
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
+#include <glm.hpp>
+#include <gtc\matrix_transform.hpp>
 #include <vector>
 #include <map>
 
@@ -57,19 +59,21 @@ namespace graphics
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	protected:
-		ShaderManager(core::ResourceManager * resMngr) :_rmngr(resMngr), _currentShader(nullptr), _defaultIndx(-1){
+		ShaderManager(core::ResourceManager * resMngr, glm::vec2 windowSize) :_rmngr(resMngr),_windowSize(windowSize), _currentShader(nullptr), _defaultIndx(-1){
 			s2d_info("SHADER MANAGER CREATED");
 
 		};
+
+		void initializeProjection();
 		~ShaderManager(){ _shaders.empty(); }
 		//Finds already created shader in _shaders
 		Shader * findShader(const char * vertSource, const char * fragSource);
 
 		int _defaultIndx;
 		Shader * _currentShader;
-		
+		glm::vec2 _windowSize;
 		std::vector<Shader*> _shaders;
-		std::map<shdrAtrib, char*> _shaderAtribs;
+		std::map<SHADER_ATTRIBUTE, char*> _shaderAtribs;
 		core::ResourceManager * _rmngr;
 	};
 }

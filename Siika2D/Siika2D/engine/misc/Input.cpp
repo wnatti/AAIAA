@@ -146,7 +146,7 @@ void Input::processStickOrDpad(AInputEvent *event)
 		if (action == AMOTION_EVENT_ACTION_MOVE)
 		{
 			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-			_sticks[i]._pointingVector = pos;
+			_sticks[i]._orientation = pos;
 		}
 	}
 }
@@ -161,24 +161,43 @@ void Input::accelerometerDisable()
 	ASensorEventQueue_disableSensor(_sensorEventQueue, _accelerometerSensor);
 }
 
-void Input::processAccelerometer()
+void Input::processSensor(SENSOR_ID sensor)
 {
-	ASensorEvent event;
-	_accelerometerData = nullptr;
-
-	while (ASensorEventQueue_getEvents(_sensorEventQueue, &event, 1) > 0)
+	switch (sensor)
 	{
-		*_accelerometerData = event.acceleration;
+	case ACCELEROMETER:
+		_accelerometerData = nullptr;
+		updateSensor(sensor);
+		break;
+
+	case GYROSCOPE:
+		_gyroscopeData = nullptr;
+		updateSensor(sensor);
+		break;
+
+	default:
+		break;
 	}
 }
 
-void Input::processGyroscope()
+void Input::updateSensor(SENSOR_ID sensor)
 {
 	ASensorEvent event;
-	_gyroscopeData = nullptr;
 
 	while (ASensorEventQueue_getEvents(_sensorEventQueue, &event, 1) > 0)
 	{
-		*_gyroscopeData = event.acceleration;
+		switch (sensor)
+		{
+		case ACCELEROMETER:
+			*_accelerometerData = event.acceleration;
+			break;
+
+		case GYROSCOPE:
+			*_gyroscopeData = event.acceleration;
+			break;
+
+		default:
+			break;
+		}
 	}
 }

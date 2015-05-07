@@ -7,7 +7,7 @@
 #include <string>
 namespace graphics
 {
-	enum shdrAtrib { unknown = -1, position, color, texture };
+	enum SHADER_ATTRIBUTE { unknown = -1, position, color, texture};
 
 	class Shader
 	{
@@ -41,6 +41,7 @@ namespace graphics
 		std::string getShaderInfoLog(GLuint handle);
 		bool _color, _texture;
 		GLuint _fragHandle, _vertHandle, _samplerHandle;
+		GLint _projectionLocation;
 		const GLchar * _fragSource;
 		const GLchar * _vertSource;
 		GLuint _program;
@@ -48,6 +49,7 @@ namespace graphics
 		GLchar * _posString = "position";
 		GLchar * _colString = "color";
 		GLchar * _texString = "texture";
+		GLchar * _projectionString = "projection";
 
 	};
 }

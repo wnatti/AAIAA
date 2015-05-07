@@ -108,11 +108,14 @@ bool Shader::compileShaders()
 bool Shader::linkProgram()
 {
 	GLint status;
-	glBindAttribLocation(_program, shdrAtrib::position, _posString);
+	glBindAttribLocation(_program, SHADER_ATTRIBUTE::position, _posString);
 	if(_color)
-		glBindAttribLocation(_program, shdrAtrib::color, _colString);
+		glBindAttribLocation(_program, SHADER_ATTRIBUTE::color, _colString);
 	if(_texture)
-		glBindAttribLocation(_program, shdrAtrib::texture, _texString);
+		glBindAttribLocation(_program, SHADER_ATTRIBUTE::texture, _texString);
+
+
+
 	glLinkProgram(_program);
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE)
@@ -121,6 +124,13 @@ bool Shader::linkProgram()
 		s2d_assert(status);
 		return false;
 	}
+
+	GLint error = glGetError();
+	assert(error == 0);
+	_projectionLocation = glGetUniformLocation(_program, _projectionString);
+	error = glGetError();
+	assert(error == 0);
+
 	return true;
 }
 
@@ -140,11 +150,11 @@ void Shader::use(bool toUse)
 		glUseProgram(0u);
 	}
 	// Moved to linkProgram()
-	glEnableVertexAttribArray(shdrAtrib::position);
+	glEnableVertexAttribArray(SHADER_ATTRIBUTE::position);
 	if(_color)
-		glEnableVertexAttribArray(shdrAtrib::color);
+		glEnableVertexAttribArray(SHADER_ATTRIBUTE::color);
 	if(_texture)
-		glEnableVertexAttribArray(shdrAtrib::texture);
+		glEnableVertexAttribArray(SHADER_ATTRIBUTE::texture);
 
 	err = glGetError();
 	s2d_assert(err == 0);

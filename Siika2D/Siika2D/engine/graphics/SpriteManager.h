@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Sprite.h"
-#include "Shader.h"
 #include "BufferManager.h"
 #include "ShaderManager.h"
 #include <map>
@@ -34,15 +33,10 @@ namespace graphics
 		Sprite * createSprite(Sprite * sprite);
 		void drawSprites();
 	protected:
-		struct sprites_buffer
-		{
-			std::vector<Sprite*> sprites;
-			BufferManager buffer;
-		};
+	
 		BufferManager * _bufferManager;
-		void batchSprites(std::vector<Sprite*> *toBatch){};
-		std::map<Shader*, sprites_buffer*> _sprites;
-		void spriteBatcher(std::vector<Sprite> *toBatch);
+		std::vector<Sprite*> _sprites;
+
 		ShaderManager* _shaderManager;
 		//std::map<Shader*, sprites_buffer> _sprites;
 		/**
@@ -52,7 +46,6 @@ namespace graphics
 		/**
 		Sorts sprites vector by comparing Z positions and textures
 		*/
-		std::vector<Sprite> *toBatch;
 
 	};
 }

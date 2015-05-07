@@ -58,7 +58,7 @@ void Siika2D::terminate()
 void Siika2D::initializeGraphics()
 {
 	_graphicsContext = new graphics::GraphicsContext(_application);
-	_shaderManager = new graphics::ShaderManager(&_resourceManager);
+	_shaderManager = new graphics::ShaderManager(&_resourceManager, _graphicsContext->getDisplaySize());
 	_textureManager = new graphics::TextureManager(&_resourceManager);
 	_spriteManager = new graphics::SpriteManager(_shaderManager);
 	_textManager = new graphics::TextManager(&_resourceManager, _shaderManager, _graphicsContext->getDisplaySize());
@@ -194,15 +194,7 @@ void Siika2D::run(android_app* app)
 	{
 		if (_input != nullptr)
 		{
-			if (id == SENSOR_ID::ACCELEROMETER)
-			{
-				_input->processAccelerometer();
-			}
-
-			if (id == SENSOR_ID::GYROSCOPE)
-			{
-				_input->processGyroscope();
-			}
+			_input->processSensor(SENSOR_ID(id));
 		}
 
 		if (_source != NULL)

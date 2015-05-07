@@ -4,9 +4,10 @@
 
 core::Siika2D *siika = core::Siika2D::UI();
 
-bool managersDone = false;
-graphics::Sprite * sprite, *sprite2;
+bool stuffDone = false;
+std::vector<graphics::Sprite*>spriteVector;
 glm::vec2 position;
+graphics::Texture * tex;
 
 float pos = 0;
 uint blue = 1;
@@ -14,18 +15,14 @@ uint green = 128;
 void doStuff()
 {
 
-	if(!managersDone)
+	if(!stuffDone)
 	{
-		siika->_shaderManager->useShader(true, true);
-		graphics::Texture * tex = siika->_textureManager->createTexture("tekstuuri.png");
-		sprite = siika->_spriteManager->createSprite(glm::vec2(0, 0), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
-		
-		siika->_shaderManager->useDefaultShader(false, true);
-		sprite2 = siika->_spriteManager->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(1, 0), glm::vec2(0, 1));
-
-		managersDone = true;
-		glActiveTexture(GL_TEXTURE0);
-		//Audio ad;
+		tex = siika->_textureManager->createTexture("tekstuuri.png");
+		for (int i = 0; i < 100;i++)
+		spriteVector.push_back(siika->_spriteManager->createSprite(glm::vec2(100, 100), glm::vec2(64, 64), glm::vec2(0.0, 0.0), tex, glm::vec2(0, 0), glm::vec2(64, 0)));
+		//sprite2 = siika->_spriteManager->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
+		//sprite3 = siika->_spriteManager->createSprite(glm::vec2(0.0, 0.0), glm::vec2(64, 64), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
+		stuffDone = true;
 	}
 
 	std::vector<int> keys = siika->_input->getDownKeys();
@@ -42,11 +39,13 @@ void doStuff()
 
 	for (int i = 0; i < siika->_input->sticksActive(); i++)
 	{
-		position += siika->_input->stickOrientation(i)._pointingVector;
+		position += siika->_input->stickOrientation(i)._orientation;
 	}
 	
 	green += 2;
-	sprite->setColor(graphics::Color(0, green, blue++, 255));
+	for (int i = 0; i < spriteVector.size(); i++)
+		spriteVector[i]->setColor(graphics::Color(0, green-i*10, blue-i*10, 1));
+
 	if(blue > 254)
 		blue = 0;
 	if(green > 252)
@@ -55,8 +54,10 @@ void doStuff()
 	if(pos > 1.0f)
 		pos = -1.0;
 
-	sprite->setPosition(glm::vec2(position.x/635.f - 1, -position.y/360.f + 1));
-	siika->_graphicsContext->clear();
+	for (int i = 0; i < spriteVector.size();i++)
+	spriteVector[i]->setPosition(glm::vec2(position.x+i, position.y+i*10));
+
+	siika->_graphicsContext->clear(); // EBIN XD
 	siika->_spriteManager->drawSprites();
 	siika->_graphicsContext->swap();
 }

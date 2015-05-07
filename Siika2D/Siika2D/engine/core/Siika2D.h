@@ -35,7 +35,6 @@ namespace core
 			Pointter to the UI
 		*/
 		static Siika2D* UI();
-		virtual ~Siika2D();
 
 		saved_state* _savedState;	
 
@@ -54,6 +53,7 @@ namespace core
 		graphics::TextManager *_textManager;
 		graphics::GraphicsContext *_graphicsContext;
 	protected:
+		virtual ~Siika2D();
 		Siika2D();
 		Siika2D(const Siika2D& s2d);
 		Siika2D& operator=(const Siika2D& s2d);
