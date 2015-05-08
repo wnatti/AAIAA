@@ -4,12 +4,18 @@
 #include "../misc/Color.h"
 #include <vector>
 
+namespace core
+{
+	class Siika2D;
+}
+
 namespace graphics
 {
 	class BufferManager
 	{
 		friend class SpriteManager;
 		friend class Sprite;
+		friend class core::Siika2D;
 
 	public:
 
@@ -22,6 +28,7 @@ namespace graphics
 		void addVertices(GLfloat* vertices, GLsizei size);
 		void addIndices(GLint* indices, GLsizei size);
 		void draw();
+		void clear();
 
 	protected:
 		BufferManager();

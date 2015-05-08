@@ -63,7 +63,7 @@ namespace core
 		static Siika2D* _instance;
 
 	
-
+		graphics::BufferManager *_bufferManager;
 		core::ResourceManager _resourceManager;
 
 		android_app *_application;

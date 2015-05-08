@@ -44,7 +44,11 @@ void BufferManager::addIndices(GLint* indices, GLsizei size)
 {
 	_indexBuffer.setBufferData(indices, size);
 }
-
+void BufferManager::clear()
+{
+	_vertices.clear();
+	_indices.clear();
+}
 void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 {
 	GLint err = glGetError();
@@ -77,12 +81,13 @@ void BufferManager::addRectangle(glm::vec2* pos, glm::vec2* textr, Color* col)
 	s2d_assert(err == 0);
 
 	int indicesSize = _indices.size();
-	_indices.push_back(0);
-	_indices.push_back(1);
-	_indices.push_back(2);
-	_indices.push_back(0);
-	_indices.push_back(3);
-	_indices.push_back(2);
+	int startingIndex = (indicesSize / 6) * 2;
+	_indices.push_back(indicesSize-startingIndex);
+	_indices.push_back(indicesSize+1-startingIndex);
+	_indices.push_back(indicesSize + 3 - startingIndex);
+	_indices.push_back(indicesSize + 1 - startingIndex);
+	_indices.push_back(indicesSize + 2 - startingIndex);
+	_indices.push_back(indicesSize + 3 - startingIndex);
 
 	err = glGetError();
 	s2d_assert(err == 0);
@@ -94,15 +99,10 @@ void BufferManager::draw()
 	setAttribPointers();
 
 	GLint err = glGetError();
-	glDrawElements(GL_TRIANGLES, 6 , GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
+	glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, reinterpret_cast<GLvoid*>(0));
 	err = glGetError();
 	s2d_assert(err == 0);
 
-	//TESTING
-	_vertices.clear();
-	_indices.clear();
-
-	//TESTING
 
 	unbindBuffers();
 }

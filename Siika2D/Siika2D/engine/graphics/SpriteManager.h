@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Sprite.h"
+#include "Shader.h"
 #include "BufferManager.h"
 #include "ShaderManager.h"
 #include <map>
@@ -26,17 +27,22 @@ namespace graphics
 		friend class core::Siika2D;
 
 	public:
-		SpriteManager(ShaderManager *shaderManager);
+		SpriteManager(ShaderManager *shaderManager, BufferManager * bufMan);
 		~SpriteManager();
 		Sprite * createSprite();
 		Sprite * createSprite(glm::vec2 location, glm::vec2 spriteSize, glm::vec2 spriteOrigin, Texture * texture, glm::vec2 textureUL, glm::vec2 textureLR);
 		Sprite * createSprite(Sprite * sprite);
 		void drawSprites();
 	protected:
-	
+		struct sprites_buffer
+		{
+			std::vector<Sprite*> sprites;
+			BufferManager buffer;
+		};
 		BufferManager * _bufferManager;
-		std::vector<Sprite*> _sprites;
-
+		void batchSprites(std::vector<Sprite*> *toBatch){};
+		std::map<Shader*, sprites_buffer*> _sprites;
+		void spriteBatcher(std::vector<Sprite> *toBatch);
 		ShaderManager* _shaderManager;
 		//std::map<Shader*, sprites_buffer> _sprites;
 		/**
@@ -46,6 +52,7 @@ namespace graphics
 		/**
 		Sorts sprites vector by comparing Z positions and textures
 		*/
+		std::vector<Sprite> *toBatch;
 
 	};
 }

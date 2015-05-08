@@ -25,6 +25,7 @@ void Sprite::setPosition(glm::vec2 position)
 }
 glm::vec2 * Sprite::getTexturePos()
 {
+	
 	_texPos[0] = _textureUL;
 	_texPos[1].x = _textureUL.x;
 	_texPos[1].y = _textureLR.y;
@@ -34,18 +35,36 @@ glm::vec2 * Sprite::getTexturePos()
 	_texPos[3].y = _textureUL.y;
 	return _texPos;
 }
-
-Sprite* Sprite::create(glm::vec2 position, glm::vec2 size, glm::vec2 origin)
+void Sprite::step()
 {
-	Sprite *sprite = new Sprite(position, size, origin);
-}
-
-void Sprite::draw()
-{
-	_bufferManager->addRectangle(getPositions(), getTexturePos(), getColor());
-	glBindTexture(GL_TEXTURE_2D,_texture->getTexture());
-	_bufferManager->draw();
-	glBindTexture(GL_TEXTURE_2D, 0u);
+	///TODO: is y change in right direction ?
+	float width = _textureUL.x - _textureLR.x;
+	float height = _textureUL.y - _textureLR.y;
 
 
+	//Needs to change horizontal position
+	if(_textureLR.x + width < 1.0f)
+	{
+		_textureUL.x += width;
+		_textureLR.x += width;
+
+	}
+	else
+	{
+		//Needs to change vertical position
+		if(_textureLR.y + height < 1.0f)
+		{
+			_textureUL.y += height;
+			_textureUL.x = 0;
+			_textureLR.y += height;
+			_textureLR.x = width;
+		}
+		else//Go to first frame
+		{
+			_textureUL.y = 0;
+			_textureUL.x = 0;
+			_textureLR.y = height;
+			_textureLR.x = width;
+		}
+	}
 }
