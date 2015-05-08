@@ -7,6 +7,9 @@
 
 namespace audio
 {
+	/**
+		This is a class for playing audio. 
+	*/
 	class Audio
 	{
 	public:
@@ -16,47 +19,48 @@ namespace audio
 		~Audio();
 
 		/**
-		* Starts a player.
-		* Returns false if there are no available audio players.
+			Starts a player.
+			Returns false if there are no available audio players.
+			Use this to play created sound.
 		*/
-		bool Play();
+		bool play();
 		/**
-		* Stops all the instances of this Audio object.
-		* Next time playing will start from the beginning.
+			Stops all the instances of this Audio object.
+			Next time playing will start from the beginning.
 		*/
-		void Stop();
+		void stop();
 		/**
-		* Pauses all the players of this Audio object.
-		* Next time playing will continue from the same point.
+			Pauses all the players of this Audio object.
+			Next time playing will continue from the same point.
 		*/
-		void Pause();
+		void pause();
 		
 		/**
-		* Sets the volume to given value.
-		* Give volumeLevel as percentage.
+			Sets the volume to given value.
+			Give volumeLevel as percentage.
 		*/
-		void SetVolume(float volumeLevel);
+		void setVolume(float volumeLevel);
 		/**
-		* Sets looping to given value.
-		* 'isEnabled = true' enables looping.
-		* 'isEnabled = false' disables looping.
+			Sets looping to given value.
+			'isEnabled = true' enables looping. Audio loops after calling Play().
+			'isEnabled = false' disables looping.
 		*/
-		void SetLooping(bool isEnabled);
+		void setLooping(bool isEnabled);
 
 		/**
-		/* MaxPlayerCount default = 3
-		* MaxPlayerCount defines how many instances of this Audio object
-		* can be played at once. 
+			MaxPlayerCount default = 3
+			MaxPlayerCount defines how many instances of this Audio object
+			can be played at once. 
 		*/
-		void SetMaxPlayerCount(unsigned newMaxCount);
+		void setMaxPlayerCount(unsigned newMaxCount);
 		
 	private:
 
-		AudioPlayer* GetAvailable();
+		AudioPlayer* getAvailable();
 
-		std::vector<AudioPlayer*> player;
+		std::vector<AudioPlayer*> _player;
 
-		unsigned playerCount;
-		unsigned maxPlayerCount;
+		unsigned _playerCount;
+		unsigned _maxPlayerCount;
 	};
 }

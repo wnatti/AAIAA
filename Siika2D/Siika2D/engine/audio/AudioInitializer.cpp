@@ -3,7 +3,7 @@
 
 using namespace audio;
 
-AudioInitializer* AudioInitializer::instance = nullptr;
+AudioInitializer* AudioInitializer::_instance = nullptr;
 
 void AudioPlayerCallback(SLPlayItf playerObject, void* context, SLuint32 event)
 {
@@ -16,87 +16,87 @@ void AudioPlayerCallback(SLPlayItf playerObject, void* context, SLuint32 event)
 	}
 }
 
-AudioInitializer* AudioInitializer::GetInstance()
+AudioInitializer* AudioInitializer::getInstance()
 {
-	if (instance == nullptr)
-		instance = new AudioInitializer();
+	if (_instance == nullptr)
+		_instance = new AudioInitializer();
 
-	return instance;
+	return _instance;
 }
 
-void AudioInitializer::InitAudioPlayer(AudioPlayer* player)
+void AudioInitializer::initAudioPlayer(AudioPlayer* player)
 {
 	SLDataLocator_AndroidFD locator = { SL_DATALOCATOR_ANDROIDFD, player->getAudioAsset()->fileDescriptor, player->getAudioAsset()->start, player->getAudioAsset()->length };
 	SLDataFormat_MIME format = { SL_DATAFORMAT_MIME, nullptr, SL_CONTAINERTYPE_UNSPECIFIED };
 	SLDataSource audioSrc = { &locator, &format };
 
-	SLDataLocator_OutputMix tempOutmix = { SL_DATALOCATOR_OUTPUTMIX, outputMixObj };
+	SLDataLocator_OutputMix tempOutmix = { SL_DATALOCATOR_OUTPUTMIX, _outputMixObj };
 	SLDataSink tempAudioSink = { &tempOutmix, nullptr };
 
 	const SLInterfaceID tempIds[3] = { SL_IID_PLAY, SL_IID_SEEK, SL_IID_VOLUME };
 	const SLboolean tempReq[3] = { SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE };
 
-	result = (*engine)->CreateAudioPlayer(engine, &player->audioPlayerObj, &audioSrc, &tempAudioSink, 3, tempIds, tempReq);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_engine)->CreateAudioPlayer(_engine, &player->_audioPlayerObj, &audioSrc, &tempAudioSink, 3, tempIds, tempReq);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerObj)->Realize(player->audioPlayerObj, SL_BOOLEAN_FALSE);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerObj)->Realize(player->_audioPlayerObj, SL_BOOLEAN_FALSE);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerObj)->GetInterface(player->audioPlayerObj, SL_IID_PLAY, &player->audioPlayerPlay);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerObj)->GetInterface(player->_audioPlayerObj, SL_IID_PLAY, &player->_audioPlayerPlay);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerObj)->GetInterface(player->audioPlayerObj, SL_IID_SEEK, &player->audioPlayerSeek);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerObj)->GetInterface(player->_audioPlayerObj, SL_IID_SEEK, &player->_audioPlayerSeek);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerObj)->GetInterface(player->audioPlayerObj, SL_IID_VOLUME, &player->audioPlayerVol);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerObj)->GetInterface(player->_audioPlayerObj, SL_IID_VOLUME, &player->_audioPlayerVol);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerPlay)->RegisterCallback(player->audioPlayerPlay, AudioPlayerCallback, NULL);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerPlay)->RegisterCallback(player->_audioPlayerPlay, AudioPlayerCallback, NULL);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*player->audioPlayerPlay)->SetCallbackEventsMask(player->audioPlayerPlay, SL_PLAYEVENT_HEADATEND);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*player->_audioPlayerPlay)->SetCallbackEventsMask(player->_audioPlayerPlay, SL_PLAYEVENT_HEADATEND);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
 }
 
-void AudioInitializer::CreateEngine()
+void AudioInitializer::createEngine()
 {
-	result = slCreateEngine(&engineObj, 0, nullptr, 0, nullptr, nullptr);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = slCreateEngine(&_engineObj, 0, nullptr, 0, nullptr, nullptr);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*engineObj)->Realize(engineObj, SL_BOOLEAN_FALSE);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_engineObj)->Realize(_engineObj, SL_BOOLEAN_FALSE);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*engineObj)->GetInterface(engineObj, SL_IID_ENGINE, &engine);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_engineObj)->GetInterface(_engineObj, SL_IID_ENGINE, &_engine);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*engine)->CreateOutputMix(engine, &outputMixObj, 0, NULL, NULL);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_engine)->CreateOutputMix(_engine, &_outputMixObj, 0, NULL, NULL);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
-	result = (*outputMixObj)->Realize(outputMixObj, SL_BOOLEAN_FALSE);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_outputMixObj)->Realize(_outputMixObj, SL_BOOLEAN_FALSE);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 }
 
 AudioInitializer::AudioInitializer()
 {
-	CreateEngine();
+	createEngine();
 }
 
 AudioInitializer::~AudioInitializer()
 {
-	if (outputMixObj != nullptr)
+	if (_outputMixObj != nullptr)
 	{
-		(*outputMixObj)->Destroy(outputMixObj);
+		(*_outputMixObj)->Destroy(_outputMixObj);
 
-		outputMixObj = nullptr;
-		outputMixVol = nullptr;
+		_outputMixObj = nullptr;
+		_outputMixVol = nullptr;
 	}
 
-	if(engineObj != nullptr)
+	if(_engineObj != nullptr)
 	{
-		(*engineObj)->Destroy(engineObj);
+		(*_engineObj)->Destroy(_engineObj);
 
-		engineObj = nullptr;
-		engine = nullptr;
+		_engineObj = nullptr;
+		_engine = nullptr;
 	}
 }

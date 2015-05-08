@@ -10,48 +10,48 @@ AudioPlayer::AudioPlayer(AudioPlayer* pointer)
 
 AudioPlayer::~AudioPlayer()
 {
-	if (audioPlayerObj != nullptr)
+	if (_audioPlayerObj != nullptr)
 	{
-		(*audioPlayerObj)->Destroy(audioPlayerObj);
+		(*_audioPlayerObj)->Destroy(_audioPlayerObj);
 
-		audioPlayerObj = nullptr;
-		audioPlayerPlay = nullptr;
-		audioPlayerSeek = nullptr;
-		audioPlayerVol = nullptr;
+		_audioPlayerObj = nullptr;
+		_audioPlayerPlay = nullptr;
+		_audioPlayerSeek = nullptr;
+		_audioPlayerVol = nullptr;
 	}
 }
 
-SLuint32 AudioPlayer::GetPlayState()
+SLuint32 AudioPlayer::getPlayState()
 {
 	SLuint32 tempReturnValue;
-	result = (*audioPlayerPlay)->GetPlayState(audioPlayerPlay, &tempReturnValue);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_audioPlayerPlay)->GetPlayState(_audioPlayerPlay, &tempReturnValue);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 
 	return tempReturnValue;
 }
 
-void AudioPlayer::SetPlayState(SLuint32 state)
+void AudioPlayer::setPlayState(SLuint32 state)
 {
-	if(audioPlayerPlay != nullptr)
+	if(_audioPlayerPlay != nullptr)
 	{
-		result = (*audioPlayerPlay)->SetPlayState(audioPlayerPlay, state);
-		s2d_assert(result == SL_RESULT_SUCCESS);
+		_result = (*_audioPlayerPlay)->SetPlayState(_audioPlayerPlay, state);
+		s2d_assert(_result == SL_RESULT_SUCCESS);
 	}
 }
 
-void AudioPlayer::SetLooping(bool isEnabled)
+void AudioPlayer::setLooping(bool isEnabled)
 {
-	result = (*audioPlayerSeek)->SetLoop(audioPlayerSeek, isEnabled ? SL_BOOLEAN_TRUE : SL_BOOLEAN_FALSE, 0, SL_TIME_UNKNOWN);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_audioPlayerSeek)->SetLoop(_audioPlayerSeek, isEnabled ? SL_BOOLEAN_TRUE : SL_BOOLEAN_FALSE, 0, SL_TIME_UNKNOWN);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 }
 
-void AudioPlayer::SetVolume(float volPercentage)
+void AudioPlayer::setVolume(float volPercentage)
 {
 	SLmillibel tempVol;
-	result = (*audioPlayerVol)->GetMaxVolumeLevel(audioPlayerVol, &tempVol);
+	_result = (*_audioPlayerVol)->GetMaxVolumeLevel(_audioPlayerVol, &tempVol);
 
 	tempVol *= 0.01 * volPercentage;
 
-	result = (*audioPlayerVol)->SetVolumeLevel(audioPlayerVol, tempVol);
-	s2d_assert(result == SL_RESULT_SUCCESS);
+	_result = (*_audioPlayerVol)->SetVolumeLevel(_audioPlayerVol, tempVol);
+	s2d_assert(_result == SL_RESULT_SUCCESS);
 }

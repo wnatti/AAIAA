@@ -7,40 +7,58 @@
 
 namespace audio
 { 
+	/**
+		Class to wrap OpenSL audio functionality.
+		For playing sounds use Audio class.
+	*/
 	class AudioPlayer 
 	{
 		friend class AudioInitializer;
 
 	public:
-		AudioPlayer(core::Audio* audioAsset){ _audioAsset = audioAsset; }
+		AudioPlayer(core::AudioData* audioAsset){ _audioAsset = audioAsset; }
 		AudioPlayer(AudioPlayer* pointer);
 		~AudioPlayer();
 
 		/**
-		* 1 = SL_PLAYSTATE_STOPPED
-		* 2 = SL_PLAYSTATE_PAUSED
-		* 3 = SL_PLAYSTATE_PLAYING
+			Returns current play state of the audio clip
+			1 = SL_PLAYSTATE_STOPPED
+			2 = SL_PLAYSTATE_PAUSED
+			3 = SL_PLAYSTATE_PLAYING
 		*/
-		SLuint32 GetPlayState();
+		SLuint32 getPlayState();
 
-		void SetPlayState(SLuint32 state);
-		void SetLooping(bool isEnabled); 
-		void SetVolume(float volPercentage);
-		core::Audio* getAudioAsset(){ return _audioAsset; }
+		/**
+			Set current play state.
+		*/
+		void setPlayState(SLuint32 state);
+
+		/**
+			Sets looping to given value.
+			'isEnabled = true' enables looping. Audio loops after calling Play().
+			'isEnabled = false' disables looping.
+		*/
+		void setLooping(bool isEnabled); 
+
+		/**
+			Sets the volume to given value.
+			VolumeLevel as percentage.
+		*/
+		void setVolume(float volPercentage);
+
+		/**
+			Returns AudioData struct. AudioData is defined in ResourceManager.h
+		*/
+		core::AudioData* getAudioAsset(){ return _audioAsset; }
 
 	private:
-		void CheckError();
+		SLObjectItf _audioPlayerObj;
+		SLPlayItf _audioPlayerPlay;
+		SLSeekItf _audioPlayerSeek;
+		SLVolumeItf _audioPlayerVol;
 
-		SLObjectItf audioPlayerObj;
-		SLPlayItf audioPlayerPlay;
-		SLSeekItf audioPlayerSeek;
-		SLVolumeItf audioPlayerVol;
+		SLresult _result;
 
-		SLresult result;
-
-		core::Audio* _audioAsset;
-
-		int fileDescriptor;
-		off_t start, length;
+		core::AudioData* _audioAsset;
 	};
 }

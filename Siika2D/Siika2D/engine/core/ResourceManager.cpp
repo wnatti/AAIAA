@@ -18,14 +18,14 @@ ResourceManager::~ResourceManager()
 
 }
 
-Image* ResourceManager::loadImage(std::string filename)
+ImageData* ResourceManager::loadImage(std::string filename)
 {
-	std::map<std::string, Image>::iterator it = _loadedImages.find(filename);
+	std::map<std::string, ImageData>::iterator it = _loadedImages.find(filename);
 	if (it != _loadedImages.end())
 		return &it->second;
 	else
 	{
-		Image loadedImage;
+		ImageData loadedImage;
 
 		std::vector<unsigned char> assetData = loadAsset(filename);
 
@@ -39,14 +39,14 @@ Image* ResourceManager::loadImage(std::string filename)
 	}
 }
 
-Audio* ResourceManager::loadAudio(std::string filename)
+AudioData* ResourceManager::loadAudio(std::string filename)
 {
-	std::map<std::string, Audio>::iterator it = _loadedAudio.find(filename);
+	std::map<std::string, AudioData>::iterator it = _loadedAudio.find(filename);
 	if (it != _loadedAudio.end())
 		return &it->second;
 	else
 	{
-		Audio loadedAudio;
+		AudioData loadedAudio;
 
 		AAsset* audioAsset = AAssetManager_open(_androidAssetManager, filename.c_str(), 2);
 		s2d_assert((audioAsset != nullptr));

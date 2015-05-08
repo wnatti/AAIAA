@@ -19,7 +19,7 @@ Texture* TextureManager::createTexture(std::string filename)
 		return &it->second;
 	else
 	{
-		core::Image* image = _resourceManager->loadImage(filename);
+		core::ImageData* image = _resourceManager->loadImage(filename);
 		Texture texture(image->height, image->height, &image->data);
 
 		_createdTextures.insert(std::make_pair(filename, texture));

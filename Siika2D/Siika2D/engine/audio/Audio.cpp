@@ -4,95 +4,95 @@
 
 using namespace audio;
 
-Audio::Audio(std::string fileName, core::ResourceManager* resourceManager) : maxPlayerCount(3), playerCount(1)
+Audio::Audio(std::string fileName, core::ResourceManager* resourceManager) : _maxPlayerCount(3), _playerCount(1)
 {
-	core::Audio* tempAudioAsset = resourceManager->loadAudio(fileName);
+	core::AudioData* tempAudioAsset = resourceManager->loadAudio(fileName);
 	s2d_assert( (tempAudioAsset != nullptr) );
-	player.push_back(new AudioPlayer(tempAudioAsset));
-	AudioInitializer::GetInstance()->InitAudioPlayer(player[0]);
+	_player.push_back(new AudioPlayer(tempAudioAsset));
+	AudioInitializer::getInstance()->initAudioPlayer(_player[0]);
 }
 
 Audio::~Audio()
 {
-	for (int i = 0; i < playerCount; i++)
-		delete player[i];
+	for (int i = 0; i < _playerCount; i++)
+		delete _player[i];
 }
 
-bool Audio::Play()
+bool Audio::play()
 {
-	AudioPlayer* tempPointer = GetAvailable();
+	AudioPlayer* tempPointer = getAvailable();
 	
 	if (tempPointer != nullptr)
 	{
-		tempPointer->SetPlayState(SL_PLAYSTATE_PLAYING);
+		tempPointer->setPlayState(SL_PLAYSTATE_PLAYING);
 		return true;
 	}
 	else
 		return false;
 }
 
-void Audio::Stop()
+void Audio::stop()
 {
-	for (int i = 0; i < playerCount; i++)
-		player[i]->SetPlayState(SL_PLAYSTATE_STOPPED);
+	for (int i = 0; i < _playerCount; i++)
+		_player[i]->setPlayState(SL_PLAYSTATE_STOPPED);
 }
 
-void Audio::Pause()
+void Audio::pause()
 {
-	for (int i = 0; i < playerCount; i++)
-		player[i]->SetPlayState(SL_PLAYSTATE_PAUSED);
+	for (int i = 0; i < _playerCount; i++)
+		_player[i]->setPlayState(SL_PLAYSTATE_PAUSED);
 }
 
-void Audio::SetVolume(float volumeLevel)
+void Audio::setVolume(float volumeLevel)
 {
-	for (int i = 0; i < playerCount; i++)
-		player[i]->SetVolume(volumeLevel);
+	for (int i = 0; i < _playerCount; i++)
+		_player[i]->setVolume(volumeLevel);
 }
 
-void Audio::SetLooping(bool isEnabled)
+void Audio::setLooping(bool isEnabled)
 {
-	for (int i = 0; i < playerCount; i++)
-		player[i]->SetLooping(isEnabled);
+	for (int i = 0; i < _playerCount; i++)
+		_player[i]->setLooping(isEnabled);
 }
 
-void Audio::SetMaxPlayerCount(unsigned newMaxCount)
+void Audio::setMaxPlayerCount(unsigned newMaxCount)
 {
-	if (newMaxCount < maxPlayerCount)
+	if (newMaxCount < _maxPlayerCount)
 	{
-		for (int i = 0; i < playerCount; i++)
+		for (int i = 0; i < _playerCount; i++)
 		{
-			player[i]->SetPlayState(SL_PLAYSTATE_STOPPED);
+			_player[i]->setPlayState(SL_PLAYSTATE_STOPPED);
 		}
 
 		s2d_info(("Removing AudioPlayers. Possible loss of data!"));
 
-		for (int i = newMaxCount - 1; i < playerCount; i++)
+		for (int i = newMaxCount - 1; i < _playerCount; i++)
 		{
-			delete player[i];
-			player.erase(player.begin() + i);
-			playerCount--;
+			delete _player[i];
+			_player.erase(_player.begin() + i);
+			_playerCount--;
 		}
 	}
 
-	maxPlayerCount = newMaxCount;
+	_maxPlayerCount = newMaxCount;
 }
 
-AudioPlayer* Audio::GetAvailable()
+AudioPlayer* Audio::getAvailable()
 {
-	for (int i = 0; i < playerCount; i++)
+	for (int i = 0; i < _playerCount; i++)
 	{
-		SLuint32 temp = player.at(i)->GetPlayState();
+		SLuint32 temp = _player.at(i)->getPlayState();
 		if ( temp == SL_PLAYSTATE_STOPPED )
-			return player[i];
+			return _player[i];
 	}
 
-	if (playerCount < maxPlayerCount)
+	if (_playerCount < _maxPlayerCount)
 	{
-		playerCount++;
-		player.push_back(new AudioPlayer(player[0]));
-		AudioInitializer::GetInstance()->InitAudioPlayer(player[playerCount - 1]);
+		_playerCount++;
+		_player.push_back(new AudioPlayer(_player[0]));
+		AudioInitializer::getInstance()->initAudioPlayer(_player[_playerCount - 1]);
 
-		return player[playerCount-1];
+		return _player[_playerCount-1];
 	}
 	else
 		return nullptr;

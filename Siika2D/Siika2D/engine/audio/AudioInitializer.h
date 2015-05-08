@@ -4,27 +4,37 @@
 
 namespace audio
 {
+	/**
+		Initializes OpenSL and audio player.
+	*/
 	class AudioInitializer
 	{
 	public:
-		static AudioInitializer* GetInstance();
+		static AudioInitializer* getInstance();
 
-		void InitAudioPlayer(AudioPlayer* player);
+		/**
+			Initialize OpenSL data structures and AudioPlayer
+		*/
+		void initAudioPlayer(AudioPlayer* player);
 		
 	private:
-		void CreateEngine();
+		
+		/**
+			Create and initialize OpenSL engine, engineObject and OpenSL outputMix object.
+		*/
+		void createEngine();
 
 		AudioInitializer();
 		~AudioInitializer();		
 
-		SLresult result;
+		SLresult _result;
 
-		SLObjectItf engineObj;
-		SLEngineItf engine;
+		SLObjectItf _engineObj;
+		SLEngineItf _engine;
 
-		SLObjectItf outputMixObj;
-		SLVolumeItf outputMixVol;
+		SLObjectItf _outputMixObj;
+		SLVolumeItf _outputMixVol;
 
-		static AudioInitializer* instance;
+		static AudioInitializer* _instance;
 	};
 }
