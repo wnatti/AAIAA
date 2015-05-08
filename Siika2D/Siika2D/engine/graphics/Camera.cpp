@@ -1,163 +1,82 @@
 #include "Camera.h"
 using namespace graphics;
 
-Camera::Camera(glm::vec2 pos, GLfloat w, GLfloat h)
+Camera::Camera(float x, float y) :_posX(x), _posY(y)
 {
-	pos = _position;
-	w = _screenWidth;
-	h = _screenHeight;
-	
+	_posX = _position.x;
+	_posY = _position.y;
+
+	initialize();
+}
+
+Camera::~Camera()
+{
+
 }
 
 void Camera::initialize()
 {
-	//set viewport
-	glViewport(0.0f, 0.0f , _screenWidth, _screenHeight);
+	Shader *shader;
+	/**
+	Initialize window projection matrix
+	*/
+	glUseProgram();
+	windowProjection = glm::ortho(0, _screenWidth, _screenHeight, 0);
+	glGetFloatv(GL_MODELVIEW_MATRIX, viewProjection);
+	/**
+	Pass to shaders
+	*/
+	glUniformMatrix4fv(shader->windowProjection, 1, false, "windowProjection");
 
-	//Initialize projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrthof(0.0f, _screenWidth, _screenHeight, 0.0, 1.0, -1.0);
+	/**
+	Initialize view projection matrix 
+	*/
+	viewProjection = glm::lookAt(
+		glm::vec3(_position.x, _position.y, 2.0f), // Camera Position
+		glm::vec3(_position.x, _position.y, 1.0f), // Where the camera looks
+		glm::vec3(0, 1, 0));
 
-	//initialize modelview matrix
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glGetFloatv(GL_MODELVIEW_MATRIX, viewProjection);
 
-	//Save default modelview matrix
-	glPushMatrix();
+	glUniformMatrix4fv(shader->viewProjection, 1, false, "viewProjection");
 
+	/**
+	world translation
+	*/
+	worldProjection = glm::translate(worldProjection, glm::vec3(0.1f, 0.2f, 0.5f));
+	glUniformMatrix4fv(shader->worldProjection, 1, false, "worldProjection");
+	
+
+
+
+	
 }
 
-void Camera::moveCamera(CAMERA_MOVEMENT move, float cameraSpeed)
+void Camera::moveCamera(CAMERA_MOVEMENT move)
 {
-	
 	switch (move)
 	{
 	case UP:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
 
-		glTranslatef(_position.x, (_position.y + cameraSpeed), 0.0f);
 		break;
-
+	
 	case DOWN:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
 
-		glTranslatef(_position.x, (_position.y - cameraSpeed), 0.0f);
 		break;
-
+		
 	case LEFT:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
 
-		glTranslatef((_position.x + cameraSpeed) , _position.y, 0.0f);
-		break;		
-	case RIGHT:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
-
-		glTranslatef((_position.x - cameraSpeed), _position.y, 0.0f);		
 		break;
 
+	case RIGHT:
+
+		break;
 	}
 }
 
 void Camera::setCameraPosition(glm::vec2 _position)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-	glLoadIdentity();
 
-	glTranslatef(_position.x, _position.y, 0.0f);
-}
-
-void Camera::zoomCamera(ZOOM zoom, GLfloat zoomFactor)
-{
-	switch (zoom)
-	{
-	case ZOOM_IN:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
-
-		glScalef(zoomFactor, zoomFactor, 0.0f);
-		break;
-
-	case ZOOM_OUT:
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-		glLoadIdentity();
-
-		glScalef(-zoomFactor, -zoomFactor, 0.0f);
-		break;
-	}
 }
 
 
-
-//VANHA KAMERA TÄSSÄ KIVASTI. TÄMÄ SILTÄ VARALTA ETTÄ UUSI KAMERA ON PIPPELISTÄ
-
-//glm::mat4 Camera::getProjection()
-//{
-//	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)800 / (GLfloat)600, 0.1f, 1000.0f);
-//	return projection;
-//}
-//
-//glm::mat4 Camera::getView()
-//{
-//	_cameraPos = glm::vec3(_posX, _posY, _posZ);
-//	_front = glm::vec3(_frontX, _frontY, _frontZ);
-//	_up = glm::vec3(0.0f, 1.0f, 0.0f);
-//
-//	glm::mat4 view = glm::lookAt(_cameraPos, //Camera position
-//								 _cameraPos + _front, //Looking position
-//								 _up); //No camera rotation
-//
-//	return view;
-//
-//}
-//
-//
-//void Camera::moveCamera(Camera_Movement movement)
-//{
-//	if (movement == UP)
-//		_posY -= _cameraSpeed;
-//	else if (movement == DOWN)
-//		_posY += _cameraSpeed;
-//	else if (movement == RIGHT)
-//		_posX += _cameraSpeed;
-//	else if (movement == LEFT)
-//		_posX -= _cameraSpeed;
-//	else if (movement == ZOOM_IN)
-//		_posZ -= _cameraSpeed;
-//	else if (movement == ZOOM_OUT)
-//		_posZ += _cameraSpeed;
-//	else if (movement == ROTATE_CLOCKWISE)
-//		/*is code for rotate clockwise*/;
-//	else if (movement == ROTATE_COUNTER_CLOCKWISE)
-//		/*is code for rotate counter clockwise*/;
-//}
-//
-//void Camera::setCameraPosition(GLfloat posX, GLfloat posY, GLfloat posZ)
-//{
-//	posX = _posX;
-//	posY = _posY;
-//	posZ = _posZ;
-//	_cameraPos = glm::vec3(_posX, _posY, _posZ);
-//	updateCamera();
-//}
-//
-//void Camera::setCameraSpeed(GLfloat speed)
-//{
-//	_cameraSpeed = speed;
-//}
-//
-//void Camera::updateCamera()
-//{
-//	/*is code for updating front*/
-//}
