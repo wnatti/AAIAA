@@ -16,12 +16,35 @@ glm::vec2 * Sprite::getPositions()
 	_positions[3].x = _position.x - _origin.x + _size.x;
 	_positions[3].y = _position.y - _origin.y;
 
+	rotate();
+
 	return _positions;
 }
 void Sprite::setPosition(glm::vec2 position)
 {
 	_position.x = position.x;// -_origin.x;
 	_position.y = position.y;// -_origin.y;
+}
+void Sprite::rotate()
+{
+	if (_rotationAngle > 360.f)
+		_rotationAngle -= 360.f;
+	else if (_rotationAngle < -360.f)
+		_rotationAngle += 360.f;
+
+	_rotationAngle = glm::radians(_rotationAngle);
+
+	glm::mat4 rotationMatrix =
+		glm::mat4(glm::cos(_rotationAngle), glm::sin(_rotationAngle), 0.f, 0.f,
+		-glm::sin(_rotationAngle), glm::cos(_rotationAngle), 0.f, 0.f,
+		0.f, 0.f, 1.f, 0.f,
+		0.f, 0.f, 0.f, 1.f);
+
+	for (int i = 0; i < 4; i++)
+	{
+		glm::vec4 tempPos = rotationMatrix*glm::vec4(_positions[i], 0.f, 1.f);
+		_positions[i] = glm::vec2(tempPos.x, tempPos.y);
+	}
 }
 glm::vec2 * Sprite::getTexturePos()
 {
