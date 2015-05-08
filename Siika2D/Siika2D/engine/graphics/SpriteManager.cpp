@@ -47,13 +47,11 @@ void SpriteManager::drawSprites()
 			glm::vec2 * textures = (*sit)->getTexturePos();
 			graphics::Color * col = (*sit)->getColor();
 
-			//_bfr->addVertices(vertices.data(), sizeof(GLfloat) * 16);// 24);
-			//_bfr->addIndices(indecis.data(), sizeof(GLint) * 6);
 			if (c == unknown)
 				_bufferManager->addRectangle(positions, textures, nullptr);
 			else
 				_bufferManager->addRectangle(positions, textures, col);
-			//buf.addRectangle(positions, nullptr, sprt->getColor());
+		
 		}
 		
 		err = glGetError();

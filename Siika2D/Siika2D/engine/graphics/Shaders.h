@@ -45,14 +45,16 @@ namespace graphics
 	const GLchar* defVertexWithBoth =
 		"attribute vec2 position;\n"
 		"attribute vec2 texture;\n"
-		"uniform mat4 projection;\n"
+		"uniform mat4 world;\n"
+		"uniform mat4 window;\n"
+		"uniform mat4 view;\n"
 		"varying vec2 UV;\n"
 		"attribute vec4 color;\n"
 		"varying vec4 varyCol;\n"
 		"void main() {\n"
 		"	UV = texture;\n"
 		"	varyCol = color; \n"
-		"   gl_Position = projection * vec4(position, 0, 1);\n"
+		"   gl_Position =  window * vec4(position, 0, 1);\n"
 		"}\n";
 	const GLchar* defFragmentWithBoth =
 		"varying lowp vec4 varyCol;\n"
@@ -61,6 +63,6 @@ namespace graphics
 		"void main()\n"
 		"{\n"
 		"   gl_FragColor = texture2D(sampler, UV) + varyCol;\n"
-		"}\n";;
+		"}\n";
 	
 }

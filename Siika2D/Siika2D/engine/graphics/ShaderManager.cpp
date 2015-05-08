@@ -10,6 +10,7 @@ void ShaderManager::useShader(bool color, bool texture)
 		if(_defaultIndx == -1)
 		{
 			_currentShader = new Shader(color,texture);
+			_camera->initialize(_currentShader);
 			_shaders.push_back(_currentShader);
 			_defaultIndx = _shaders.size()-1;
 			
@@ -21,9 +22,8 @@ void ShaderManager::useShader(bool color, bool texture)
 		}
 	}
 	s2d_assert(_currentShader);
-	_currentShader->use();
-	glm::mat4 proj = glm::ortho(0.0f, _windowSize.x, _windowSize.y, 0.0f, -1.0f, 1.0f);
-	glUniformMatrix4fv(_currentShader->_projectionLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&proj));
+	//_camera->useProjection(_currentShader);
+
 }
 void ShaderManager::useDefaultShader(bool color, bool texture)
 {
@@ -62,7 +62,6 @@ Shader * ShaderManager::createShader(char * vertPath, char * fragPath)
 		}
 	}
 	_currentShader = newShdr;
-	initializeProjection();
 	return _currentShader; 
 }
 Shader * ShaderManager::findShader(const char * vertSource, const char * fragSource)
@@ -81,8 +80,8 @@ Shader * ShaderManager::findShader(const char * vertSource, const char * fragSou
 
 void ShaderManager::initializeProjection()
 {
-	_currentShader->use();
+	/*_currentShader->use();
 	glm::mat4 proj = glm::ortho(0.0f, _windowSize.x, _windowSize.y, 0.0f, -1.0f, 1.0f);
 	glUniformMatrix4fv(_currentShader->_projectionLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&proj));
-	_currentShader->use(false);
+	_currentShader->use(false);*/
 }

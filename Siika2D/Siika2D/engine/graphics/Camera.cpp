@@ -1,12 +1,10 @@
 #include "Camera.h"
 using namespace graphics;
 
-Camera::Camera(float x, float y) :_posX(x), _posY(y)
+Camera::Camera(glm::vec2 window)
 {
-	_posX = _position.x;
-	_posY = _position.y;
-
-	initialize();
+	_displaySize = window;
+	_position = glm::vec3(0, 0, -3);
 }
 
 Camera::~Camera()
@@ -14,42 +12,52 @@ Camera::~Camera()
 
 }
 
-void Camera::initialize()
+void Camera::initialize(Shader* shader)
 {
-	Shader *shader;
+
+	GLint error;
+	error = glGetError();
+	s2d_assert(error == 0);
 	/**
-	Initialize window projection matrix
+		Initialize window projection matrix
 	*/
-	glUseProgram();
-	windowProjection = glm::ortho(0, _screenWidth, _screenHeight, 0);
-	glGetFloatv(GL_MODELVIEW_MATRIX, viewProjection);
-	/**
-	Pass to shaders
-	*/
-	glUniformMatrix4fv(shader->windowProjection, 1, false, "windowProjection");
+	shader->use();
+	_windowProjection = glm::ortho(0.0f, _displaySize.x, _displaySize.y, 0.0f, -1.0f, 1.0f);
+
+	_windowLocation = shader->_windowLocation;
+	error = glGetError();
+	s2d_assert(error == 0);
+
 
 	/**
-	Initialize view projection matrix 
+		Pass to shaders
 	*/
-	viewProjection = glm::lookAt(
-		glm::vec3(_position.x, _position.y, 2.0f), // Camera Position
-		glm::vec3(_position.x, _position.y, 1.0f), // Where the camera looks
-		glm::vec3(0, 1, 0));
+	glUniformMatrix4fv(_windowLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&_windowProjection));
+	 
+	/**
+		Initialize view projection matrix 
+	*/
 
-	glGetFloatv(GL_MODELVIEW_MATRIX, viewProjection);
+	//_viewProjection = glm::translate(glm::vec3(0,0,-5));
+	
+	/*glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f),
+								  glm::vec3(0.0f, 0.0f, 10.0f),
+								  glm::vec3(0.0f, 1.0f, 0.0f));
+	*/
+	//_viewLocation = glGetUniformLocation(shader->getProgram(), _viewString);
 
-	glUniformMatrix4fv(shader->viewProjection, 1, false, "viewProjection");
+	//glUniformMatrix4fv(_viewLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&_viewProjection));
 
 	/**
 	world translation
 	*/
-	worldProjection = glm::translate(worldProjection, glm::vec3(0.1f, 0.2f, 0.5f));
-	glUniformMatrix4fv(shader->worldProjection, 1, false, "worldProjection");
-	
+	/*_worldProjection = glm::translate(_worldProjection,glm::vec3(1,1,1));
 
+	_worldLocation = glGetUniformLocation(shader->getProgram(), _worldString);
 
+	glUniformMatrix4fv(_worldLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&_worldProjection));*/
 
-	
+	shader->use(false);
 }
 
 void Camera::moveCamera(CAMERA_MOVEMENT move)
@@ -77,6 +85,16 @@ void Camera::moveCamera(CAMERA_MOVEMENT move)
 void Camera::setCameraPosition(glm::vec2 _position)
 {
 
+}
+
+void Camera::useProjection(Shader *shader)
+{
+	shader->use();
+	GLint err = glGetError();
+	_windowProjection = glm::ortho(0.0f, _displaySize.x, _displaySize.y, 0.0f, -1.0f, 1.0f);
+	glUniformMatrix4fv(shader->_windowLocation, 1, GL_FALSE, reinterpret_cast<const float*>(&_windowProjection));
+	err = glGetError();
+	int i = 0;
 }
 
 

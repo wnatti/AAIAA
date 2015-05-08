@@ -7,6 +7,7 @@
 #include "../graphics/SpriteManager.h"
 #include "../graphics/GraphicsContext.h"
 #include "../audio/AudioManager.h"
+#include "../graphics/Camera.h"
 
 #include <android/sensor.h>
 #include "../misc/Input.h"
@@ -53,6 +54,7 @@ namespace core
 		graphics::TextureManager *_textureManager;
 		graphics::TextManager *_textManager;
 		graphics::GraphicsContext *_graphicsContext;
+		graphics::Camera *_camera;
 		audio::AudioManager* _audioManager;
 
 	protected:

@@ -3,7 +3,7 @@
 
 #include "../core/ErrorHandler.h"
 #include "../core/ResourceManager.h"
-
+#include "Camera.h"
 #include <EGL/egl.h>
 #include <GLES2\gl2.h>
 #include <glm.hpp>
@@ -59,7 +59,7 @@ namespace graphics
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }
 	protected:
-		ShaderManager(core::ResourceManager * resMngr, glm::vec2 windowSize) :_rmngr(resMngr),_windowSize(windowSize), _currentShader(nullptr), _defaultIndx(-1){
+		ShaderManager(core::ResourceManager * resMngr, glm::vec2 windowSize, Camera *camera) :_rmngr(resMngr),_windowSize(windowSize), _currentShader(nullptr), _defaultIndx(-1),_camera(camera){
 			s2d_info("SHADER MANAGER CREATED");
 
 		};
@@ -69,6 +69,7 @@ namespace graphics
 		//Finds already created shader in _shaders
 		Shader * findShader(const char * vertSource, const char * fragSource);
 
+		Camera * _camera;
 		int _defaultIndx;
 		Shader * _currentShader;
 		glm::vec2 _windowSize;

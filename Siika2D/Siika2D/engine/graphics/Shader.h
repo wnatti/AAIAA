@@ -22,6 +22,9 @@ namespace graphics
 		void use(bool toUse = true);
 		bool hasColor(){ return _color; }
 		bool hasTexture(){ return _texture; }
+		//TESTING
+		GLint _windowLocation;
+
 
 	private:
 		///Shader must be created using ShaderManager::createShader()
@@ -41,7 +44,6 @@ namespace graphics
 		std::string getShaderInfoLog(GLuint handle);
 		bool _color, _texture;
 		GLuint _fragHandle, _vertHandle, _samplerHandle;
-		GLint _projectionLocation;
 		const GLchar * _fragSource;
 		const GLchar * _vertSource;
 		GLuint _program;
@@ -49,7 +51,6 @@ namespace graphics
 		GLchar * _posString = "position";
 		GLchar * _colString = "color";
 		GLchar * _texString = "texture";
-		GLchar * _projectionString = "projection";
-
+		GLchar * _windowString = "window";
 	};
 }

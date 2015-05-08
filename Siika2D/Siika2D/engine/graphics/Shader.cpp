@@ -126,9 +126,9 @@ bool Shader::linkProgram()
 	}
 
 	GLint error = glGetError();
-	assert(error == 0);
-	_projectionLocation = glGetUniformLocation(_program, _projectionString);
-	error = glGetError();
+
+	_windowLocation = glGetUniformLocation(_program, _windowString);
+
 	assert(error == 0);
 
 	return true;
@@ -137,7 +137,7 @@ bool Shader::linkProgram()
 void Shader::use(bool toUse)
 {
 	GLint err = glGetError();
-	s2d_assert(err == 0);
+	//s2d_assert(err == 0);
 
 	if(toUse)
 	{

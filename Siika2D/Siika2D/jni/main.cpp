@@ -18,14 +18,13 @@ void doStuff()
 	if(!stuffDone)
 	{
 		tex = siika->_textureManager->createTexture("tekstuuri.png");
+		//siika->_shaderManager->useDefaultShader(true, true);
 		siika->_shaderManager->useShader(true, true);
 		for (int i = 0; i < 50; i++)
 		{
-			
 			spriteVector.push_back(siika->_spriteManager->createSprite(glm::vec2(100, 100), glm::vec2(64, 64), glm::vec2(32,32), tex, glm::vec2(0, 0), glm::vec2(1, 1)));
 		}
-		//sprite2 = siika->_spriteManager->createSprite(glm::vec2(0.5, 0.5), glm::vec2(0.5, 0.5), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
-		//sprite3 = siika->_spriteManager->createSprite(glm::vec2(0.0, 0.0), glm::vec2(64, 64), glm::vec2(0.2, 0.2), tex, glm::vec2(0, 1), glm::vec2(1, 0));
+
 		stuffDone = true;
 	}
 
@@ -59,7 +58,7 @@ void doStuff()
 		pos = -1.0;
 
 	for (int i = 0; i < spriteVector.size();i++)
-		spriteVector[i]->setPosition(glm::vec2(position.x+i, position.y+i*10));
+		spriteVector[i]->setPosition(glm::vec2(position.x+i, position.y+i*2));
 
 	siika->_graphicsContext->clear(); // EBIN XD
 	siika->_spriteManager->drawSprites();

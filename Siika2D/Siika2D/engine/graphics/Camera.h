@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <gtc\type_ptr.hpp>
 #include <gtc\matrix_transform.hpp>
+#include <gtx\transform.hpp>
 #include "Shader.h"
 
 namespace graphics
@@ -18,21 +19,27 @@ namespace graphics
 	class Camera
 	{
 	public:
-		void initialize();
+		void initialize(Shader *shader);
 		void moveCamera(CAMERA_MOVEMENT move);
 		void setCameraPosition(glm::vec2 _position);
+		void useProjection(Shader* shader);
 
 		/**
 		Constructor takes vec2 object
 		*/
-		Camera(float x, float y);
+		Camera(glm::vec2 window);
 		~Camera();
 
 	private:
-		int _screenWidth, _screenHeight;
-		glm::vec2 _position, _origin;
-		float _posX, _posY;
-		glm::mat4 windowProjection, viewProjection, worldProjection;
+		glm::vec2 _displaySize;
+		glm::vec2 _origin;
+		glm::vec3 _position;
+		float rotation;
+		glm::mat4 _windowProjection, _viewProjection, _worldProjection;
+		GLchar * _windowString = "window";
+		GLchar * _viewString = "view";
+		GLchar * _worldString = "world";
+		GLint _windowLocation, _viewLocation, _worldLocation;
 	};
 }
 

@@ -18,6 +18,7 @@ Texture::~Texture()
 
 void Texture::initialize()
 {
+	GLint err = glGetError();
 	glGenTextures(1, &_texture);  
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	s2d_assert(glGetError() == 0);
