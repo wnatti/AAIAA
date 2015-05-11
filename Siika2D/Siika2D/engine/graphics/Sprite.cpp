@@ -2,8 +2,29 @@
 
 using namespace graphics;
 
+glm::vec2 * Sprite::getBounds(glm::vec2 pos)
+{
+	glm::vec2[4] bounds;
+	bounds[0].x = pos.x - _origin.x;
+	bounds[0].y = pos.y - _origin.y;
+
+	bounds[1].x = pos.x - _origin.x;
+	bounds[1].y = pos.y - _origin.y + _size.y;
+
+	bounds[2].x = pos.x - _origin.x + _size.x;
+	bounds[2].y = pos.y - _origin.y + _size.y;
+
+	bounds[3].x = pos.x - _origin.x + _size.x;
+	bounds[3].y = pos.y - _origin.y;
+
+	return bounds;
+}
+
+
 glm::vec2 * Sprite::getPositions()
 {
+	rotate();
+/*
 	_positions[0].x = _position.x - _origin.x;
 	_positions[0].y = _position.y - _origin.y;
 
@@ -15,8 +36,7 @@ glm::vec2 * Sprite::getPositions()
 
 	_positions[3].x = _position.x - _origin.x + _size.x;
 	_positions[3].y = _position.y - _origin.y;
-
-	rotate();
+*/
 
 	return _positions;
 }
@@ -27,6 +47,9 @@ void Sprite::setPosition(glm::vec2 position)
 }
 void Sprite::rotate()
 {
+	glm::vec3 * posAtZero = getBounds(glm::vec2(0,0));
+	glm::vec3 * pos = getBounds(_position);
+
 	if (_rotationAngle > 360.f)
 		_rotationAngle -= 360.f;
 	else if (_rotationAngle < -360.f)
@@ -42,8 +65,9 @@ void Sprite::rotate()
 
 	for (int i = 0; i < 4; i++)
 	{
-		glm::vec4 tempPos = rotationMatrix*glm::vec4(_positions[i], 0.f, 1.f);
-		_positions[i] = glm::vec2(tempPos.x, tempPos.y);
+		
+		glm::vec4 tempPos = rotationMatrix*glm::vec4(posAtZero[i], 0.f, 1.f);
+		_positions[i] = pos[i] + (posAtZero[i] - glm::vec2(tempPos.x, tempPos.y));
 	}
 }
 glm::vec2 * Sprite::getTexturePos()

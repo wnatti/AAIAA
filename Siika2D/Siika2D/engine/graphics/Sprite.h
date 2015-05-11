@@ -41,6 +41,7 @@ namespace graphics
 			delete _col;
 		};
 	private:
+		glm::vec2 * getBounds(glm::vec2 pos);
 		glm::vec2 * getPositions();
 		glm::vec2 * getTexturePos();
 		void rotate();
