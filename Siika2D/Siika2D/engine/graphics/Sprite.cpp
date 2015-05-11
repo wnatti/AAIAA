@@ -4,7 +4,7 @@ using namespace graphics;
 
 glm::vec2 * Sprite::getBounds(glm::vec2 pos)
 {
-	glm::vec2[4] bounds;
+	glm::vec2 bounds[4];
 	bounds[0].x = pos.x - _origin.x;
 	bounds[0].y = pos.y - _origin.y;
 
@@ -47,8 +47,8 @@ void Sprite::setPosition(glm::vec2 position)
 }
 void Sprite::rotate()
 {
-	glm::vec3 * posAtZero = getBounds(glm::vec2(0,0));
-	glm::vec3 * pos = getBounds(_position);
+	glm::vec2 * posAtZero = getBounds(glm::vec2(0,0));
+	glm::vec2 * pos = getBounds(_position);
 
 	if (_rotationAngle > 360.f)
 		_rotationAngle -= 360.f;
