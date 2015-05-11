@@ -11,7 +11,7 @@
 
 #include <android/sensor.h>
 #include "../misc/Input.h"
-//#include "engine\core\MemoryManager.h"
+//#include "..\core\MemoryManager.h"
 
 namespace core
 {

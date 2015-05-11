@@ -4,6 +4,7 @@
 #include "..\core\ErrorHandler.h"
 #include <algorithm>
 #include <glm.hpp>
+#include <gtx\vector_angle.hpp>
 #include <vector>
 #include <map>
 
@@ -44,7 +45,8 @@ struct Finger
 
 struct Stick
 {
-	glm::vec2 _orientation = glm::vec2(0.f, 0.f);
+	glm::vec2 _pointingVector = glm::vec2(0.f, 0.f);
+	float _rotation = 0;
 };
 
 
@@ -101,7 +103,7 @@ namespace misc
 			return _fingers[finger];
 		}
 
-		Stick stickOrientation(int stick)
+		Stick stick(int stick)
 		{
 			return _sticks[stick];
 		}

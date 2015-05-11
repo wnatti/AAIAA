@@ -146,7 +146,19 @@ void Input::processStickOrDpad(AInputEvent *event)
 		if (action == AMOTION_EVENT_ACTION_MOVE)
 		{
 			glm::vec2 pos(AMotionEvent_getX(event, i), AMotionEvent_getY(event, i));
-			_sticks[i]._orientation = pos;
+			_sticks[i]._pointingVector = pos;
+
+			
+			float X = glm::abs(pos.x);
+			float Y = glm::abs(pos.y);
+
+			if (X > 0.01 || Y >0.01)
+			{
+				float radAngle = glm::atan(pos.y, pos.x);
+				_sticks[i]._rotation = glm::degrees(radAngle);
+			}
+
+			
 		}
 	}
 }

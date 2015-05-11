@@ -1,13 +1,11 @@
 #pragma once
-#include <memory>
-#include <stdlib.h>
+
 #include <typeinfo>
 #include <string>
-#include <iostream>
+//#include <iostream>
 #include <map>
-#include <memory.h>
-#include <sstream>
-#include "ErrorHandler.h"
+//#include <sstream>
+//#include "ErrorHandler.h"
 
 
 namespace core
@@ -129,9 +127,12 @@ void operator delete[](void* ptr)
 }
 //void operator delete(void* ptr, const char* file, int line) _NOEXCEPT;
 //void operator delete[](void* ptr, const char* file, int line) _NOEXCEPT;
-
+#define DEBUG_NEW new(__FILE__, __LINE__)
+#define new DEBUG_NEW
+/*
 #ifndef NDEBUG
 #define NEW new(__FILE__, __LINE__)
 #else
 #define NEW new
 #endif
+*/

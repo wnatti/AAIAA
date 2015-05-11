@@ -2,6 +2,7 @@
 #include "..\engine\core\Siika2D.h"
 #include "../engine/audio/Audio.h"
 #include "../engine/misc/timer.h"
+#include "../engine/core/MemoryManager.h"
 core::Siika2D *siika = core::Siika2D::UI();
 
 bool stuffDone = false;
@@ -15,6 +16,7 @@ misc::Timer timer;
 float pos = 0;
 uint blue = 1;
 uint green = 128;
+float orientation;
 void doStuff()
 {
 
@@ -53,15 +55,17 @@ void doStuff()
 
 	for (int i = 0; i < siika->_input->sticksActive(); i++)
 	{
-		glm::vec2 movement = siika->_input->stickOrientation(i)._orientation;
-		movement *= 10;
-		position += movement;
+		orientation = siika->_input->stick(i)._rotation;
 	}
 	
 	green += 2;
 	for (int i = 0; i < spriteVector.size(); i++)
-		spriteVector[i]->setColor(graphics::Color(0, green-i*10, blue-i*10, 1));
+		spriteVector[i]->setColor(graphics::Color(0, green-i*10, blue-i*10, 255));
 
+
+	teksti->setColor(graphics::Color(0, green, blue, 255));
+
+	blue += 2;
 	if(blue > 254)
 		blue = 0;
 	if(green > 252)
@@ -75,7 +79,7 @@ void doStuff()
 
 	for (int i = 0; i < spriteVector.size(); i++)
 	{
-		spriteVector[i]->setRotation(position.y);
+		spriteVector[i]->setRotation(orientation);
 		if (timer.getElapsedTime(TIME::SECONDS) > 2)
 		{
 			spriteVector[i]->step();
@@ -88,6 +92,7 @@ void doStuff()
 	siika->_spriteManager->drawSprites();
 	siika->_textManager->drawTexts();
 	siika->_graphicsContext->swap();
+	//core::MemoryManager::getInstance().getCount();
 }
 
 void siika_main()
