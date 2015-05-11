@@ -3,6 +3,7 @@
 #include "..\glm\vec2.hpp"
 #include "glm.hpp"
 #include "..\misc\color.h"
+#include <gtx/transform.hpp>
 
 namespace graphics
 {
@@ -42,6 +43,7 @@ namespace graphics
 		};
 	private:
 		glm::vec2 * getBounds(glm::vec2 pos);
+		glm::vec2 _bounds[4];
 		glm::vec2 * getPositions();
 		glm::vec2 * getTexturePos();
 		void rotate();

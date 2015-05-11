@@ -28,9 +28,8 @@
     <ClCompile Include="engine\graphics\Buffer.cpp" />
     <ClCompile Include="engine\graphics\BufferManager.cpp" />
     <ClCompile Include="engine\graphics\Camera.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="engine\graphics\Graphics.cpp" />
     <ClCompile Include="engine\graphics\GraphicsContext.cpp" />
     <ClCompile Include="engine\graphics\Shader.cpp" />
     <ClCompile Include="engine\graphics\ShaderManager.cpp" />
@@ -63,9 +62,8 @@
     <ClInclude Include="engine\graphics\Buffer.h" />
     <ClInclude Include="engine\graphics\BufferManager.h" />
     <ClInclude Include="engine\graphics\Camera.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="engine\graphics\Graphics.h" />
     <ClInclude Include="engine\graphics\GraphicsContext.h" />
     <ClInclude Include="engine\graphics\Shader.h" />
     <ClInclude Include="engine\graphics\ShaderManager.h" />

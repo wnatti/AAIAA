@@ -14,7 +14,7 @@ Timer::~Timer()
 
 void Timer::reset()
 {
-	std::clock_t _start;
+	_start = std::clock();
 }
 void Timer::start()
 {

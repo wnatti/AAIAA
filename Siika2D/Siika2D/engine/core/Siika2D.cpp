@@ -65,7 +65,7 @@ void Siika2D::initializeGraphics()
 	_bufferManager = new graphics::BufferManager();
 	_textureManager = new graphics::TextureManager(&_resourceManager);
 	_spriteManager = new graphics::SpriteManager(_shaderManager,_bufferManager);
-	//_textManager = new graphics::TextManager(&_resourceManager, _shaderManager, _graphicsContext->getDisplaySize());
+	_textManager = new graphics::TextManager(&_resourceManager, _shaderManager, _graphicsContext->getDisplaySize());
 	_audioManager = new audio::AudioManager(&_resourceManager);
 	_shaderManager->useShader(true, true);
 
