@@ -7,6 +7,11 @@
 
 namespace graphics
 {
+	/**
+	Sprite 
+	When sprite is created it gets assigned the currently used shader, if no shader is set default one will be used
+
+	*/
 	class Sprite
 	{
 		friend class SpriteManager;
@@ -28,13 +33,23 @@ namespace graphics
 		Color * getColor(){ return _col; };
 
 
-		///Gets next sprite in spritesheet
+		///Gets next sprite in spritesheet will cycle trough and go back to first sprite
 		void step();
 	protected:
 		Sprite(){};
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin) :
 			_position(position), _size(size), _origin(origin), _texture(nullptr), _col(nullptr), _rotationAngle(0){};
+		/**
+		Position: position of the sprite
+		Size: size of the sprite
+		Origin: origin point of the sprite in pixels 0,0 is upper left corner
+		TextureToSet: Texture of the sprite
+		TextureUpperLeft: Upper left corner of the texture in texture coordinates ie 0,0 is upperleft corner of the texture while 0.5,0 is middle-top
+		textureLowerRigth: Lower right corner of the texture use 1.0,1.0 for full texture
+		To use sprite sheets give texture coordinates that do not use the full texture ie UL: 0.0, 0.0 LR,0.2,0.2 makes a 5x5 grid
+		use sprite::step() to move to next frame
 
+		*/
 		Sprite(glm::vec2 position, glm::vec2 size, glm::vec2 origin, Texture * TextureToSet, glm::vec2 textureUpperLeft, glm::vec2 textureLowerRigth) :
 			_position(position), _size(size), _origin(origin), _texture(TextureToSet), _textureUL(textureUpperLeft), _textureLR(textureLowerRigth), _col(nullptr), _rotationAngle(0){};
 		~Sprite()
@@ -42,6 +57,7 @@ namespace graphics
 			delete _col;
 		};
 	private:
+		///Gets bounds of the sprite at given position
 		glm::vec2 * getBounds(glm::vec2 pos);
 		glm::vec2 _bounds[4];
 		glm::vec2 * getPositions();

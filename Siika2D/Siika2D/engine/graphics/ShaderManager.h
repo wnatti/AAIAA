@@ -50,11 +50,16 @@ namespace graphics
 		*/
 		Shader * createShader(char * vertPath, char * fragPath);
 		
-		///Compiles shaders links program for _currentShader if its not set uses default shaders
+		/**Compiles shaders links program for _currentShader. 
+		If there is no _currentShaders it will create it from default shaders with given parameters
+		On subsequent when a shader has been made it will call _currentShader::useShader();
+		*/
 		void useShader(bool color = true, bool texture = false);
 		//Gets current shader
 		Shader * getShader(){return _currentShader;}
-		//Uses desired default shader
+		/** Gets a default shader with the given parameters and sets it as currentShader must call useShader to use it.
+		
+		*/
 		void useDefaultShader(bool color, bool texture);
 		///Sets the shader to be used by useShader()
 		void setCurrentShader(Shader * shaderToUse){ _currentShader = shaderToUse; }

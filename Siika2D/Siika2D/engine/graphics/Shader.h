@@ -22,19 +22,18 @@ namespace graphics
 		void use(bool toUse = true);
 		bool hasColor(){ return _color; }
 		bool hasTexture(){ return _texture; }
-		//TESTING
 		GLint _windowLocation;
 
 
 	private:
-		///Shader must be created using ShaderManager::createShader()
+		///Gets and activates texture sampler
 		void useSampler();
+		///Shader must be created using ShaderManager::createShader()
 		Shader(bool color = false, bool texture = false);
 		Shader(const GLchar * fragmentSource, const GLchar * vertexSource, bool color = false, bool texture = false);
 		~Shader();
 		void setColor(bool toSet){ _color = toSet; }
 		void setTexture(bool toSet){ _texture = toSet; }
-
 
 		bool compileShaders();
 		bool linkProgram();
