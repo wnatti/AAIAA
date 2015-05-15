@@ -102,31 +102,30 @@ glm::vec2 * Sprite::getTexturePos()
 }
 void Sprite::step()
 {
-	///TODO: is y change in right direction ?
-	float width = _textureUL.x - _textureLR.x;
-	float height = _textureUL.y - _textureLR.y;
+	float width = _textureLR.x - _textureUL.x;
+	float height = _textureLR.y - _textureUL.y;
 
 
 	//Needs to change horizontal position
-	if(_textureLR.x + width < 1.0f)
+	if((_textureLR.x + width) < 1.0f)
 	{
-		_textureUL.x -= width;
-		_textureLR.x -= width;
+		_textureUL.x += width;
+		_textureLR.x += width;
 
 	}
 	else
 	{
-		_textureUL.y = 0;
-		_textureUL.x = 0;
-		_textureLR.y = height;
-		_textureLR.x = width;
-		/*
+		//_textureUL.y = 0;
+		//_textureUL.x = 0;
+		//_textureLR.y = height;
+		//_textureLR.x = width;
+		
 		//Needs to change vertical position
 		if(_textureLR.y + height < 1.0f)
 		{
 			_textureUL.y += height;
 			_textureUL.x = 0;
-			_textureLR.y += height;
+			_textureLR.y += height*2;
 			_textureLR.x = width;
 		}
 		else//Go to first frame
@@ -136,6 +135,6 @@ void Sprite::step()
 			_textureLR.y = height;
 			_textureLR.x = width;
 		}
-		*/
+		
 	}
 }
