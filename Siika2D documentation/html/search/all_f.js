@@ -2,7 +2,6 @@ var searchData=
 [
   ['red',['RED',['../namespacegraphics.html#a5acd35de041bd015ed25531e0fae2267aa702befc65c0250065ea5961c2d38e0e',1,'graphics']]],
   ['removeref',['removeRef',['../classcore_1_1_memory_manager.html#ad23687ea2ded0e4c3b840cafd625126a',1,'core::MemoryManager']]],
-  ['removesystem',['removeSystem',['../class_system_manager.html#ae575ece1ea677c33a4f338ae73a55b58',1,'SystemManager']]],
   ['reset',['reset',['../classmisc_1_1_timer.html#a9020542d73357a4eef512eefaf57524b',1,'misc::Timer']]],
   ['resourcemanager',['ResourceManager',['../classcore_1_1_resource_manager.html',1,'core']]],
   ['resourcemanager',['ResourceManager',['../classcore_1_1_resource_manager.html#a3b32babd2e81909bbd90d7f2d566fadb',1,'core::ResourceManager']]],

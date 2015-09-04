@@ -8,6 +8,6 @@ var searchData=
   ['updatesensor',['updateSensor',['../classmisc_1_1_input.html#a90a2f35a1a12d1e69b3fbb022bd165c7',1,'misc::Input']]],
   ['use',['use',['../classgraphics_1_1_shader.html#a7ad867c3bec7b87c4a7715997e1084ba',1,'graphics::Shader']]],
   ['usedefaultshader',['useDefaultShader',['../classgraphics_1_1_shader_manager.html#a8a6a8b8fa1bd9c12be72dc7e4f6c68cf',1,'graphics::ShaderManager']]],
-  ['usesampler',['useSampler',['../classgraphics_1_1_shader.html#a507eab19accf52603f3eaa1deee7aa6b',1,'graphics::Shader']]],
+  ['useprojection',['useProjection',['../classgraphics_1_1_camera.html#af30dc740d23ff564b9d98046cd6b5f14',1,'graphics::Camera']]],
   ['useshader',['useShader',['../classgraphics_1_1_shader_manager.html#a9662a705c9fb8f94b64e1469634c2c54',1,'graphics::ShaderManager']]]
 ];

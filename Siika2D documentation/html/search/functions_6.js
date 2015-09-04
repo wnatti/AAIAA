@@ -3,7 +3,6 @@ var searchData=
   ['gameobject',['GameObject',['../class_game_object.html#a4dbc70ae9f20e17399a7b97a4c614fa5',1,'GameObject']]],
   ['geta',['getA',['../classgraphics_1_1_color.html#a0913c4bb2a39b4bc623236b44827098c',1,'graphics::Color']]],
   ['getaudioasset',['getAudioAsset',['../classaudio_1_1_audio_player.html#a3f870be0905be9256730dc71c0175c47',1,'audio::AudioPlayer']]],
-  ['getavailable',['getAvailable',['../classaudio_1_1_audio.html#a231353588a893e7484f623d0d750f702',1,'audio::Audio']]],
   ['getb',['getB',['../classgraphics_1_1_color.html#a6775ccf4a9cc16437f9a313c1353b045',1,'graphics::Color']]],
   ['getcolor',['getColor',['../classgraphics_1_1_sprite.html#ac4d29d96d94214d4675ad0b16d621816',1,'graphics::Sprite::getColor()'],['../classgraphics_1_1_text.html#a9001efab08bd0adbb6d1f8bde1ce577a',1,'graphics::Text::getColor()']]],
   ['getcount',['getCount',['../classcore_1_1_memory_manager.html#af7a45afc340ecbaf1cb1255ccc91eb7d',1,'core::MemoryManager']]],
@@ -15,15 +14,9 @@ var searchData=
   ['getinstance',['getInstance',['../classaudio_1_1_audio_initializer.html#aef4733ad611951e98b89d1228e3a4fda',1,'audio::AudioInitializer::getInstance()'],['../classcore_1_1_memory_manager.html#a3a5035bcc157cfcf8bfb5f02437f4608',1,'core::MemoryManager::getInstance()'],['../classmisc_1_1_input.html#ac4d3907be50264020afd1e0a23be12a9',1,'misc::Input::getInstance()']]],
   ['getplaystate',['getPlayState',['../classaudio_1_1_audio_player.html#a80559d90002d578733e387d3f826eed7',1,'audio::AudioPlayer']]],
   ['getposition',['getPosition',['../classgraphics_1_1_sprite.html#a690590fcb4825f21f7bec99045d257c0',1,'graphics::Sprite::getPosition()'],['../class_game_object.html#a4a4042f7e6ccb8ed9a65e0d6a6b9b7f3',1,'GameObject::getPosition()']]],
-  ['getpositions',['getPositions',['../classgraphics_1_1_sprite.html#adb8bf782e009cff74eaab6e9c54061f4',1,'graphics::Sprite']]],
   ['getprogram',['getProgram',['../classgraphics_1_1_shader.html#a1c916d52e0526c528a89dbdfad3380ce',1,'graphics::Shader']]],
-  ['getprograminfolog',['getProgramInfoLog',['../classgraphics_1_1_shader.html#afa5b5658ee13e2b09faa964edc7bdbea',1,'graphics::Shader']]],
   ['getr',['getR',['../classgraphics_1_1_color.html#a61bf78208a2d148482ace2a96d63329f',1,'graphics::Color']]],
   ['getshader',['getShader',['../classgraphics_1_1_shader_manager.html#a7c7b1727a2981b8f95aa7a4434fc325f',1,'graphics::ShaderManager']]],
-  ['getshaderinfolog',['getShaderInfoLog',['../classgraphics_1_1_shader.html#a4fdb3324e22c4e5d60bca584af4f8487',1,'graphics::Shader']]],
-  ['getsystem',['getSystem',['../class_system_manager.html#a03bee18b510daea61c44822129a6c7fd',1,'SystemManager']]],
   ['gettexture',['getTexture',['../classgraphics_1_1_texture.html#a74b4991e37bd06de4f17e62d341a1e9a',1,'graphics::Texture']]],
-  ['gettexturepos',['getTexturePos',['../classgraphics_1_1_sprite.html#a2eae96b106ce65a848b283098da190fe',1,'graphics::Sprite']]],
-  ['graphics',['Graphics',['../classgraphics_1_1_graphics.html#ae841f49a9cf9378bc9e62024fb315502',1,'graphics::Graphics']]],
   ['graphicscontext',['GraphicsContext',['../classgraphics_1_1_graphics_context.html#a309de1b0ea4b087129312f88e2b779af',1,'graphics::GraphicsContext']]]
 ];

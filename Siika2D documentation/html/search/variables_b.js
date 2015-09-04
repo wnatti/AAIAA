@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width',['width',['../structcore_1_1_image_data.html#a84d8fa4f50525658a9bda14c45afdd9c',1,'core::ImageData']]]
+  ['x',['x',['../structcore_1_1saved__state.html#a6c625536ba2ab5f2444146f51977db89',1,'core::saved_state']]]
 ];

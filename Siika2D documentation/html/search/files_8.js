@@ -11,7 +11,5 @@ var searchData=
   ['sprite_2ecpp',['Sprite.cpp',['../_sprite_8cpp.html',1,'']]],
   ['sprite_2eh',['Sprite.h',['../_sprite_8h.html',1,'']]],
   ['spritemanager_2ecpp',['SpriteManager.cpp',['../_sprite_manager_8cpp.html',1,'']]],
-  ['spritemanager_2eh',['SpriteManager.h',['../_sprite_manager_8h.html',1,'']]],
-  ['system_2eh',['System.h',['../_system_8h.html',1,'']]],
-  ['systemmanager_2eh',['SystemManager.h',['../_system_manager_8h.html',1,'']]]
+  ['spritemanager_2eh',['SpriteManager.h',['../_sprite_manager_8h.html',1,'']]]
 ];

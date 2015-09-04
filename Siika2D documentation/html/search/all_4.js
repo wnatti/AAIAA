@@ -1,6 +1,7 @@
 var searchData=
 [
   ['data',['data',['../structcore_1_1_image_data.html#af711282db8689c1981370c639dcc608e',1,'core::ImageData']]],
+  ['debug_5fnew',['DEBUG_NEW',['../_memory_manager_8h.html#ae506a7a05c7311380f9160324fa2c047',1,'MemoryManager.h']]],
   ['deffragmentwithboth',['defFragmentWithBoth',['../namespacegraphics.html#ac9a1b90a92fe9a99e04898a01cb76293',1,'graphics']]],
   ['deffragmentwithcolor',['defFragmentWithColor',['../namespacegraphics.html#a92c37efa7bd4bedbd562c225d30cabec',1,'graphics']]],
   ['deffragmentwithtexture',['defFragmentWithTexture',['../namespacegraphics.html#af0d977d7aa6703e22ed5527446c460af',1,'graphics']]],

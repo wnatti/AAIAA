@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['linkprogram',['linkProgram',['../classgraphics_1_1_shader.html#afb2de0068b4e4df73fe0b05896ef79f5',1,'graphics::Shader']]],
-  ['loadasset',['loadAsset',['../classcore_1_1_resource_manager.html#a0fd67dad99bac2e7db72dbb2c8e177fb',1,'core::ResourceManager']]],
   ['loadaudio',['loadAudio',['../classcore_1_1_resource_manager.html#ad46466a2f69675917c4fdb8c7f86b958',1,'core::ResourceManager']]],
   ['loadfile',['loadFile',['../classcore_1_1_resource_manager.html#a0da38d2c40fc9e0cee6c8037f2160172',1,'core::ResourceManager']]],
   ['loadimage',['loadImage',['../classcore_1_1_resource_manager.html#a6664776ba2fdbda82e4385c2219147d0',1,'core::ResourceManager']]],
